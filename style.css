@@ -11,6 +11,7 @@ body {
     top: 0;
     left: 0;
     z-index: 1;
+    border-bottom: 5px solid #ffffff;
 }
 
 #nav-text {
@@ -19,7 +20,7 @@ body {
     font-size: 20px;
     font-family: 'Open Sans', sans-serif;
     font-weight: bold;
-    padding-top: 10px;
+    padding-top: 5px;
     padding-left: 20px;
 }
 
@@ -39,10 +40,9 @@ body {
     color: #ffffff;
     text-decoration: none;
     padding-left: 20px;
-    padding-top: 10px;
+    padding-top: 5px;
     position: relative;
     padding: 1px 15px;
-
 }
 
 #nav-link:after {    
