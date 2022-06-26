@@ -152,3 +152,24 @@ body {
     font-family: "Open Sans", sans-serif;
     text-decoration: none;
 }
+
+#cbky-card {
+    display: inline_block;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #0a092d;
+    color: #ffffff;
+}
+
+#cbky-p {
+    font-family: "Dosis", sans-serif;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+#cbky-l {
+    font-family: "Dosis", sans-serif;
+    font-size: 20px;
+    color: #ffffff;
+}
