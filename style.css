@@ -79,6 +79,13 @@ body {
     text-align: center;
 }
 
+#p-links {
+    color: #ffffff;
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+    text-align: center;
+}
+
 #p-highlight1 {
     font-family: "Open Sans", sans-serif;
     color: #00b4ff;
@@ -172,4 +179,14 @@ body {
     font-family: "Dosis", sans-serif;
     font-size: 20px;
     color: #ffffff;
+}
+
+#proj-link {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+#soci-link {
+    color: #ffffff;
+    text-decoration: none;
 }
