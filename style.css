@@ -3,6 +3,18 @@ body {
     overflow: auto;
 }
 
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a092d;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ffffff;
+}
+
 #navbar {
     background-color: #0a092d;
     height: 50px;
