@@ -1,4 +1,4 @@
-<!DOCTYPE html>    
+<!-- <!DOCTYPE html>    
     <html>    
         <head>    
         <meta charset="UTF-8">
@@ -30,30 +30,37 @@
             </div>
 
             <br><br><br>
-            <h2 id="nav-text">FEEDBACK FORM</h2>    
+            <h2 id="nav-text">FEEDBACK FORM</h2>   
+            <form onSubmit="WriteToFile(this)">
                 <div>
-                    <input type="text" id="txtName" name="input1" placeholder="Enter your name" />
+                    <input type="text" id="txtName" name="FirstName" placeholder="Enter your name" />
                 </div>
                 <div>
-                    <textarea id="msg" name="input2" placeholder="Enter your feedback..." style="height:100px"></textarea>
+                    <textarea id="msg" name="feedback" placeholder="Enter your feedback..." style="height:100px"></textarea>
                 </div>
         
-                <!--Add to button to save the data.-->
                 <div>
-                    <input type="button" id="bt" value="Send feedback" onclick="saveFile()" />
+                    <input type="submit" id="bt" value="Send feedback"/>
                 </div>
-            </div>
+            </form>
 
-            <script type ="text/javascript">
+            <script type="text/javascript">
                 function WriteToFile(passForm) {
                
-                   let fso = CreateObject("Scripting.FileSystemObject");  
-                   let s = fso.CreateTextFile("./data/data.txt", True);
-                   s.writeline(document.passForm.input1.value);
-                   s.writeline(document.passForm.input2.value);
-                   s.Close();
+                    var openFileDialog = new ActiveXObject("MSComDlg.CommonDialog");
+                    var fso = CreateObject("Scripting.FileSystemObject");  
+                    var s = fso.CreateTextFile("data/feedback.txt", True);
+                   
+                    var firstName = document.getElementById('FirstName');
+                    var feedback  = document.getElementById('feedback');
+            
+                    s.writeline("First Name:" + FirstName);
+                    s.writeline("Feedback:" + feedback);
+            
+                    s.writeline("-----------------------------");
+                    s.Close();
                 }
-                 </script>
+            </script>
 
         </body>    
-    </html>  
+    </html>   -->
