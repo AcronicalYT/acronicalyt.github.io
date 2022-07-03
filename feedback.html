@@ -1,0 +1,59 @@
+<!DOCTYPE html>    
+    <html>    
+        <head>    
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./sub-styles/feedback.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+        <script src="./scripts/navbarhide.js"></script>
+        <title>Acronical's Feedback Form</title>       
+        </head>  
+
+        <body>    
+
+            <div id="navbar">
+                <h1 id="nav-text"><a href="./index.html" id="nav-text">Home</a></h1>
+                <ul id="navbar-menu">
+                    <li id="navbar-li">
+                        <a href="./latest_upload.html" id="nav-link">Latest Upload</a>
+                        <a href="./projects.html" id="nav-link">Projects</a>
+                        <a href="./socials.html" id="nav-link">Socials</a>
+                        <a href="./feedback.html" id="nav-link">Feedback</a>
+                    </li>
+                </ul>
+            </div>
+
+            <br><br><br>
+            <h2 id="nav-text">FEEDBACK FORM</h2>    
+                <div>
+                    <input type="text" id="txtName" name="input1" placeholder="Enter your name" />
+                </div>
+                <div>
+                    <textarea id="msg" name="input2" placeholder="Enter your feedback..." style="height:100px"></textarea>
+                </div>
+        
+                <!--Add to button to save the data.-->
+                <div>
+                    <input type="button" id="bt" value="Send feedback" onclick="saveFile()" />
+                </div>
+            </div>
+
+            <script type ="text/javascript">
+                function WriteToFile(passForm) {
+               
+                   let fso = CreateObject("Scripting.FileSystemObject");  
+                   let s = fso.CreateTextFile("./data/data.txt", True);
+                   s.writeline(document.passForm.input1.value);
+                   s.writeline(document.passForm.input2.value);
+                   s.Close();
+                }
+                 </script>
+
+        </body>    
+    </html>  

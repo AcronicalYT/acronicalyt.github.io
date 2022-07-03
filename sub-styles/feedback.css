@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+}
+
+div {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f6f6f6;
+    overflow: hidden;
+}
+
+input[type=text], textarea, select {
+    font-family: 'Open Sans', sans-serif;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgb(127, 106, 106);
+    border-radius: 4px;
+}
+
+input[type=button]{ 
+    font-family: 'Open Sans', sans-serif;
+    width: auto;
+    float: right;
+    cursor: pointer;
+    padding: 7px;
+}
