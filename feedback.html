@@ -47,9 +47,10 @@
             <script type="text/javascript">
                 function WriteToFile(passForm) {
                
-                    var openFileDialog = new ActiveXObject("MSComDlg.CommonDialog");
-                    var fso = CreateObject("Scripting.FileSystemObject");  
-                    var s = fso.CreateTextFile("data/feedback.txt", True);
+                    const parser = new DOMParser();
+                    const txtDoc = parser.parseFromString(txt,"text/txt"); 
+                    const fso = CreateObject("Scripting.FileSystemObject");  
+                    const s = fso.CreateTextFile("data/feedback.txt", True);
                    
                     var firstName = document.getElementById('FirstName');
                     var feedback  = document.getElementById('feedback');
