@@ -272,3 +272,14 @@ body {
     color: #ffffff;
     text-decoration: none;
 }
+
+#disc {
+    z-index: 1;
+}
+
+#here-link {
+    color: #ffffff;
+    text-decoration: none;
+    z-index: 0;
+    display: none;   
+}
