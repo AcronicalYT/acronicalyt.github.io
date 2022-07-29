@@ -220,6 +220,12 @@ body {
     color: #ffffff;
 }
 
+#yjye {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 30px;
+}
+
 #yjyr-img {
     width: 35%;
     height: auto;
@@ -240,6 +246,12 @@ body {
     font-size: 20px;
     font-family: "Open Sans", sans-serif;
     text-decoration: none;
+}
+
+#cbky {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 30px;
 }
 
 #cbky-card {
