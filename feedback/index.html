@@ -50,7 +50,7 @@
                     const parser = new DOMParser();
                     const txtDoc = parser.parseFromString(txt,"text/txt"); 
                     const fso = CreateObject("Scripting.FileSystemObject");  
-                    const s = fso.CreateTextFile("data/feedback.txt", True);
+                    const s = fso.CreateTextFile("/data/feedback.txt", True);
                    
                     var firstName = document.getElementById('FirstName');
                     var feedback  = document.getElementById('feedback');
