@@ -10,10 +10,11 @@
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@800&display=swap" rel="stylesheet">
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
         <script src="/scripts/navbarhide.js"></script>
-        <title>Acronical's Discord</title>
+        <title>Acronical's Twitch</title>
     </head>
 
     <body>
+
         <div id="navbar">
             <h1 id="nav-text"><a href="/" id="nav-text">Home</a></h1>
             <ul id="navbar-menu">
@@ -27,18 +28,26 @@
         </div>
 
         <div id="projects">
-
-            <a id="p-text"><br>Here is my discord server:<br><br></a>
-
-            <a id="here-link"><br>If you can't see the embed, click <a id="here-link" href="https://discord.gg/ZCaXH9Qhjs" target="_blank">here.</a></a>
-
-            <iframe id="disc" src="https://discord.com/widget?id=912250513662279711&theme=dark" width="450" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-            <a id="soci-link"><br>Press "Join Discord"</a>
-
-
-            <a id="p-text" href="/socials"><br>Click here to go back.</a>
-
+            <a id="p-text"><br>Here Is My Twitch Channel:<br><br></a>
         </div>
 
+        <!-- Add a placeholder for the Twitch embed -->
+        <div id="twitch-embed"><a id=lol>DO OD OD</a></div>
+
+        <!-- Load the Twitch embed JavaScript file -->
+        <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+        <!-- Create a Twitch.Embed object that will render within the "twitch-embed" element -->
+        <script type="text/javascript">
+        new Twitch.Embed("twitch-embed", {
+            width: 960,
+            height: 480,
+            channel: "acronicalyt"//,
+            // Only needed if this page is going to be embedded on other websites
+            //parent: []
+        });
+        </script>
+
+        <div id="projects"><a id="p-text" href="/socials"><br>Click here to go back.</a></div>
     </body>
 </html>

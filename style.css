@@ -295,3 +295,11 @@ body {
     z-index: -1;
     display: none;   
 }
+
+#twitch-embed {
+    text-align: center;
+}
+
+#lol {
+    display: none;
+}
