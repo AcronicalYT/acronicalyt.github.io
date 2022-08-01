@@ -297,6 +297,7 @@ body {
 }
 
 #twitch-embed {
+    align-items: center;
     text-align: center;
 }
 
