@@ -138,6 +138,7 @@ body {
     font-family: "Open Sans", sans-serif;
     font-weight: 800;
     text-align: center;
+    cursor: default;
 }
 
 #p-text2 {
@@ -152,6 +153,7 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    cursor: default;
 }
 
 #p-bio {
@@ -159,6 +161,9 @@ body {
     font-size: 20px;
     font-family: "Open Sans", sans-serif;
     text-align: center;
+    margin-left: 120px;
+    margin-right: 120px;
+    cursor: default;
 }
 
 #p-links {
@@ -166,21 +171,27 @@ body {
     font-size: 20px;
     font-family: "Open Sans", sans-serif;
     text-align: center;
+    margin-left: 120px;
+    margin-right: 120px;
+    cursor: default;
 }
 
 #p-highlight1 {
     font-family: "Open Sans", sans-serif;
     color: #00b4ff;
+    cursor: default;
 }
 
 #p-highlight2 {
     font-family: "Open Sans", sans-serif;
     color: #ff0033;
+    cursor: default;
 }
 
 #p-highlight3 {
     font-family: "Open Sans", sans-serif;
     color: #00ff3c;
+    cursor: default;
 }
 
 #p-text {
@@ -189,6 +200,7 @@ body {
     font-size: 50px;
     margin-left: 10px;
     margin-top: 10px;
+    cursor: default;
 }
 
 #projects {
@@ -212,12 +224,14 @@ body {
     font-family: "Dosis", sans-serif;
     font-size: 20px;
     color: #ffffff;
+    cursor: default;
 }
 
 #yjye-l {
     font-family: "Dosis", sans-serif;
     font-size: 20px;
     color: #ffffff;
+    cursor: default;
 }
 
 #yjye {
@@ -267,12 +281,14 @@ body {
     font-family: "Dosis", sans-serif;
     font-size: 20px;
     color: #ffffff;
+    cursor: default;
 }
 
 #cbky-l {
     font-family: "Dosis", sans-serif;
     font-size: 20px;
     color: #ffffff;
+    cursor: default;
 }
 
 #proj-link {
@@ -303,4 +319,23 @@ body {
 
 #lol {
     display: none;
+}
+
+#abt-me {
+    background-color: #0a092d;
+    padding-top: 10px;
+    margin-right: 90px;
+    margin-left: 90px;
+    font-family: "Open Sans", sans-serif;
+    text-align: center;
+    color: #ffffff;
+    cursor: default;
+}
+
+#abt-me-text {
+    color: #ffffff;
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+    text-align: center;
+    cursor: default;
 }
