@@ -329,3 +329,12 @@ body {
     text-align: center;
     cursor: default;
 }
+
+#back-text {
+    color: #ffffff;
+    font-family: "Open Sans", sans-serif;
+    font-size: 50px;
+    margin-left: 10px;
+    margin-top: 10px;
+    text-decoration: none;
+}
