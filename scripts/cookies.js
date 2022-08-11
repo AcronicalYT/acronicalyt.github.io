@@ -11,6 +11,7 @@ window.cookieconsent.initialise({
     "theme": "classic",
     "position": "bottom-left",
     "content": {
-        "message": "This website uses cookies on some pages, these cookies are required for the site to work."
+        "message": "This website uses cookies on some pages, these cookies are required for the site to work.",
+        "href": "/cookies"
     }
     });
