@@ -375,6 +375,37 @@ body {
     cursor: default;
 }
 
+#jst-title {
+    padding-top: 5vh;
+    color: #ffffff;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    font-size: 45px;
+    cursor: default;
+}
+
+#jst-desc {
+    color: #ffffff;
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+    text-align: center;
+    margin-left: 120px;
+    margin-right: 120px;
+    cursor: default;
+}
+
+#jst-link {
+    color: #ffffff;
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+    text-align: center;
+    margin-left: 120px;
+    margin-right: 120px;
+    margin-top: 100vh;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 /* Optimse the site for mobile users using the above code */
 
 @media screen and (max-width: 600px) {
