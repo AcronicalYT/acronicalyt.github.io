@@ -176,6 +176,16 @@ body {
     cursor: default;
 }
 
+#lorem {
+    color: #ffffff;
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+    text-align: center;
+    margin-left: 90px;
+    margin-right: 90px;
+    cursor: default;
+}
+
 #p-links {
     color: #ffffff;
     font-size: 20px;
@@ -454,6 +464,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#latest-embed {
+    /* Make it so the embeds appear below their above text */
+    display: block;
+    align-items: center;
+    justify-content: center;
+    
 }
 
 /* Optimse the site for mobile users using the above code */
