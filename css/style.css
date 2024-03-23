@@ -1,0 +1,11 @@
+body {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background-color: #0a092d;
+    font-family: 'Roboto', sans-serif;
+    margin: auto;
+    overflow: hidden;
+}
