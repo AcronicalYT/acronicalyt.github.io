@@ -1,0 +1,42 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    width: 100vw;
+    height: 4.5rem;
+    background-color: #6584a0;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-size: 1.7rem;
+    z-index: 1000;
+    justify-content: center;
+    color: var(--white);
+    border-bottom: var(--white) 0.3rem solid;
+    transition-duration: 0.5s;
+}
+
+.nav-ul {
+    list-style: none;
+    list-style-type: none;
+    float: right;
+    display: flex;
+    justify-content: space-around;
+    width: 95%;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--white);
+}
+
+.nav-li {
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.home-link {
+    padding: 0 1rem;
+    float: left;
+}
