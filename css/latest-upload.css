@@ -1,0 +1,38 @@
+.upload-header {
+    font-size: 3.1rem;
+}
+
+.channel {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    width: 50vw;
+}
+
+.channel-header {
+    font-size: 2.4rem;
+}
+
+.latest-video {
+    aspect-ratio: 16/9;
+    margin-bottom: 1.2rem;
+}
+
+.sub-button {
+    color: var(--white);
+    text-decoration: none;
+    background-color: var(--grey-blue);
+    font-size: 1.4rem;
+    margin: 0 auto;
+    padding: 1vh 2vw;
+    border: 0.2rem solid var(--white);
+    border-radius: 0.2rem;
+    transform: scale(100%);
+    transition-duration: 0.4s;
+}
+
+.sub-button:hover {
+    border-radius: 0.5rem;
+    transition-duration: 0.4s;
+    transform: scale(110%);
+}
