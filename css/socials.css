@@ -1,5 +1,12 @@
+.main {
+    margin-top: 4.2rem;
+    margin-bottom: 0;
+}
+
 .socials-header {
     font-size: 3.2rem;
+    padding: 0;
+    margin-bottom: 0;
 }
 
 .socials {
