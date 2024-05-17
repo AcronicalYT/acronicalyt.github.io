@@ -5,7 +5,7 @@ async function yrrahBotPing() {
         console.error('One or both elements not found: ' + uptimeElement + " " + uptimeText);
     } else {
         try {
-            const response = await fetch('http://fi2.bot-hosting.net:21001/uptime');
+            const response = await fetch('https://yrrahbot.acronical.is-a.dev/uptime');
             const { uptime } = await response.json();
             uptimeElement.textContent = uptime;
             uptimeText.textContent = "YrrahBot has been online for: " + uptime;
@@ -24,7 +24,7 @@ async function nocwareBotPing() {
         console.error('One or both elements not found: ' + uptimeElement + " " + uptimeText);
     } else {
         try {
-            const response = await fetch('http://fi2.bot-hosting.net:21741/uptime');
+            const response = await fetch('https://nocwarebot.acronical.is-a.dev/uptime');
             const { uptime } = await response.json();
             uptimeElement.textContent = uptime;
             uptimeText.textContent = "NocwareBot has been online for: " + uptime;
