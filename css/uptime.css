@@ -15,7 +15,7 @@
     border: none;
     background-color: #f1f1f1;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     border-radius: 1rem;
 }
 
@@ -43,4 +43,13 @@
 .panel p {
     margin: 0;
     color: var(--white);
+    font-size: 1.2rem;
+}
+
+.more-info {
+    text-decoration: none;
+    text-align: center;
+    color: var(--white);
+    font-weight: bold;
+    font-size: 1.1rem;
 }
