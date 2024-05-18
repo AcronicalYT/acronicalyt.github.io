@@ -53,3 +53,11 @@
     font-weight: bold;
     font-size: 1.1rem;
 }
+
+.colorCircle {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.5rem;
+}

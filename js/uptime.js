@@ -1,16 +1,14 @@
 async function yrrahBotPing() {
-    const uptimeText = document.getElementById('yrrahBot');
-    const uptimeElement = document.getElementById('yrrahBotUptime');
-    if (!uptimeElement || !uptimeText) {
+    const uptimePanel = document.getElementById('yrrahPanel');
+    const uptimeElement = document.getElementById('yrrahUptime');
+    if (!uptimeElement || !uptimePanel) {
         console.error('One or both elements not found: ' + uptimeElement + " " + uptimeText);
     } else {
         try {
             const response = await fetch('https://yrrahbot.acronical.is-a.dev/uptime');
             const { uptime } = await response.json();
             uptimeElement.textContent = uptime;
-            uptimeText.textContent = "YrrahBot has been online for: " + uptime;
         } catch (error) {
-            uptimeText.textContent = "An error occured, this could be for many reasons."
             uptimeElement.textContent = "Contact Acronical if the issue persists."
             console.log('Error: ', error);
         }
@@ -18,18 +16,16 @@ async function yrrahBotPing() {
 }
 
 async function nocwareBotPing() {
-    const uptimeText = document.getElementById('nocwareBot');
-    const uptimeElement = document.getElementById('nocwareBotUptime');
-    if (!uptimeElement || !uptimeText) {
+    const uptimePanel = document.getElementById('nocwarePanel');
+    const uptimeElement = document.getElementById('nocwareUptime');
+    if (!uptimeElement || !uptimePanel) {
         console.error('One or both elements not found: ' + uptimeElement + " " + uptimeText);
     } else {
         try {
             const response = await fetch('https://nocwarebot.acronical.is-a.dev/uptime');
             const { uptime } = await response.json();
             uptimeElement.textContent = uptime;
-            uptimeText.textContent = "NocwareBot has been online for: " + uptime;
         } catch (error) {
-            uptimeText.textContent = "An error occured, this could be for many reasons."
             uptimeElement.textContent = "Contact Acronical if the issue persists."
             console.log('Error: ', error);
         }
