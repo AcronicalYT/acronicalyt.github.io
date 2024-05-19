@@ -9,7 +9,7 @@ async function yrrahBotPing() {
             const { uptime } = await response.json();
             uptimeElement.textContent = uptime;
         } catch (error) {
-            uptimeElement.textContent = "Contact Acronical if the issue persists."
+            uptimeElement.textContent = "Failed to get uptime."
             console.log('Error: ', error);
         }
     }
@@ -26,7 +26,7 @@ async function nocwareBotPing() {
             const { uptime } = await response.json();
             uptimeElement.textContent = uptime;
         } catch (error) {
-            uptimeElement.textContent = "Contact Acronical if the issue persists."
+            uptimeElement.textContent = "Failed to get uptime."
             console.log('Error: ', error);
         }
     }
