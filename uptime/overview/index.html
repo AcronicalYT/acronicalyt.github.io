@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/navbar.css">
+        <link rel="stylesheet" href="/css/uptime.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <meta property="og:title" content="Acronical's Uptime Page">
+        <meta property="og:description" content="Uptime | Acronical">
+        <meta property="og:image" content="/images/favicon.ico">
+        <script src="/js/navMenu.js" defer></script>
+        <script src="/js/panelOpen.js" defer></script>
+        <title>Acronical's Uptime Page</title>
+    </head>
+
+    <body>
+        <div class="navbar">
+            <ul class="nav-ul">
+                <b><a href="/" class="nav-link home-link">Home</a></b>
+                <b><a href="/latest-upload" class="nav-link"><li class="nav-li">Latest Upload</li></a></b>
+                <b><a href="/projects" class="nav-link"><li class="nav-li">Projects</li></a></b>
+                <b><a href="/socials" class="nav-link"><li class="nav-li">Socials</li></a></b>
+            </ul>
+
+            <ul class="mob-nav-ul">
+                <b><a href="/" class="mob-nav-link">Home</a></b>
+                <b><a href="/latest-upload" class="mob-nav-link"><li class="mob-nav-li">Latest Upload</li></a></b>
+                <b><a href="/projects" class="mob-nav-link"><li class="mob-nav-li">Projects</li></a></b>
+                <b><a href="/socials" class="mob-nav-link"><li class="mob-nav-li">Socials</li></a></b>
+                <b><a href="#" class="mob-nav-link nav-close"><li class="mob-nav-li">Close</li></a></b>                
+            </ul>
+            <b><a class="nav-open" href="#">Menu</a></b>
+        </div>
+        
+        <div class="main">
+            <div class="card">
+                <button class="expand-btn">Yrrah's Bot</button>
+                <div class="panel" id="yrrahPanel">
+                    <p id="yrrahUp">Loading...</p>
+                    <p id="yrrahUptime"></p>
+                </div>
+            </div>
+
+            <div class="card">
+              <button class="expand-btn">Nocware's Bot</button>
+              <div class="panel" id="nocwarePanel">
+                  <p id="nocwareUp">Loading...</p>
+                  <p id="nocwareUptime"></p>
+              </div>
+            </div>
+        </div>
+
+        <script src="/js/isUp.js"></script>
+        <script src="/js/uptime.js"></script>
+    </body>
+</html>
