@@ -5,11 +5,11 @@ async function yrrahBotPing() {
         console.error('One or both elements not found: ' + uptimeElement + " " + uptimeText);
     } else {
         try {
-            const response = await fetch('https://yrrahbot.acronical.is-a.dev/uptime');
+            const response = await fetch('https://fi2.bot-hosting.net:21001/uptime');
             const { uptime } = await response.json();
-            uptimeElement.textContent = uptime;
+            uptimeElement.textContent = `Online for ${uptime}`;
         } catch (error) {
-            uptimeElement.textContent = "Failed to get uptime."
+            uptimeElement.textContent = "Failed to get exact uptime."
             console.log('Error: ', error);
         }
     }
@@ -22,11 +22,11 @@ async function nocwareBotPing() {
         console.error('One or both elements not found: ' + uptimeElement + " " + uptimeText);
     } else {
         try {
-            const response = await fetch('https://nocwarebot.acronical.is-a.dev/uptime');
+            const response = await fetch('https://fi2.bot-hosting.net:21741/uptime');
             const { uptime } = await response.json();
-            uptimeElement.textContent = uptime;
+            uptimeElement.textContent = `Online for ${uptime}`;
         } catch (error) {
-            uptimeElement.textContent = "Failed to get uptime."
+            uptimeElement.textContent = "Failed to get exact uptime."
             console.log('Error: ', error);
         }
     }
