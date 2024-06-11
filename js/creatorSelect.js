@@ -1,7 +1,6 @@
 const creatorButtons = document.querySelectorAll('.creator-pill');
 const videoIframe = document.getElementById('finale-video');
 
-// Function to update video source and button selection
 function updateSelection(creator) {
     let newVideoSource = "";
     creatorButtons.forEach(button => button.classList.remove('active'));
@@ -16,21 +15,20 @@ function updateSelection(creator) {
     videoIframe.setAttribute('src', newVideoSource);
 }
 
-// Check for existing cookie
 const cookieValue = document.cookie.split(';').find(cookie => cookie.startsWith('creator='));
 if (cookieValue) {
     const selectedCreator = cookieValue.split('=')[1];
     updateSelection(selectedCreator);
 } else {
-    // Set default selection (optional)
-    updateSelection("Yrrah"); // Update with your default creator
+    updateSelection("Yrrah");
 }
 
 creatorButtons.forEach(button => {
     button.addEventListener('click', () => {
         updateSelection(button.textContent);
 
-        // Set cookie with selected creator
-        document.cookie = `creator=${button.textContent}; path=/;`;
+        const expiryDate = new Date();
+        expiryDate.setFullYear(expiryDate.getFullYear() + 1); // Set expiry to 1 year from now
+        document.cookie = `creator=${button.textContent}; path=/; expires=${expiryDate.toUTCString()}`;
     });
 });
