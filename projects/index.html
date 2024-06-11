@@ -15,6 +15,7 @@
         <meta property="og:description" content="Projects | Acronical">
         <meta property="og:image" content="/images/favicon.ico">
         <script src="/js/navMenu.js" defer></script>
+        <script src="/js/creatorSelect.js" defer></script>
         <title>Acronical's Projects</title>
     </head>
 
@@ -40,7 +41,11 @@
         <div class="main">
             <h1 class="projects-header">My projects:</h1>
             <div class="project">
-                <iframe class="project-video" src="https://www.youtube.com/embed/3foEooqOzi4?si=KtqAIQApUrOdZkZh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe id="finale-video" class="project-video" src="https://www.youtube.com/embed/3foEooqOzi4?si=KtqAIQApUrOdZkZh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <div class="creator-selector">
+                    <button class="creator-pill active">Yrrah</button>
+                    <button class="creator-pill">Astelina</button>
+                </div>
                 <h2 class="sub-header">Outcasts Finale</h2>
                 <p class="project-desc">This project is a Minecraft Java plugin that adds new custom items to the game that the Outcasters came up with, each with custom crafting recipies and abilities.</p>
                 <a href="https://github.com/OutcastsEvents/OutcastsFinale/releases/tag/stable" target="_blank" class="project-button">Download</a>
