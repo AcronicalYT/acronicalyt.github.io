@@ -7,10 +7,10 @@ function updateSelection(creator) {
 
     if (creator === "Yrrah") {
         newVideoSource = "https://www.youtube.com/embed/3foEooqOzi4?si=KtqAIQApUrOdZkZh";
-        document.querySelectorAll('.creator-pill#yrrah').forEach(e => e.classList.add('active'));
+        document.querySelectorAll('.creator-pill.yrrah').forEach(e => e.classList.add('active'));
     } else if (creator === "Astelina") {
         newVideoSource = "https://www.youtube.com/embed/AXNnBcWiP4c?si=coHwyg-da8wC9bHK";
-        document.querySelectorAll('.creator-pill#astelina').forEach(e => e.classList.add('active'));
+        document.querySelectorAll('.creator-pill.astelina').forEach(e => e.classList.add('active'));
     }
     finaleVideoIFrame.setAttribute('src', newVideoSource);
 }
