@@ -17,6 +17,11 @@ body {
     overflow-x: hidden;
 }
 
+a {
+    color: var(--white);
+    text-decoration: underline;
+}
+
 .main {
     margin-top: 4.7rem;
     margin-bottom: 1rem;
