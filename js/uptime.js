@@ -5,7 +5,7 @@ async function yrrahBotPing() {
         console.error('One or both elements not found: ' + uptimeElement + " " + uptimeText);
     } else {
         try {
-            const response = await fetch('https://fi2.bot-hosting.net:21001/uptime');
+            const response = await fetch('https://yrrah.ddns.net:21001/uptime');
             const { uptime } = await response.json();
             uptimeElement.textContent = `Online for ${uptime}`;
         } catch (error) {
