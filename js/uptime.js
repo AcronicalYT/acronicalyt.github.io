@@ -5,7 +5,7 @@ async function yrrahBotPing() {
         console.error('One or both elements not found: ' + uptimeElement + " " + uptimeText);
     } else {
         try {
-            const response = await fetch('https://yrrahbot.yrrah.live:21001/uptime');
+            const response = await fetch('https://yrrahbot.yrrah.live/uptime');
             const { uptime } = await response.json();
             uptimeElement.textContent = `Online for ${uptime}`;
         } catch (error) {
