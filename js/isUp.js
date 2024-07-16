@@ -5,7 +5,7 @@ async function yrrahBotPing() {
         return console.error('One or more elements not found: ' + uptimePanel + " " + uptimeText);
     } else {
         try {
-            const response = await fetch('https://yrrah.ddns.net:21001/uptime');
+            const response = await fetch('https://yrrahbot.yrrah.live:21001/uptime');
             if (!response) {
                 uptimeText.textContent = "Yrrah's Bot may be offline!";
                 uptimePanel.style.backgroundColor = '#ff230095';
