@@ -32,5 +32,23 @@ async function nocwareBotPing() {
     }
 }
 
-setInterval(nocwareBotPing, 1000);
+async function playhireBotPing() {
+    const uptimePanel = document.getElementById('playhirePanel');
+    const uptimeElement = document.getElementById('playhireUptime');
+    if (!uptimeElement || !uptimePanel) {
+        console.error('One or both elements not found: ' + uptimeElement + " " + uptimeText);
+    } else {
+        try {
+            const response = await fetch('https://de3.bot-hosting.net:22433/uptime');
+            const { uptime } = await response.json();
+            uptimeElement.textContent = `Online for ${uptime}`;
+        } catch (error) {
+            uptimeElement.textContent = "Failed to get exact uptime."
+            console.log('Error: ', error);
+        }
+    }
+}
+
 setInterval(yrrahBotPing, 1000);
+setInterval(nocwareBotPing, 1000);
+setInterval(playhireBotPing, 1000);

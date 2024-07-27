@@ -42,5 +42,29 @@ async function nocwareBotPing() {
     }
 }
 
-setInterval(nocwareBotPing, 1000);
+async function playhireBotPing() {
+    const uptimeText = document.getElementById('playhireUp');
+    const uptimePanel = document.getElementById('playhirePanel');
+    if (!uptimePanel || !uptimeText) {
+        return console.error('One or both elements not found: ' + uptimePanel + " " + uptimeText);
+    } else {
+        try {
+            const response = await fetch('https://de3.bot-hosting.net:22433/uptime');
+            if (!response) {
+                uptimeText.textContent = "Playhire's Bot may be offline!";
+                uptimePanel.style.backgroundColor = '#ff230095';
+            }
+            uptimeText.textContent = "Playhire's Bot is online!";
+            uptimePanel.style.backgroundColor = '#23870095';
+        } catch (error) {
+            uptimeText.textContent = "Playhire's bot may be offline!"
+            uptimePanel.style.backgroundColor = '#ff230095';
+            console.log('Error: ', error);
+        }
+    }
+
+}
+
 setInterval(yrrahBotPing, 1000);
+setInterval(nocwareBotPing, 1000);
+setInterval(playhireBotPing, 1000);
