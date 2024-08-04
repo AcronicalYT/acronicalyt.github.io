@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 2rem;
 }
 
 .card {
@@ -64,4 +64,20 @@
     color: var(--white);
     text-align: center;
     margin: 0.5rem 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .cards-row {
+        flex-direction: column;
+        margin: auto;
+    }
+
+    .cards-row:first-child {
+        margin-top: 2rem;
+    }
+
+    .card {
+        width: 80%;
+        margin: 1.3rem auto;
+    }
 }
