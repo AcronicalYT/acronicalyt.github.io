@@ -12,12 +12,13 @@ body {
     border-radius: 50%;
     background: white linear-gradient(to right, #352493, #08067a);
     opacity: 0.8;
+    z-index: 0;
 }
 
 #bg-blur {
     height: 100%;
     width: 100%;
     position: fixed;
-    z-index: 2;
+    z-index: 1;
     backdrop-filter: blur(12vmax);
 }
