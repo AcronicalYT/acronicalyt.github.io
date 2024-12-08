@@ -1,0 +1,23 @@
+.buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.button {
+    padding: 0.5rem 1rem;
+    border: 0.1rem solid var(--white);
+    border-radius: 0.5rem;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition-duration: 0.25s;
+}
+
+.button:hover {
+    background-color: var(--white);
+    color: var(--black);
+    transform: translate(0.15rem, -0.25rem);
+    filter: drop-shadow(0 0 0.75rem var(--white));
+    transition-duration: 0.5s;
+}
