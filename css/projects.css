@@ -1,7 +1,3 @@
-body {
-    overflow: hidden;
-}
-
 .project-container {
     display: flex;
     flex-direction: column;

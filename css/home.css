@@ -1,7 +1,3 @@
-body {
-    overflow: hidden;
-}
-
 .container {
     display: flex;
     text-align: center;

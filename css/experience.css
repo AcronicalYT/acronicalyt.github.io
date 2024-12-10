@@ -1,7 +1,3 @@
-body {
-    overflow: hidden;
-}
-
 .experience-container {
     display: flex;
     flex-direction: column;
