@@ -32,6 +32,19 @@ async function fetchProject(projectName) {
     }
 }
 
+async function resetElements() {
+    projectHeader.textContent = "";
+    projectDescription.textContent = "";
+    projectDescription.classList.add('hidden');
+    projectImage.src = "";
+    projectImage.classList.add('hidden');
+    projectVideo.src = "";
+    projectVideo.classList.add('hidden');
+    projectButton.href = "";
+    projectButton.textContent = "";
+    projectButton.classList.add('hidden');
+}
+
 window.onload = async () => {
     const projects = await fetchAllProjects();
     for (const [key, project] of Object.entries(projects)) {
@@ -49,9 +62,8 @@ dropdownListButton.addEventListener('click', () => {
 document.addEventListener('click', async function(e) {
     if (e.target.classList.contains('dropdown-item')) {
         const item = e.target;
-        console.log("Clicked on", item.textContent);
+        await resetElements();
         const project = await fetchProject(item.textContent);
-        console.log(project);
         dropdownListButton.textContent = project.name;
         projectHeader.textContent = project.name;
         projectDescription.textContent = project.description;

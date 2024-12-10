@@ -35,3 +35,22 @@ body {
     margin-bottom: 1rem;
     text-align: center;
 }
+
+@media (max-width: 768px) {
+    .container {
+        justify-content: flex-start;
+    }
+
+    .header {
+        font-size: 2rem;
+    }
+
+    .logo {
+        width: 8rem;
+        height: 8rem;
+    }
+
+    .description {
+        font-size: 1rem;
+    }
+}

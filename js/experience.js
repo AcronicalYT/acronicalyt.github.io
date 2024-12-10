@@ -32,6 +32,18 @@ async function fetchExperience(experienceName) {
     }
 }
 
+async function resetElements() {
+    experienceHeader.textContent = "";
+    experienceDescription.textContent = "";
+    experienceDescription.classList.add('hidden');
+    experienceTimeframe.textContent = "";
+    experienceTimeframe.classList.add('hidden');
+    experienceIcon.src = "";
+    experienceIcon.classList.add('hidden');
+    experienceBanner.src = "";
+    experienceBanner.classList.add('hidden');
+}
+
 window.onload = async () => {
     const experiences = await fetchAllExperience();
     for (const [key, experience] of Object.entries(experiences)) {
@@ -49,9 +61,8 @@ dropdownListButton.addEventListener('click', () => {
 document.addEventListener('click', async function(e) {
     if (e.target.classList.contains('dropdown-item')) {
         const item = e.target;
-        console.log("Clicked on", item.textContent);
+        await resetElements();
         const experience = await fetchExperience(item.textContent);
-        console.log(experience);
         dropdownListButton.textContent = experience.entity;
         experienceHeader.textContent = experience.entity;
         experienceDescription.textContent = experience.description;
