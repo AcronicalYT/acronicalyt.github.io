@@ -21,3 +21,9 @@
     filter: drop-shadow(0 0 0.75rem var(--white));
     transition-duration: 0.5s;
 }
+
+@media screen and (max-width: 768px) {
+    .buttons {
+        flex-direction: column;
+    }
+}

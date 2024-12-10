@@ -69,6 +69,14 @@ body {
 }
 
 @media screen and (max-width: 768px) {
+    .experience-title {
+        font-size: 1.5rem;
+    }
+
+    .experience-description {
+        font-size: 1rem;
+    }
+
     .experience {
         width: 90%;
     }
