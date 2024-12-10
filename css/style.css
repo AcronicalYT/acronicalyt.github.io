@@ -33,3 +33,7 @@ a {
     text-decoration: underline;
     color: var(--white);
 }
+
+.hidden {
+    display: none;
+}
