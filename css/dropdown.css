@@ -40,7 +40,7 @@
     margin: 0;
     padding: 0;
     background-color: #222;
-    border: 1px solid #555;
+    border: 0.1rem solid #555;
     border-radius: 0.5rem;
     transition: max-height 0.5s ease, opacity 0.3s ease;
     opacity: 0;
@@ -57,7 +57,7 @@
     color: white;
     font-size: 1.2rem;
     cursor: pointer;
-    border-bottom: 1px solid #444;
+    border-bottom: 0.1rem solid #444;
 }
 
 .dropdown-item:last-child {
@@ -86,4 +86,18 @@
     background-color: #888;
     border-radius: 0.1rem;
     border: 0.02rem solid #222;
+}
+
+@media screen and (max-width: 768px) {
+    .dropdown-container {
+        width: 90%;
+    }
+
+    .dropdown-open-button {
+        font-size: 1.4rem;
+    }
+
+    .dropdown-item {
+        font-size: 1rem;
+    }
 }
