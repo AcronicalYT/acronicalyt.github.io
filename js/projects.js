@@ -33,7 +33,7 @@ async function fetchProject(projectName) {
 }
 
 async function resetElements() {
-    projectHeader.textContent = "";
+    projectHeader.textContent = "Loading...";
     projectDescription.textContent = "";
     projectDescription.classList.add('hidden');
     projectImage.src = "";
