@@ -25,7 +25,7 @@ async function fetchAllExperience() {
 async function fetchExperience(experienceName) {
     try {
         for (const [key, experience] of Object.entries(await fetchAllExperience())) {
-            if (experience.name === experienceName) return experience;
+            if (experience.entity === experienceName) return experience;
         }
     } catch (error) {
         console.error('Failed to fetch experience:', error);
@@ -37,7 +37,7 @@ window.onload = async () => {
     for (const [key, experience] of Object.entries(experiences)) {
         const experienceElement = document.createElement('li');
         experienceElement.classList.add('dropdown-item');
-        experienceElement.textContent = experience.name;
+        experienceElement.textContent = experience.entity;
         dropdownList.appendChild(experienceElement);
     }
 }
@@ -52,19 +52,19 @@ document.addEventListener('click', async function(e) {
         console.log("Clicked on", item.textContent);
         const experience = await fetchExperience(item.textContent);
         console.log(experience);
-        dropdownListButton.textContent = experience.name;
-        experienceHeader.textContent = experience.name;
+        dropdownListButton.textContent = experience.entity;
+        experienceHeader.textContent = experience.entity;
         experienceDescription.textContent = experience.description;
         experienceDescription.classList.remove('hidden');
-        if (experience.left) {
+        if (experience.left === true) {
             experienceTimeframe.textContent = `Started ${experience.start} ended ${experience.end}`;
             experienceTimeframe.classList.remove('hidden');
-        } else if (!experience.left) {
+        } else if (experience.left === false) {
             experienceTimeframe.textContent = `Started ${experience.start}`;
             experienceTimeframe.classList.remove('hidden');
         }
-        if (experience.images.icon) {
-            experienceIcon.src = experience.icon;
+        if (experience.images.logo) {
+            experienceIcon.src = experience.images.logo;
             experienceIcon.classList.remove('hidden');
         }
         if (experience.images.banner) {
@@ -74,5 +74,6 @@ document.addEventListener('click', async function(e) {
         if (experience.link) {
             experienceHeader.href = experience.link;
         }
+        dropdownList.classList.remove('open');
     }
 });

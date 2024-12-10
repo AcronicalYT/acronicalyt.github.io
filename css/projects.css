@@ -2,16 +2,6 @@ body {
     overflow: hidden;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100vh;
-    position: fixed;
-    z-index: 4;
-    width: 100%;
-}
-
 .project-container {
     display: flex;
     flex-direction: column;
