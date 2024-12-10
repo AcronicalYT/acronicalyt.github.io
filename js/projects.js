@@ -1,4 +1,5 @@
 const projectsURL = 'https://api.acronical.uk/projects';
+const altProjectsURL = 'https://api.acronical.co.uk/projects';
 const dropdownList = document.querySelector('.dropdown-list');
 const dropdownListButton = document.querySelector('.dropdown-open-button');
 const projectHeader = document.querySelector('.project-header');
@@ -11,8 +12,13 @@ async function fetchAllProjects() {
     try {
         const response = await fetch(projectsURL);
         return await response.json();
-    } catch (error) {
-        console.error('Failed to fetch projects:', error);
+    } catch  {  
+        try {
+            const response = await fetch(altProjectsURL);
+            return await response.json();
+        } catch (error) {
+            console.log("Failed to get projects")
+        }
     }
 }
 
