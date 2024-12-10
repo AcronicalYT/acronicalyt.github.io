@@ -9,7 +9,7 @@ body {
     background-color: var(--black);
     font-family: 'Roboto', sans-serif;
     margin: 0;
-    overflow: hidden;
+    overflow-x: hidden;
     user-select: none;
 }
 
@@ -37,10 +37,4 @@ a {
 
 .hidden {
     display: none;
-}
-
-@media (max-width: 768px) {
-    body {
-        overflow-y: auto;
-    }
 }
