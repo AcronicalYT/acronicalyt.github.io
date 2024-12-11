@@ -7,6 +7,9 @@
         <link rel="stylesheet" href="/css/style.css">
         <link rel="stylesheet" href="/css/navbar.css">
         <link rel="stylesheet" href="/css/projects.css">
+        <link rel="stylesheet" href="/css/background.css">
+        <link rel="stylesheet" href="/css/dropdown.css">
+        <link rel="stylesheet" href="/css/buttons.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
@@ -15,98 +18,39 @@
         <meta property="og:description" content="Projects | Acronical">
         <meta property="og:image" content="/images/favicon.ico">
         <script src="/js/navMenu.js" defer></script>
-        <script src="/js/creatorSelect.js" defer></script>
+        <script src="/js/projects.js" defer></script>
+        <script src="/js/bgBlob.js" defer></script>
         <title>Acronical's Projects</title>
     </head>
 
     <body>
-        <div class="navbar">
-            <ul class="nav-ul">
-                <b><a href="/" class="nav-link home-link">Home</a></b>
-                <b><a href="/latest-upload" class="nav-link"><li class="nav-li">Latest Upload</li></a></b>
-                <b><a href="/projects" class="nav-link"><li class="nav-li">Projects</li></a></b>
-                <b><a href="/socials" class="nav-link"><li class="nav-li">Socials</li></a></b>
-                <b><a href="/experience" class="nav-link"><li class="nav-li">Experience</li></a></b>
-            </ul>
-
-            <ul class="mob-nav-ul">
-                <b><a href="/" class="mob-nav-link">Home</a></b>
-                <b><a href="/latest-upload" class="mob-nav-link"><li class="mob-nav-li">Latest Upload</li></a></b>
-                <b><a href="/projects" class="mob-nav-link"><li class="mob-nav-li">Projects</li></a></b>
-                <b><a href="/socials" class="mob-nav-link"><li class="mob-nav-li">Socials</li></a></b>
-                <b><a href="/experience" class="mob-nav-link"><li class="mob-nav-li">Experience</li></a></b>
-                <b><a href="#" class="mob-nav-link nav-close"><li class="mob-nav-li">Close</li></a></b>                
-            </ul>
-            <b><a class="nav-open" href="#">Menu</a></b>
+        <div id="bg-blob"></div>
+        <div id="bg-blur"></div>
+        <div class="navbar-container">
+            <div class="navbar">
+              <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
+              <a href="/" class="nav-link">Home</a>
+              <a href="/projects" class="nav-link">Projects</a>
+              <a href="/experience" class="nav-link">Experience</a>
+              <a href="/contact" class="nav-link">Contact</a>
+            </div>
         </div>
 
-        <div class="main">
-            <h1 class="projects-header">My projects:</h1>
+        <div class="dropdown-container">
+            <button class="dropdown-open-button">Select a project</button>
+            <ul class="dropdown-list"></ul>
+        </div>
+
+        <div class="project-container">
             <div class="project">
-                <img src="https://jst.acronical.uk/assets/logo.jpg" class="project-logo">
-                <h2 class="sub-header">JST Discord Bot</h2>
-                <p class="project-desc">This is a fully-featured, multipurpose Discord bot with everything from moderation to management.</p>
-                <a href="https://jst.acronical.uk" target="_blank" class="project-button">Check it Out!</a>
-            </div>
-            <div class="divider"></div>
-            <div class="project">
-                <iframe class="project-video" src="https://www.youtube.com/embed/6g1GjiLT-ls?si=dydA0kGz4lODYRKg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <h2 class="sub-header">Yrrah's Birthday Event</h2>
-                <p class="project-desc">This is a plugin made for Yrrah's birthday where the goal is to craft and deposit as many cakes as possible with ingredients from around the map.</p>
-                <a href="https://github.com/AcronicalYT/YrrahBirthdayEvent/releases" target="_blank" class="project-button">Download</a>
-            </div>
-            <div class="divider"></div>
-            <div class="project">
-                <h2 class="sub-header">Recording Indicator</h2>
-                <p class="project-desc">This project is a Minecraft Java plugin that adds a simple indicator on the tab list to display if a user is live or recording.</p>
-                <a href="https://github.com/AcronicalYT/RecordingIndicator/releases" target="_blank" class="project-button">Download</a>
-            </div>
-            <div class="divider"></div>
-            <div class="project">
-                <iframe id="finale-video" class="project-video" src="https://www.youtube.com/embed/3foEooqOzi4?si=KtqAIQApUrOdZkZh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <div class="creator-selector">
-                    <button class="creator-pill yrrah finale active">Yrrah</button>
-                    <button class="creator-pill astelina finale">Astelina</button>
+                <h2 class="project-header">Select a Project</h2>
+                <div class="media">
+                    <iframe class="project-video hidden" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <img class="project-image hidden" alt="Project Image">
                 </div>
-                <h2 class="sub-header">Outcasts Finale</h2>
-                <p class="project-desc">This project is a Minecraft Java plugin that adds new custom items to the game that the Outcasters came up with, each with custom crafting recipies and abilities.</p>
-                <a href="https://github.com/OutcastsEvents/OutcastsFinale/releases" target="_blank" class="project-button">Download</a>
+                <p class="project-description hidden"></p>
+                <a class="project-button button active hidden" target="_blank"></a>
             </div>
-            <div class="divider"></div>
-            <div class="project">
-                <iframe class="project-video" src="https://www.youtube.com/embed/md3Jr7o-muk?si=eHrp3aX8vghzIGvj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <h2 class="sub-header">Animal Capture</h2>
-                <p class="project-desc">This project is a Minecraft Java plugin that puts two teams head-to-head in a race to capture as many animals, and gain as many points, as they can.</p>
-                <a href="https://github.com/OutcastsEvents/AnimalCapture/releases" target="_blank" class="project-button">Download</a>
-            </div>
-            <div class="divider"></div>
-            <div class="project">
-                <iframe class="project-video" src="https://www.youtube.com/embed/OZptg9Sffk0?si=UDA3WCEUpl7aPhTZ"title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <h2 class="sub-header">Water Rising</h2>
-                <p class="project-desc">This project is a customisable Minecraft Java plugin that causes water to rise by a specified amount whenever you run a command and gives players hunger when they are under the water.</p>
-                <a href="https://github.com/OutcastsEvents/WaterRises/releases" target="_blank" class="project-button">Download</a>
-            </div>
-            <div class="divider"></div>
-            <div class="project">
-                <iframe class="project-video" src="https://www.youtube.com/embed/1GpwnZ3_ZbY?si=MTwJbHcLMbFy48SO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <h2 class="sub-header">Lava Rising</h2>
-                <p class="project-desc">This project is a customisable Minecraft Java plugin that causes lava to rise by a specified amount whenever you run a command.</p>
-                <a href="https://github.com/OutcastsEvents/LavaRises/releases" target="_blank" class="project-button">Download</a>
-            </div>
-            <div class="divider"></div>
-            <div class="project">
-                <iframe class="project-video" src="https://www.youtube.com/embed/CJMgzFuOpFU?si=CzXD49639b8Gft5P" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <h2 class="sub-header">You Jump You Explode</h2>
-                <p class="project-desc">This project is a Minecraft Java plugin that causes an explosion underneath you whenever you explode.</p>
-                <a href="https://dev.bukkit.org/projects/you-jump-you-explode/files/latest" target="_blank" class="project-button">Download</a>
-            </div>
-            <div class="divider"></div>
-            <div class="project">
-                <iframe class="project-video" src="https://www.youtube.com/embed/UIf3Qck4Fl4?si=AELBBdlXE1ClTlCm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <h2 class="sub-header">Common Blocks Kill You</h2>
-                <p class="project-desc">This project is a Minecraft Java plugin that causes you to die if you touch grass, netherrack or end stone.</p>
-                <a href="https://dev.bukkit.org/projects/minecraft-but-you-cant-touch-common-blocks/files/latest" target="_blank" class="project-button">Download</a>
-            </div>            
         </div>
     </body>
 </html>

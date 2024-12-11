@@ -1,92 +1,71 @@
-.projects-header {
-    font-size: 3.5rem;
+.project-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 5;
+    overflow-y: auto;
+    margin: 0;
 }
 
 .project {
     display: flex;
-    margin: auto;
     flex-direction: column;
-    width: 50vw;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 2rem auto;
+    background-color: #00000045;
+    border: 0.1rem solid #fff;
+    backdrop-filter: blur(0.5rem);
+    filter: drop-shadow(0 0 0.5rem #000);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+    color: var(--white);
+}
+
+.project-header {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.project-description {
+    font-size: 1.2rem;
+    margin: 1rem 0;
 }
 
 .project-video {
+    width: 35vw;
     aspect-ratio: 16/9;
-    margin: 0;
-    padding: 0;
+    margin: 1rem 0;
 }
 
-.project-logo {
-    margin: 0 auto;
-    padding: 0;
-    width: 35%;
+.project-image {
+    width: 10rem;
+    aspect-ratio: 1/1;
+    margin: 1rem 0;
     border-radius: 50%;
 }
 
-.sub-header {
-    font-size: 2.4rem;
-    padding: 0;
-    margin: 0.7rem 0;
-}
-
-.project-desc {
-    font-size: 1.4rem;
-    padding: 0;
-    margin: 0.7rem 0;
-}
-
-.project-button {
-    color: var(--white);
-    text-decoration: none;
-    background-color: var(--grey-blue);
-    font-size: 1.4rem;
-    margin: 0.5rem auto 1rem auto;
-    padding: 1vh 2vw;
-    border: 0.2rem solid var(--white);
-    border-radius: 0.2rem;
-    transform: scale(100%);
-    transition-duration: 0.4s;
-}
-
-.project-button:hover {
-    border-radius: 0.5rem;
-    transition-duration: 0.4s;
-    transform: scale(110%);
-}
-
-.creator-selector {
-    display: flex;
-    margin-top: 1em;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.creator-pill {
-    background-color: var(--grey-blue);
-    border: 1px solid var(--grey-blue);
-    color: var(--white);
-    border-radius: 0.5em;
-    padding: 0.5em 1em;
-    margin-right: 0.5em;
-    cursor: pointer;
-    font-size: 1em;
-}
-
-.creator-pill.active {
-    background-color: var(--white);
-    border-color: var(--white);
-    font-weight: bold;
-    color: var(--black);
-}
-
 @media screen and (max-width: 768px) {
-    .project {
-        width: 95vw;
+    .project-header {
+        font-size: 1.5rem;
+    }
+
+    .project-description {
+        font-size: 1rem;
     }
 
     .project-video {
         width: 80vw;
-        margin: 0 auto;
-        aspect-ratio: 16/9;
-        margin-bottom: 1.2rem;
+    }
+
+    .project-image {
+        width: 5rem;
     }
 }

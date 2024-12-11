@@ -1,13 +1,16 @@
+body {
+    overflow: hidden;
+}
+
 .container {
     display: flex;
-    text-align: center;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
+    width: 100%;
     position: fixed;
     z-index: 4;
-    width: 100%;
 }
 
 .header {
@@ -17,14 +20,6 @@
     text-align: center;
 }
 
-.logo {
-    width: 10rem;
-    height: 10rem;
-    margin-bottom: 1rem;
-    border-radius: 50%;
-    filter: drop-shadow(0 0 1rem var(--black));
-}
-
 .description {
     font-size: 1.5rem;
     color: var(--white);
@@ -32,18 +27,9 @@
     text-align: center;
 }
 
-@media (max-width: 768px) {
-    .container {
-        justify-content: flex-start;
-    }
-
+@media screen and (max-width: 768px) {
     .header {
         font-size: 2rem;
-    }
-
-    .logo {
-        width: 8rem;
-        height: 8rem;
     }
 
     .description {
