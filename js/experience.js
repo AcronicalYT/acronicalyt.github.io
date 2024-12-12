@@ -1,5 +1,6 @@
 const experienceURL = 'https://api.acronical.uk/experience';
 const altExperienceURL = 'https://api.acronical.co.uk/experience';
+const emExperienceURL = 'https://api.acronical.is-a.dev/experience';
 const dropdownList = document.querySelector('.dropdown-list');
 const dropdownListButton = document.querySelector('.dropdown-open-button');
 const experienceHeader = document.querySelector('.experience-title');
@@ -16,8 +17,14 @@ async function fetchAllExperience() {
         try {
             const response = await fetch(altExperienceURL);
             return await response.json();
-        } catch (error) {
-            console.log("Failed to get projects")
+        } catch {
+            try {
+                const response = await fetch(emExperienceURL);
+                return await response.json();
+            } catch (error) {
+                console.log("Failed to get data from api:", error);
+                return null;
+            }
         }
     }
 }
