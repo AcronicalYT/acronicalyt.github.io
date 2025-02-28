@@ -74,13 +74,13 @@ document.addEventListener('click', async function(e) {
         experienceHeader.textContent = experience.entity;
         experienceDescription.textContent = experience.description;
         experienceDescription.classList.remove('hidden');
-        if (experience.left) {
-            experienceTimeframe.textContent = `Started ${experience.start} ended ${experience.end}`;
-            experienceTimeframe.classList.remove('hidden');
-        } else if (!experience.left) {
+        if (!experience.left) {
             experienceTimeframe.textContent = `Started ${experience.start}`;
             experienceTimeframe.classList.remove('hidden');
-        }
+        } else {
+            experienceTimeframe.textContent = `Started ${experience.start} ended ${experience.end}`;
+            experienceTimeframe.classList.remove('hidden');
+        } 
         if (experience.images.logo) {
             experienceIcon.src = experience.images.logo;
             experienceIcon.classList.remove('hidden');
