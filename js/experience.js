@@ -74,7 +74,7 @@ document.addEventListener('click', async function(e) {
         experienceHeader.textContent = experience.entity;
         experienceDescription.textContent = experience.description;
         experienceDescription.classList.remove('hidden');
-        if (!experience.left) {
+        if (experience.left == false) {
             experienceTimeframe.textContent = `Started ${experience.start}`;
             experienceTimeframe.classList.remove('hidden');
         } else {
