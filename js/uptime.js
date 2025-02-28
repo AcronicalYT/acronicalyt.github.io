@@ -52,6 +52,7 @@ window.onload = async () => {
     const services = await fetchAllServices();
     console.log(services);
     for (const [key, service] of Object.entries(services)) {
+        if (!service.isActive) continue;
         const serviceElement = document.createElement('li');
         serviceElement.classList.add('dropdown-item');
         serviceElement.textContent = service.name;
