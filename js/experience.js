@@ -75,10 +75,10 @@ document.addEventListener('click', async function(e) {
         experienceDescription.textContent = experience.description;
         experienceDescription.classList.remove('hidden');
         if (experience.left == false) {
-            experienceTimeframe.textContent = `Started ${experience.start}`;
+            experienceTimeframe.textContent = `Since ${experience.start}`;
             experienceTimeframe.classList.remove('hidden');
         } else {
-            experienceTimeframe.textContent = `Started ${experience.start} ended ${experience.end}`;
+            experienceTimeframe.textContent = `${experience.start} - ${experience.end}`;
             experienceTimeframe.classList.remove('hidden');
         } 
         if (experience.images.logo) {
