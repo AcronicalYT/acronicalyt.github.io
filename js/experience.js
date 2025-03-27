@@ -42,6 +42,7 @@ async function fetchExperience(experienceName) {
 async function resetElements() {
     experienceHeader.textContent = "Loading...";
     experienceDescription.textContent = "";
+    experienceHeader.href = null;
     experienceDescription.classList.add('hidden');
     experienceTimeframe.textContent = "";
     experienceTimeframe.classList.add('hidden');
