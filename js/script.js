@@ -1,13 +1,15 @@
 // --- API Configuration ---
-const API_BASE_URL = "https://api.acronical.uk/";
-const PROJECTS_API_ENDPOINT = API_BASE_URL + "projects";
-const CLIENTS_API_ENDPOINT = API_BASE_URL + "experience"
-const SERVICES_API_ENDPOINT = API_BASE_URL + "services";
+const PROJECTS_API_ENDPOINT = "https://your-api-endpoint.com/projects"; // Replace with your actual API endpoint
+const CLIENTS_API_ENDPOINT = "https://your-api-endpoint.com/clients"; // Replace with your actual API endpoint
+const SERVICES_API_ENDPOINT = "https://your-api-endpoint.com/services"; // Replace with your actual API endpoint
+const LANYARD_WEBSOCKET_URL = "wss://lanyard.acronical.uk/socket";
+const DISCORD_USER_ID = "627045949998497792";
 
 // --- Global State ---
 let servicesData = [];
 let servicesStatusChecked = false;
 let isTransitioning = false;
+let lanyardSocket;
 
 // --- Tab Navigation Logic ---
 function openTab(evt, tabName) {
@@ -32,21 +34,25 @@ function openTab(evt, tabName) {
         evt.currentTarget.classList.add('active');
     }
 
+    const showNewTab = () => {
+        newTab.style.display = 'block';
+        newTab.classList.add('tab-fade-in');
+        observeAnimations(newTab);
+        newTab.addEventListener('animationend', () => {
+            newTab.classList.remove('tab-fade-in');
+            isTransitioning = false;
+        }, { once: true });
+    };
+
     if (currentTab) {
         currentTab.classList.add('tab-fade-out');
         currentTab.addEventListener('animationend', () => {
             currentTab.style.display = 'none';
             currentTab.classList.remove('tab-fade-out');
-
-            newTab.style.display = 'block';
-            newTab.classList.add('tab-fade-in');
-            observeAnimations(newTab);
-
-            newTab.addEventListener('animationend', () => {
-                newTab.classList.remove('tab-fade-in');
-                isTransitioning = false;
-            }, { once: true });
+            showNewTab();
         }, { once: true });
+    } else {
+        showNewTab();
     }
 
     if (tabName === 'Services' && !servicesStatusChecked) {
@@ -60,7 +66,7 @@ function renderError(container, message, colSpan = 1) {
     if (!container) return;
     const colSpanClass = `md:col-span-${colSpan}`;
     container.innerHTML = `
-                <div class="${colSpanClass} flex flex-col items-center justify-center gap-2 text-red-400 p-8 text-center">
+                <div class="${colSpanClass} flex flex-col items-center justify-center gap-2 p-8 text-center" style="color: var(--error-color);">
                     <i data-feather="alert-triangle" class="w-10 h-10"></i>
                     <p>${message}</p>
                 </div>
@@ -293,7 +299,7 @@ async function fetchAndRenderClients() {
         card.innerHTML = `
                     <div class="flex-grow">
                         <div class="flex justify-between items-start">
-                             <a href="${client.link}" target="_blank" rel="noopener noreferrer" class="font-bold text-lg hover:text-teal-300 transition-colors" style="color: var(--text-primary);">${client.entity}</a>
+                             <a href="${client.link}" target="_blank" rel="noopener noreferrer" class="font-bold text-lg contact-link transition-colors" style="color: var(--text-primary);">${client.entity}</a>
                              ${dateRange ? `<span class="text-xs flex-shrink-0 ml-4">${dateRange}</span>` : ''}
                         </div>
                         ${descriptionHTML}
@@ -306,12 +312,134 @@ async function fetchAndRenderClients() {
     });
 }
 
+// --- Lanyard WebSocket Logic ---
+function connectLanyard() {
+    lanyardSocket = new WebSocket(LANYARD_WEBSOCKET_URL);
+
+    lanyardSocket.onopen = () => {
+        console.log("Lanyard WebSocket connected.");
+        lanyardSocket.send(JSON.stringify({ op: 2, d: { subscribe_to_id: DISCORD_USER_ID } }));
+    };
+
+    lanyardSocket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+
+        if (data.op === 1) { // Hello
+            const heartbeatInterval = data.d.heartbeat_interval;
+            setInterval(() => {
+                if (lanyardSocket.readyState === WebSocket.OPEN) {
+                    lanyardSocket.send(JSON.stringify({ op: 3 }));
+                }
+            }, heartbeatInterval);
+        } else if (data.op === 0) { // Event
+            updateProfileCard(data.d);
+        }
+    };
+
+    lanyardSocket.onclose = () => {
+        console.log("Lanyard WebSocket disconnected. Reconnecting in 5 seconds...");
+        setTimeout(connectLanyard, 5000);
+    };
+
+    lanyardSocket.onerror = (error) => {
+        console.error("Lanyard WebSocket error:", error);
+        lanyardSocket.close();
+    };
+}
+
+function updateProfileCard(data) {
+    if (!data || !data.discord_user) return;
+
+    // Update Avatar
+    const avatarHash = data.discord_user.avatar;
+    const avatarUrl = avatarHash && avatarHash.startsWith('a_')
+        ? `https://cdn.discordapp.com/avatars/${data.discord_user.id}/${avatarHash}.gif?size=128`
+        : `https://cdn.discordapp.com/avatars/${data.discord_user.id}/${avatarHash}.png?size=128`;
+    document.getElementById('profile-avatar').src = avatarUrl;
+
+    // Update Username
+    document.getElementById('profile-username').textContent = data.discord_user.username;
+
+    // Update Status
+    const statusDot = document.getElementById('profile-status-dot');
+    const statusText = document.getElementById('profile-status-text');
+    statusDot.className = 'w-3 h-3 rounded-full'; // Reset classes
+    switch (data.discord_status) {
+        case 'online':
+            statusDot.style.backgroundColor = 'var(--status-dot-online)';
+            statusText.textContent = 'Online';
+            break;
+        case 'idle':
+            statusDot.style.backgroundColor = 'var(--status-dot-idle)';
+            statusText.textContent = 'Idle';
+            break;
+        case 'dnd':
+            statusDot.style.backgroundColor = 'var(--status-dot-dnd)';
+            statusText.textContent = 'Do Not Disturb';
+            break;
+        default:
+            statusDot.style.backgroundColor = 'var(--status-dot-offline)';
+            statusText.textContent = 'Offline';
+            break;
+    }
+
+    // Update Activities
+    const gameActivity = data.activities.find(a => a.type === 0);
+    const spotifyActivity = data.spotify;
+    const customStatusActivity = data.activities.find(a => a.type === 4);
+
+    const activitySection = document.getElementById('activity-section');
+    const spotifySection = document.getElementById('spotify-section');
+
+    // Handle Spotify
+    if (spotifyActivity) {
+        spotifySection.style.display = 'block';
+        document.getElementById('spotify-song').textContent = spotifyActivity.song;
+        document.getElementById('spotify-artist').textContent = `by ${spotifyActivity.artist}`;
+        document.getElementById('spotify-album-art').src = spotifyActivity.album_art_url;
+    } else {
+        spotifySection.style.display = 'none';
+    }
+
+    // Handle Game or Custom Status
+    const mainActivity = gameActivity || customStatusActivity;
+    if (mainActivity) {
+        activitySection.style.display = 'block';
+        const activityTitle = document.getElementById('activity-title');
+        const activityName = document.getElementById('activity-name');
+        const activityDetails = document.getElementById('activity-details');
+        const activityState = document.getElementById('activity-state');
+        const activityImage = document.getElementById('activity-large-image');
+
+        if (mainActivity.type === 0) { // Game
+            activityTitle.textContent = 'PLAYING A GAME';
+            activityImage.style.display = 'block';
+            activityName.textContent = mainActivity.name;
+            activityDetails.textContent = mainActivity.details || '';
+            activityState.textContent = mainActivity.state || '';
+            if (mainActivity.assets && mainActivity.assets.large_image) {
+                activityImage.src = `https://cdn.discordapp.com/app-assets/${mainActivity.application_id}/${mainActivity.assets.large_image}.png`;
+            } else {
+                activityImage.src = 'https://placehold.co/40x40/7c3aed/ffffff?text=?';
+            }
+        } else { // Custom Status
+            activityTitle.textContent = 'CUSTOM STATUS';
+            activityImage.style.display = 'none';
+            activityName.textContent = mainActivity.state || '';
+            activityDetails.textContent = '';
+            activityState.textContent = '';
+        }
+    } else {
+        activitySection.style.display = 'none';
+    }
+}
 
 // --- Initial Load & Theme Handling ---
 document.addEventListener('DOMContentLoaded', (event) => {
     const themeToggle = document.getElementById('theme-toggle');
     const sunIcon = document.querySelector('.sun-icon');
     const moonIcon = document.querySelector('.moon-icon');
+    const mainLayout = document.getElementById('main-layout-container');
 
     const applyTheme = (theme) => {
         const isDark = theme === 'dark';
@@ -340,19 +468,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetchAndRenderProjects();
     fetchAndRenderClients();
     fetchAndRenderServices();
+    connectLanyard();
 
     const tabButtons = document.querySelectorAll('.tab-link');
     const homeButton = document.getElementById('home-button');
 
     tabButtons.forEach(button => {
-        button.addEventListener('click', (e) => openTab(e, button.dataset.tab));
+        button.addEventListener('click', (e) => {
+            mainLayout.classList.remove('welcome-view');
+            mainLayout.classList.add('content-view');
+            openTab(e, button.dataset.tab)
+        });
     });
 
     homeButton.addEventListener('click', (e) => {
-        openTab({currentTarget: homeButton}, 'Welcome');
-    });
+        mainLayout.classList.add('welcome-view');
+        mainLayout.classList.remove('content-view');
 
-    const initialTab = document.getElementById('Welcome');
-    initialTab.style.display = 'block';
-    observeAnimations(initialTab);
+        let currentTab = null;
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            if (tab.style.display !== 'none' && !tab.classList.contains('tab-fade-out')) {
+                currentTab = tab;
+            }
+        });
+
+        if (currentTab) {
+            isTransitioning = true;
+            document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
+
+            currentTab.classList.add('tab-fade-out');
+            currentTab.addEventListener('animationend', () => {
+                currentTab.style.display = 'none';
+                currentTab.classList.remove('tab-fade-out');
+                isTransitioning = false;
+            }, { once: true });
+        }
+    });
 });
