@@ -1,7 +1,8 @@
 // --- API Configuration ---
-const PROJECTS_API_ENDPOINT = "https://your-api-endpoint.com/projects"; // Replace with your actual API endpoint
-const CLIENTS_API_ENDPOINT = "https://your-api-endpoint.com/clients"; // Replace with your actual API endpoint
-const SERVICES_API_ENDPOINT = "https://your-api-endpoint.com/services"; // Replace with your actual API endpoint
+const BASE_API_URL = "https://api.acronical.uk/";
+const PROJECTS_API_ENDPOINT = `${BASE_API_URL}projects`;
+const CLIENTS_API_ENDPOINT = `${BASE_API_URL}experience`;
+const SERVICES_API_ENDPOINT = `${BASE_API_URL}services`;
 const LANYARD_WEBSOCKET_URL = "wss://lanyard.acronical.uk/socket";
 const DISCORD_USER_ID = "627045949998497792";
 
@@ -331,7 +332,7 @@ function connectLanyard() {
                     lanyardSocket.send(JSON.stringify({ op: 3 }));
                 }
             }, heartbeatInterval);
-        } else if (data.op === 0) { // Event
+        } else if (data.op === 0) {
             updateProfileCard(data.d);
         }
     };
