@@ -112,7 +112,7 @@ async function fetchAndRenderServices() {
     observeAnimations(container);
 }
 
-function updateServiceStatus(serviceName, isOnline) {
+function updateServiceStatus(serviceName, isOnline, broughtOffline = false) {
     const serviceId = serviceName.replace(/\s+/g, '-').toLowerCase();
     const statusContainer = document.getElementById(`status-${serviceId}`);
     if (!statusContainer) return;
@@ -129,28 +129,47 @@ function updateServiceStatus(serviceName, isOnline) {
         text.style.color = 'var(--text-secondary)';
     } else {
         dot.classList.add('status-dot-past');
-        text.textContent = 'Offline';
+        text.textContent = 'Failed to Connect';
+        if (broughtOffline) {
+            text.textContent = 'Offline';
+            text.style.color = 'var(--text-secondary)';
+        }
         text.classList.add('status-text-past');
     }
 }
 
 async function checkServiceStatus(service) {
+    if (!service || !service.uptimeURL) {
+        console.error(`Service data incomplete for ${service.name}`);
+        updateServiceStatus(service.name, false, false);
+        return;
+    }
+    if (!service.online) {
+        console.log(`Service ${service.name} is marked as offline, skipping check.`);
+        updateServiceStatus(service.name, false, true);
+        return;
+    }
     try {
         const response = await fetch(service.uptimeURL, { cache: 'no-cache' });
         if (response.ok) {
-            updateServiceStatus(service.name, true);
+            updateServiceStatus(service.name, true, false);
             return;
         }
     } catch (error) {
         console.log(`Primary URL for ${service.name} failed, trying alternate.`);
     }
 
+    if (!service.altUptimeURL) {
+        console.error(`No alternate URL provided for ${service.name}, skipping check.`);
+        updateServiceStatus(service.name, false, false);
+        return;
+    }
     try {
         const response = await fetch(service.altUptimeURL, { cache: 'no-cache' });
-        updateServiceStatus(service.name, response.ok);
+        updateServiceStatus(service.name, response.ok, false);
     } catch (error) {
         console.error(`Both URLs for ${service.name} failed.`);
-        updateServiceStatus(service.name, false);
+        updateServiceStatus(service.name, false, false);
     }
 }
 
