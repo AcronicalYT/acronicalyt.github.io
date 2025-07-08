@@ -124,9 +124,9 @@ function updateServiceStatus(serviceName, isOnline) {
     text.className = 'status-text font-bold'; // Reset classes
 
     if (isOnline) {
-        dot.classList.add('status-dot-current');
-        text.textContent = 'Online';
-        text.classList.add('status-text-current');
+        dot.className = 'status-dot w-3 h-3 rounded-full status-dot-checking animate-pulse';
+        text.textContent = 'Checking...';
+        text.style.color = 'var(--text-secondary)';
     } else {
         dot.classList.add('status-dot-past');
         text.textContent = 'Offline';

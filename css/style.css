@@ -17,6 +17,8 @@
     --status-dot-idle: #f59e0b; /* amber-500 */
     --status-dot-dnd: #ef4444; /* red-500 */
     --status-dot-offline: #64748b; /* slate-500 */
+    --status-dot-checking: #f59e0b; /* amber-600 */
+    --status-dot-current: #16a34a; /* green-800 */
     --status-text-current: #166534; /* green-800 */
     --status-dot-past: #64748b; /* slate-500 */
     --status-text-past: #475569; /* slate-600 */
@@ -53,6 +55,8 @@ html.dark {
     --status-dot-idle: #facc15; /* yellow-400 */
     --status-dot-dnd: #f87171; /* red-400 */
     --status-dot-offline: #64748b; /* slate-500 */
+    --status-dot-checking: #facc12; /* yellow-500 */
+    --status-dot-current: #16a34a; /* green-800 */
     --status-text-current: #4ade80; /* green-400 */
     --status-dot-past: #64748b; /* slate-500 */
     --status-text-past: #94a3b8; /* slate-400 */
@@ -111,6 +115,7 @@ body {
 .status-text-current { color: var(--status-text-current); }
 .status-dot-past { background-color: var(--status-dot-past); }
 .status-text-past { color: var(--status-text-past); }
+.status-dot-checking { background-color: var(--status-dot-checking); }
 
 /* --- Custom Scrollbar Styling --- */
 .custom-scrollbar::-webkit-scrollbar { width: 8px; }
