@@ -224,7 +224,7 @@ async function fetchAndRenderProjects() {
             card.innerHTML = `
                 <div class="flex-grow">
                     <h4 class="font-bold text-lg" style="color: var(--text-primary);">${project.name}</h4>
-                    <p class="text-sm mt-2 mb-4">${project.description || project.descrtiption || ''}</p>
+                    <p class="text-sm mt-2 mb-4">${project.description || ''}</p>
                 </div>
                 <div class="flex-shrink-0 mt-auto">
                     <div class="flex items-center justify-between">
