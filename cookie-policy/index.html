@@ -3,49 +3,91 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Acronical | Cookie Policy</title>
         <link rel="stylesheet" href="/css/style.css">
-        <link rel="stylesheet" href="/css/navbar.css">
-        <link rel="stylesheet" href="/css/home.css">
+        <script src="https://cdn.tailwindcss.com"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+        <script src="https://unpkg.com/feather-icons"></script>
         <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-        <meta property="og:title" content="Acronical's Cookie Policy">
-        <meta property="og:description" content="Cookie Policy | Acronical">
-        <meta property="og:image" content="/images/favicon.ico">
-        <script src="/js/navMenu.js" defer></script>
-        <title>Acronical's Homepage</title>
     </head>
-
-    <body>
-        <div class="navbar">
-            <ul class="nav-ul">
-                <b><a href="/" class="nav-link home-link">Home</a></b>
-                <b><a href="/latest-upload" class="nav-link"><li class="nav-li">Latest Upload</li></a></b>
-                <b><a href="/projects" class="nav-link"><li class="nav-li">Projects</li></a></b>
-                <b><a href="/socials" class="nav-link"><li class="nav-li">Socials</li></a></b>
-                <b><a href="/experience" class="nav-link"><li class="nav-li">Experience</li></a></b>
-            </ul>
-
-            <ul class="mob-nav-ul">
-                <b><a href="/" class="mob-nav-link">Home</a></b>
-                <b><a href="/latest-upload" class="mob-nav-link"><li class="mob-nav-li">Latest Upload</li></a></b>
-                <b><a href="/projects" class="mob-nav-link"><li class="mob-nav-li">Projects</li></a></b>
-                <b><a href="/socials" class="mob-nav-link"><li class="mob-nav-li">Socials</li></a></b>
-                <b><a href="/experience" class="mob-nav-link"><li class="mob-nav-li">Experience</li></a></b>
-                <b><a href="#" class="mob-nav-link nav-close"><li class="mob-nav-li">Close</li></a></b>
-            </ul>
-            <b><a class="nav-open" href="#">Menu</a></b>
+    <body class="bg-[#f1f5f9] dark:bg-[#020617] transition-colors duration-300">
+        <div class="blob-container">
+            <div class="blob blob-1 w-96 h-96 opacity-50"></div>
+            <div class="blob blob-2 w-80 h-80 opacity-40"></div>
+            <div class="blob blob-3 w-72 h-72 opacity-50"></div>
         </div>
 
-        <div class="main">
-            <h1 class="intro-header">Cookies...</h1>
-            <p class="intro-text">
-                I'm sure you've all heard of cookies, those things that larger companies put on your device so they know what you did at 08:47 last thursday morning. But how do I use them?<br><br>
-                Simply put, I collect absolutely 0 data from you. The cookies on this site are added on by external services like <a class="embedded-link" href="https://policies.google.com/technologies/cookies?hl=en" target="_blank">YouTube (Google)</a>, <a class="embedded-link" href="https://www.twitch.tv/p/en/legal/cookie-notice/" target="_blank">Twitch</a>, and <a class="embedded-link" href="https://github.com/privacy/cookies" target="_blank">GitHub</a>.<br><br>
-                These sites add cookies because of embeds, or analytical reasons. I have no access to this data, and each site has their own cookie policy that you can go and read. The only cookies I use on this site are for the <a class="embedded-link" href="/projects">projects page</a> to <b>locally</b> store the creator you've selected out of the preferences - I also do not see any of this.
-            </p>
-        </div>
+        <main class="min-h-screen w-full p-4 md:p-8 flex items-center justify-center">
+            <div class="glass-panel w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col anim-fade-in-up is-visible">
+                <header class="p-6 border-b flex items-center justify-between" style="border-color: var(--panel-border);">
+                    <div class="flex items-center gap-3">
+                        <i data-feather="database" class="w-6 h-6" style="color: var(--accent-color);"></i>
+                        <h1 class="text-xl font-bold tracking-tight" style="color: var(--text-primary);">Cookie Policy</h1>
+                    </div>
+                    <a href="/" class="text-xs uppercase tracking-widest hover:opacity-70 transition-opacity" style="color: var(--text-secondary);">Back Home</a>
+                </header>
+
+                <div class="p-6 md:p-10 overflow-y-auto custom-scrollbar">
+                    <section class="mb-10 text-center md:text-left">
+                        <h2 class="text-3xl font-bold mb-4" style="color: var(--text-primary);">Cookies...</h2>
+                        <p class="leading-relaxed" style="color: var(--text-secondary);">
+                            We've all heard of them — those digital crumbs companies use to track your every move so they know what you did at 3:26am last Wednesday.
+                            I (<span class="font-bold" style="color: var(--text-primary);">Acronical</span>) like to keep things a bit simpler.
+                        </p>
+                    </section>
+
+                    <div class="grid grid-cols-1 gap-6 mb-10">
+                        <div class="card p-6 rounded-xl border flex flex-col md:flex-row gap-6 items-start" style="border-color: var(--card-border); background: var(--card-bg);">
+                            <div class="p-3 rounded-lg" style="background: var(--action-button-bg);">
+                                <i data-feather="eye-off" class="w-6 h-6" style="color: var(--accent-color);"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-sm uppercase tracking-widest mb-2" style="color: var(--text-primary);">Zero Data Collection</h3>
+                                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+                                    I collect absolutely <span class="font-bold" style="color: var(--accent-color);">zero</span> personal data through this site. I don't see who you are, or what you do.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                        <section>
+                            <h3 class="font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-2" style="color: var(--text-primary);">
+                                <i data-feather="external-link" class="w-4 h-4"></i> Third-Party Embeds
+                            </h3>
+                            <p class="text-sm leading-relaxed mb-4" style="color: var(--text-secondary);">
+                                Some cookies may be placed by external services used for embeds or analytics. These services have their own policies which you can review:
+                            </p>
+                            <div class="flex flex-wrap gap-3">
+                                <a href="https://policies.google.com/technologies/cookies?hl=en" target="_blank" class="action-button px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2">
+                                    <i data-feather="youtube" class="w-3 h-3"></i> YouTube
+                                </a>
+                                <a href="https://www.twitch.tv/p/en/legal/cookie-notice/" target="_blank" class="action-button px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2">
+                                    <i data-feather="twitch" class="w-3 h-3"></i> Twitch
+                                </a>
+                                <a href="https://github.com/privacy/cookies" target="_blank" class="action-button px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2">
+                                    <i data-feather="github" class="w-3 h-3"></i> GitHub
+                                </a>
+                            </div>
+                        </section>
+                    </div>
+
+                    <footer class="mt-10 pt-6 border-t flex justify-between items-center" style="border-color: var(--panel-border);">
+                        <p class="text-[10px] uppercase tracking-widest opacity-40">Privacy First Policy</p>
+                        <p class="text-[10px] uppercase tracking-widest opacity-40">2026</p>
+                    </footer>
+                </div>
+            </div>
+        </main>
+
+        <script>
+            feather.replace();
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        </script>
     </body>
 </html>
