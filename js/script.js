@@ -261,6 +261,9 @@ async function fetchAndRenderClients() {
             const statusClass = client.left ? 'status-text-past' : 'status-text-current';
             const dotClass = client.left ? 'status-dot-past' : 'status-dot-current animate-pulse';
 
+            let buttonsHTML = '';
+            if (client.link != null) buttonsHTML += `<a href="${client.link}" target="_blank" class="action-button inline-flex items-center gap-2 text-sm font-bold py-2 px-3 rounded-md"><i data-feather="external-link" class="w-4 h-4"></i>View</a>`;
+
             card.innerHTML = `
                 <div class="flex-grow">
                     <div class="flex justify-between items-start">
@@ -270,9 +273,17 @@ async function fetchAndRenderClients() {
                     <p class="text-sm mt-2 mb-4">${client.description || ''}</p>
                 </div>
                 <div class="flex-shrink-0 mt-auto pt-4 border-t border-white/5">
-                    <div class="flex items-center gap-2 text-sm">
-                        <div class="w-2 h-2 ${dotClass} rounded-full"></div>
-                        <span class="${statusClass}">${statusLabel}</span>
+                    <div class="flex items-center gap-2 text-sm justify-between">
+                        <div class="flex items-center gap-2 text-sm">
+                            <div class="w-2 h-2 ${dotClass} rounded-full"></div>
+                            <span class="${statusClass}">${statusLabel}</span>
+                        </div>
+                        <div class="flex gap-2">${buttonsHTML}</div>
+                    </div>
+                </div>
+                <div class="flex-shrink-0 mt-auto">
+                    <div class="flex items-center ">
+                        
                     </div>
                 </div>`;
             container.appendChild(card);
