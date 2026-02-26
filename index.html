@@ -1,40 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acronical | Home</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Acronical | Home</title>
 
-    <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/style.css">
 
-    <script src="/js/script.js" defer></script>
+        <script src="/js/script.js" defer></script>
 
-    <!-- Tailwind CSS for styling and responsiveness -->
-    <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts for the sleek, techy feel -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <!-- Feather Icons for simple, clean icons -->
-    <script src="https://unpkg.com/feather-icons"></script>
-</head>
+        <script src="https://unpkg.com/feather-icons"></script>
+    </head>
     <body>
-        <!-- Animated Blob Background Container -->
-        <div class="blob-container">
-            <div class="blob blob-1"></div>
-            <div class="blob blob-2"></div>
-            <div class="blob blob-3"></div>
-        </div>
-
-        <!-- Main Content Wrapper -->
         <main id="main-content" class="min-h-screen w-full p-4 md:p-8 flex items-center justify-center">
-
-            <!-- The Glass Panel -->
             <div class="glass-panel w-full max-w-6xl h-auto md:h-[90vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden">
-
-                <!-- Header/Tabs -->
                 <header class="p-4 md:p-6 border-b flex-shrink-0" style="border-color: var(--panel-border);">
                     <div class="flex flex-col md:flex-row justify-between items-center">
                         <div class="flex items-center gap-4">
@@ -55,7 +40,6 @@
                 </header>
 
                 <div id="main-layout-container" class="flex-grow flex flex-col md:flex-row overflow-hidden welcome-view">
-                    <!-- Profile Card (Left Column) -->
                     <div id="profile-card" class="p-6 border-b md:border-b-0 md:border-r custom-scrollbar overflow-y-auto" style="border-color: var(--panel-border);">
                         <div class="relative">
                             <div id="profile-banner" class="h-24 rounded-lg" style="background-color: var(--accent-color);"></div>
@@ -98,35 +82,23 @@
                         </div>
                     </div>
 
-                    <!-- Tab Content Area (Right Column) -->
                     <div id="tab-content-area" class="flex-grow p-6 md:p-8 overflow-y-auto custom-scrollbar">
-
-                        <!-- Projects Tab -->
                         <div id="Projects" class="tab-content" style="display:none;">
                             <h3 class="text-xl md:text-2xl font-bold mb-6 anim-fade-in-up" style="color: var(--text-primary);">Creator Projects</h3>
-                            <div id="project-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                <!-- Projects will be dynamically inserted here -->
-                            </div>
+                            <div id="project-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
                         </div>
 
-                        <!-- Experience Tab -->
                         <div id="Experience" class="tab-content" style="display:none;">
                             <h3 class="text-xl md:text-2xl font-bold mb-6 anim-fade-in-up" style="color: var(--text-primary);">Experience & Work</h3>
-                            <div id="client-grid-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <!-- Experience will be dynamically inserted here -->
-                            </div>
+                            <div id="client-grid-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
                         </div>
 
-                        <!-- Services Tab -->
                         <div id="Services" class="tab-content" style="display:none;">
                             <h3 class="text-xl md:text-2xl font-bold mb-6 anim-fade-in-up" style="color: var(--text-primary);">Services Status</h3>
                             <p class="mb-6 anim-fade-in-up">Live status of active Discord bots. Status is checked when this tab is opened.</p>
-                            <div id="service-status-list" class="space-y-4">
-                                <!-- Service statuses will be dynamically inserted here by JavaScript -->
-                            </div>
+                            <div id="service-status-list" class="space-y-4"></div>
                         </div>
 
-                        <!-- Socials Tab -->
                         <div id="Socials" class="tab-content" style="display:none;">
                             <h3 class="text-xl md:text-2xl font-bold mb-6 anim-fade-in-up" style="color: var(--text-primary);">Connect With Me</h3>
                             <div class="flex flex-wrap justify-center gap-8 mt-8">
@@ -138,31 +110,29 @@
                                     <i data-feather="youtube" class="w-10 h-10"></i>
                                     <span>YouTube</span>
                                 </a>
-                                <a href="#" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center gap-2 transition-colors icon-hover-effect anim-fade-in-up">
+                                <a href="https://www.twitch.tv/acronicalyt" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center gap-2 transition-colors icon-hover-effect anim-fade-in-up">
                                     <i data-feather="twitch" class="w-10 h-10"></i>
                                     <span>Twitch</span>
                                 </a>
-                                <a href="#" class="social-link group flex flex-col items-center gap-2 transition-colors icon-hover-effect anim-fade-in-up">
+                                <a href="https://discord.acronical.uk" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center gap-2 transition-colors icon-hover-effect anim-fade-in-up">
                                     <i data-feather="message-square" class="w-10 h-10"></i>
                                     <span>Discord</span>
                                 </a>
-                                <a href="#" class="social-link group flex flex-col items-center gap-2 transition-colors icon-hover-effect anim-fade-in-up">
+                                <a href="https://www.twitter.com/acronicalyt" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center gap-2 transition-colors icon-hover-effect anim-fade-in-up">
                                     <i data-feather="twitter" class="w-10 h-10"></i>
                                     <span>Twitter</span>
                                 </a>
-                                <a href="#" class="social-link group flex flex-col items-center gap-2 transition-colors icon-hover-effect anim-fade-in-up">
+                                <a href="https://www.ko-fi.com/acronical" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center gap-2 transition-colors icon-hover-effect anim-fade-in-up">
                                     <i data-feather="coffee" class="w-10 h-10"></i>
                                     <span>Ko-fi</span>
                                 </a>
                             </div>
                         </div>
 
-                        <!-- Contact Tab -->
                         <div id="Contact" class="tab-content" style="display:none;">
                             <h3 class="text-xl md:text-2xl font-bold mb-6 anim-fade-in-up" style="color: var(--text-primary);">Get In Touch</h3>
                             <p class="mb-8 max-w-xl anim-fade-in-up">The best ways to reach me for inquiries are through Discord or Email.</p>
                             <div class="space-y-6">
-                                <!-- Discord Contact -->
                                 <div class="flex items-center gap-4 anim-fade-in-up">
                                     <i data-feather="message-square" class="w-8 h-8 flex-shrink-0" style="color: var(--accent-color);"></i>
                                     <div>
@@ -175,7 +145,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Email Contact -->
+
                                 <div class="flex items-center gap-4 anim-fade-in-up">
                                     <i data-feather="at-sign" class="w-8 h-8 flex-shrink-0" style="color: var(--accent-color);"></i>
                                     <div>
@@ -195,7 +165,6 @@
             </div>
         </main>
 
-        <!-- A small message box for copy confirmation -->
         <div id="copy-notification" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-teal-500 text-slate-900 font-bold py-2 px-4 rounded-lg shadow-lg opacity-0 transition-opacity duration-300 pointer-events-none">
             Copied to clipboard!
         </div>

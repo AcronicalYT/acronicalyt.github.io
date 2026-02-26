@@ -3,33 +3,90 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Acronical's Discord Bot Privacy Policy</title>
+        <title>Acronical | Privacy Policy</title>
         <link rel="stylesheet" href="/css/style.css">
+        <script src="https://cdn.tailwindcss.com"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+        <script src="https://unpkg.com/feather-icons"></script>
     </head>
-
-    <body>
+    <body class="bg-[#f1f5f9] dark:bg-[#020617] transition-colors duration-300">
         <div class="blob-container">
-            <div class="blob blob-1"></div>
-            <div class="blob blob-2"></div>
-            <div class="blob blob-3"></div>
+            <div class="blob blob-1 w-96 h-96 opacity-50"></div>
+            <div class="blob blob-2 w-80 h-80 opacity-40"></div>
+            <div class="blob blob-3 w-72 h-72 opacity-50"></div>
         </div>
 
-        <div class="main flex justify-center items-center min-h-screen">
-            <div class="glass-panel p-8 rounded-lg shadow-lg max-w-2xl w-full anim-fade-in-up">
-                <h1 class="intro-header mb-4" style="color: var(--text-primary);">Discord Bot Privacy Policy</h1>
-                <p class="intro-text mb-6">This privacy policy is for the Discord bots that I have created and is hosted on the Discord platform. This privacy policy is to inform you about what data is collected and how it is used.</p>
-                <h2 class="intro-header mt-6 mb-2">Data Collection</h2>
-                <p class="intro-text mb-4">The bot collects data such as user IDs, server IDs, and message content. This data is used to provide the bot's functionality and to improve the user experience.</p>
-                <h2 class="intro-header mt-6 mb-2">Data Usage</h2>
-                <p class="intro-text mb-4">The data collected by the bot is used to provide the bot's functionality, such as responding to commands and interacting with users. The data is not shared with any third parties and is not used for any other purposes.</p>
-                <h2 class="intro-header mt-6 mb-2">Data Storage</h2>
-                <p class="intro-text mb-4">The data collected by the bot is stored securely on the Discord platform. In cases where data is not stored on the discord platform, it is stored in a secure database with only user ids, guild ids, and non-identifiable text or role ids.</p>
-                <h2 class="intro-header mt-6 mb-2">Contact</h2>
-                <p class="intro-text">If you have any questions or concerns about the bot's privacy policy, please contact me at <a href="mailto:acronicalbusiness@gmail.com" class="contact-link" style="color: var(--accent-color);">my email</a>.</p>
+        <main class="min-h-screen w-full p-4 md:p-8 flex items-center justify-center">
+            <div class="glass-panel w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col anim-fade-in-up is-visible">
+                <header class="p-6 border-b flex items-center justify-between" style="border-color: var(--panel-border);">
+                    <div class="flex items-center gap-3">
+                        <i data-feather="shield" class="w-6 h-6" style="color: var(--accent-color);"></i>
+                        <h1 class="text-xl font-bold tracking-tight" style="color: var(--text-primary);">Privacy Policy</h1>
+                    </div>
+                    <a href="/" class="text-xs uppercase tracking-widest hover:opacity-70 transition-opacity" style="color: var(--text-secondary);">Back Home</a>
+                </header>
+
+                <div class="p-6 md:p-10 overflow-y-auto custom-scrollbar space-y-8">
+                    <section>
+                        <p class="leading-relaxed" style="color: var(--text-secondary);">
+                            This privacy policy governs the Discord bots created by <span class="font-bold" style="color: var(--text-primary);">Acronical</span>.
+                            My goal is to be transparent about the data I handle to provide a safe and functional experience on the Discord platform.
+                        </p>
+                    </section>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="card p-5 rounded-xl border" style="border-color: var(--card-border); background: var(--card-bg);">
+                            <div class="flex items-center gap-2 mb-3">
+                                <i data-feather="database" class="w-4 h-4" style="color: var(--accent-color);"></i>
+                                <h2 class="font-bold uppercase text-xs tracking-wider" style="color: var(--text-primary);">Data Collection</h2>
+                            </div>
+                            <p class="text-sm leading-relaxed">
+                                The bot processes User IDs, Server IDs, and message content strictly required for command execution and core functionality.
+                            </p>
+                        </div>
+
+                        <div class="card p-5 rounded-xl border" style="border-color: var(--card-border); background: var(--card-bg);">
+                            <div class="flex items-center gap-2 mb-3">
+                                <i data-feather="cpu" class="w-4 h-4" style="color: var(--accent-color);"></i>
+                                <h2 class="font-bold uppercase text-xs tracking-wider" style="color: var(--text-primary);">Data Usage</h2>
+                            </div>
+                            <p class="text-sm leading-relaxed">
+                                Data is used solely to respond to interactions. I never sell data or share it with third-party entities.
+                            </p>
+                        </div>
+                    </div>
+
+                    <section class="space-y-4">
+                        <div class="flex items-center gap-2">
+                            <i data-feather="lock" class="w-4 h-4" style="color: var(--accent-color);"></i>
+                            <h2 class="font-bold text-sm uppercase tracking-widest" style="color: var(--text-primary);">Security & Storage</h2>
+                        </div>
+                        <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+                            Most data resides within Discord's infrastructure. Internal storage is restricted to secure databases containing only non-identifiable strings, IDs, and configuration settings required for persistence.
+                        </p>
+                    </section>
+
+                    <footer class="pt-6 border-t flex flex-col md:flex-row justify-between items-center gap-4" style="border-color: var(--panel-border);">
+                        <div class="flex items-center gap-2">
+                            <i data-feather="mail" class="w-4 h-4" style="color: var(--text-secondary);"></i>
+                            <span class="text-sm">Inquiries:</span>
+                            <a href="mailto:privacy@acronical.uk" class="contact-link text-sm font-bold transition-colors" style="color: var(--accent-color);">privacy@acronical.uk</a>
+                        </div>
+                        <p class="text-[10px] uppercase tracking-tighter opacity-50">Last Updated: February 2026</p>
+                    </footer>
+                </div>
             </div>
-        </div>
+        </main>
+
+        <script>
+            feather.replace();
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        </script>
     </body>
 </html>

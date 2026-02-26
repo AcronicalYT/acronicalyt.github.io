@@ -3,35 +3,94 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Acronical's Discord Bot TOS</title>
+        <title>Acronical | Terms of Service</title>
         <link rel="stylesheet" href="/css/style.css">
+        <script src="https://cdn.tailwindcss.com"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+        <script src="https://unpkg.com/feather-icons"></script>
     </head>
-
-    <body>
+    <body class="bg-[#f1f5f9] dark:bg-[#020617] transition-colors duration-300">
         <div class="blob-container">
-            <div class="blob blob-1"></div>
-            <div class="blob blob-2"></div>
-            <div class="blob blob-3"></div>
+            <div class="blob blob-1 w-96 h-96 opacity-50"></div>
+            <div class="blob blob-2 w-80 h-80 opacity-40"></div>
+            <div class="blob blob-3 w-72 h-72 opacity-50"></div>
         </div>
 
-        <div class="main flex justify-center items-center min-h-screen">
-            <div class="glass-panel p-8 rounded-lg shadow-lg max-w-2xl w-full anim-fade-in-up">
-                <h1 class="intro-header mb-4" style="color: var(--text-primary);">Discord Bot Terms of Service</h1>
-                <p class="intro-text mb-6">By using any Discord bot of mine, you agree to the following terms of service:</p>
-                <h2 class="intro-header mt-6 mb-2">1. Usage</h2>
-                <p class="intro-text mb-4">The bot is provided as is and is intended for discord purposes only.</p>
-                <h2 class="intro-header mt-6 mb-2">2. Data Collection</h2>
-                <p class="intro-text mb-4">The bot collects data such as user IDs, server IDs, and message content. This data is used to provide the bot's functionality and to improve the user experience.</p>
-                <h2 class="intro-header mt-6 mb-2">3. Data Usage</h2>
-                <p class="intro-text mb-4">The data collected by the bot is used to provide the bot's functionality, such as responding to commands and interacting with users. The data is not shared with any third parties and is not used for any other purposes.</p>
-                <h2 class="intro-header mt-6 mb-2">4. Data Storage</h2>
-                <p class="intro-text mb-4">The data collected by the bot is stored securely on the Discord platform. In cases where data is not stored on the discord platform, it is stored in a secure database with only user ids, guild ids, and non-identifiable text or role ids.</p>
-                <h2 class="intro-header mt-6 mb-2">5. Contact</h2>
-                <p class="intro-text">If you have any questions or concerns about the bot's terms of service, please contact me at <a href="mailto:acronicalbusiness@gmail.com" class="contact-link" style="color: var(--accent-color);">my email</a>.</p>
+        <main class="min-h-screen w-full p-4 md:p-8 flex items-center justify-center">
+            <div class="glass-panel w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col anim-fade-in-up is-visible">
+                <header class="p-6 border-b flex items-center justify-between" style="border-color: var(--panel-border);">
+                    <div class="flex items-center gap-3">
+                        <i data-feather="file-text" class="w-6 h-6" style="color: var(--accent-color);"></i>
+                        <h1 class="text-xl font-bold tracking-tight" style="color: var(--text-primary);">Terms of Service</h1>
+                    </div>
+                    <a href="/" class="text-xs uppercase tracking-widest hover:opacity-70 transition-opacity" style="color: var(--text-secondary);">Back Home</a>
+                </header>
+
+                <div class="p-6 md:p-10 overflow-y-auto custom-scrollbar">
+                    <div class="mb-8 p-4 rounded-lg border-l-4" style="background: var(--card-bg); border-color: var(--accent-color);">
+                        <p class="text-sm leading-relaxed" style="color: var(--text-primary);">
+                            By inviting or interacting with any Discord bot provided by <span class="font-bold">Acronical</span>, you agree to comply with and be bound by the following terms.
+                        </p>
+                    </div>
+
+                    <div class="space-y-8">
+                        <section>
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-xs font-bold px-2 py-0.5 rounded" style="background: var(--accent-color); color: var(--bg-color);">01</span>
+                                <h2 class="font-bold uppercase text-xs tracking-widest" style="color: var(--text-primary);">Usage Agreement</h2>
+                            </div>
+                            <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+                                All services are provided "as is" without warranty of any kind. Bots are intended for Discord-related purposes only. Misuse, attempted exploitation, or use in violation of Discord's own ToS may result in a service ban.
+                            </p>
+                        </section>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <section class="card p-5 rounded-xl border" style="border-color: var(--card-border); background: var(--card-bg);">
+                                <h2 class="font-bold uppercase text-[10px] tracking-widest mb-2" style="color: var(--accent-color);">02. Data Collection</h2>
+                                <p class="text-xs leading-relaxed">
+                                    Collection is limited to User IDs, Server IDs, and necessary message content required for the bot's features and performance improvements.
+                                </p>
+                            </section>
+
+                            <section class="card p-5 rounded-xl border" style="border-color: var(--card-border); background: var(--card-bg);">
+                                <h2 class="font-bold uppercase text-[10px] tracking-widest mb-2" style="color: var(--accent-color);">03. Data Usage</h2>
+                                <p class="text-xs leading-relaxed">
+                                    Data is utilised strictly for command processing and user interaction. No information is sold or shared with external third parties.
+                                </p>
+                            </section>
+                        </div>
+
+                        <section>
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-xs font-bold px-2 py-0.5 rounded" style="background: var(--accent-color); color: var(--bg-color);">04</span>
+                                <h2 class="font-bold uppercase text-xs tracking-widest" style="color: var(--text-primary);">Storage Policy</h2>
+                            </div>
+                            <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+                                Data is primarily stored within Discord. Any secondary storage uses secure databases for non-identifiable configuration data (e.g., Role IDs, Guild settings).
+                            </p>
+                        </section>
+                    </div>
+
+                    <footer class="mt-10 pt-6 border-t flex flex-col md:flex-row justify-between items-center gap-4" style="border-color: var(--panel-border);">
+                        <div class="flex items-center gap-3">
+                            <i data-feather="help-circle" class="w-4 h-4" style="color: var(--text-secondary);"></i>
+                            <span class="text-sm">Questions?</span>
+                            <a href="mailto:tos@acronical.uk" class="contact-link text-sm font-bold transition-colors" style="color: var(--accent-color);">tos@acronical.uk</a>
+                        </div>
+                        <p class="text-[10px] uppercase tracking-widest opacity-40">Effective: Feb 2026</p>
+                    </footer>
+                </div>
             </div>
-        </div>
+        </main>
+
+        <script>
+            feather.replace();
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        </script>
     </body>
 </html>
