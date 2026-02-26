@@ -198,25 +198,28 @@ async function fetchAndRenderProjects() {
 
     try {
         const response = await fetch(PROJECTS_API_ENDPOINT);
+        if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         const projects = Object.values(data);
 
         container.innerHTML = '';
+
         projects.forEach(project => {
             const card = document.createElement('div');
             card.className = 'card p-5 rounded-lg card-hover-effect anim-fade-in-up flex flex-col';
 
-            const tagMap = {
+            const tagVars = {
                 'video-plugin': { bg: 'var(--tag-video-bg)', text: 'var(--tag-video-text)' },
                 'plugin': { bg: 'var(--tag-plugin-bg)', text: 'var(--tag-plugin-text)' },
                 'discord-bot': { bg: 'var(--tag-discord-bg)', text: 'var(--tag-discord-text)' }
             };
-            const theme = tagMap[project.type] || { bg: 'var(--tag-default-bg)', text: 'var(--tag-default-text)' };
+            const currentTagVars = tagVars[project.type] || { bg: 'var(--tag-default-bg)', text: 'var(--tag-default-text)' };
 
-            let actions = '';
-            if (project.download?.has) actions += `<a href="${project.download.url}" target="_blank" class="action-button inline-flex items-center gap-2 text-sm font-bold py-2 px-3 rounded-md"><i data-feather="download" class="w-4 h-4"></i>Download</a>`;
-            if (project.invite?.has) actions += `<a href="${project.invite.url}" target="_blank" class="action-button inline-flex items-center gap-2 text-sm font-bold py-2 px-3 rounded-md"><i data-feather="arrow-right-circle" class="w-4 h-4"></i>Invite</a>`;
-            if (project.link?.has) actions += `<a href="${project.link.url || project.link.link}" target="_blank" class="action-button inline-flex items-center gap-2 text-sm font-bold py-2 px-3 rounded-md"><i data-feather="external-link" class="w-4 h-4"></i>View</a>`;
+            let buttonsHTML = '';
+
+            if (project.download?.has) buttonsHTML += `<a href="${project.download.url}" target="_blank" class="action-button inline-flex items-center gap-2 text-sm font-bold py-2 px-3 rounded-md"><i data-feather="download" class="w-4 h-4"></i>Download</a>`;
+            if (project.invite?.has) buttonsHTML += `<a href="${project.invite.url}" target="_blank" class="action-button inline-flex items-center gap-2 text-sm font-bold py-2 px-3 rounded-md"><i data-feather="arrow-right-circle" class="w-4 h-4"></i>Invite</a>`;
+            if (project.link?.has) buttonsHTML += `<a href="${project.link.url}" target="_blank" class="action-button inline-flex items-center gap-2 text-sm font-bold py-2 px-3 rounded-md"><i data-feather="external-link" class="w-4 h-4"></i>View</a>`;
 
             card.innerHTML = `
                 <div class="flex-grow">
@@ -225,16 +228,17 @@ async function fetchAndRenderProjects() {
                 </div>
                 <div class="flex-shrink-0 mt-auto">
                     <div class="flex items-center justify-between">
-                        <span class="project-tag inline-block px-2 py-1 rounded capitalize text-xs" style="background-color: ${theme.bg}; color: ${theme.text};">${project.type.replace('-', ' ')}</span>
-                        <div class="flex gap-2">${actions}</div>
+                        <span class="project-tag inline-block px-2 py-1 rounded capitalize text-xs" style="background-color: ${currentTagVars.bg}; color: ${currentTagVars.text};">${project.type.replace('-', ' ')}</span>
+                        <div class="flex gap-2">${buttonsHTML}</div>
                     </div>
                 </div>`;
             container.appendChild(card);
         });
+
         feather.replace();
         observeAnimations(container);
-    } catch (e) {
-        renderError(container, "Failed to load projects.", 3);
+    } catch (error) {
+        renderError(container, "Could not load projects.", 3);
     }
 }
 
@@ -273,6 +277,7 @@ async function fetchAndRenderClients() {
                 </div>`;
             container.appendChild(card);
         });
+        feather.replace();
         observeAnimations(container);
     } catch (e) {
         renderError(container, "Failed to load experience.", 2);
