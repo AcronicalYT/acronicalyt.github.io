@@ -9,177 +9,105 @@
         <script src="/js/script.js" defer></script>
         <script src="https://cdn.tailwindcss.com"></script>
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-
-        <script src="https://unpkg.com/feather-icons"></script>
+        <script>
+            tailwind.config = {
+                darkMode: 'class',
+            }
+        </script>
     </head>
-    <body class="transition-colors duration-300">
-        <div class="blob-container">
-            <div class="blob blob-1 w-96 h-96 opacity-50"></div>
-            <div class="blob blob-2 w-80 h-80 opacity-40"></div>
-            <div class="blob blob-3 w-72 h-72 opacity-50"></div>
-        </div>
-        <main id="main-content" class="min-h-screen w-full p-4 md:p-8 flex items-center justify-center">
-            <div class="glass-panel w-full max-w-6xl h-auto md:h-[90vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden border" style="background: var(--panel-bg); border-color: var(--panel-border); backdrop-filter: blur(24px);">
-                <header class="p-4 md:p-6 border-b flex-shrink-0" style="border-color: var(--panel-border);">
-                    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <div class="flex items-center gap-4">
-                            <h2 id="home-button" class="header-title text-2xl font-bold cursor-pointer transition-transform hover:scale-105" style="color: var(--text-primary);">Acronical</h2>
-                            <button id="theme-toggle" title="Toggle theme" class="p-2 rounded-full transition-all hover:bg-black/5 dark:hover:bg-white/5" style="color: var(--text-secondary);">
-                                <span class="sun-icon"><i data-feather="sun"></i></span>
-                                <span class="moon-icon hidden"><i data-feather="moon"></i></span>
-                            </button>
-                        </div>
-                        <nav id="tabs" class="flex flex-wrap justify-center gap-x-2 md:gap-x-4">
-                            <button class="tab-link py-2 px-4 text-sm font-bold rounded-lg transition-all hover:bg-black/5 dark:hover:bg-white/5" data-tab="Projects">Projects</button>
-                            <button class="tab-link py-2 px-4 text-sm font-bold rounded-lg transition-all hover:bg-black/5 dark:hover:bg-white/5" data-tab="Experience">Experience</button>
-                            <button class="tab-link py-2 px-4 text-sm font-bold rounded-lg transition-all hover:bg-black/5 dark:hover:bg-white/5" data-tab="Services">Services</button>
-                            <button class="tab-link py-2 px-4 text-sm font-bold rounded-lg transition-all hover:bg-black/5 dark:hover:bg-white/5" data-tab="Socials">Socials</button>
-                            <button class="tab-link py-2 px-4 text-sm font-bold rounded-lg transition-all hover:bg-black/5 dark:hover:bg-white/5" data-tab="Contact">Contact</button>
-                        </nav>
-                    </div>
-                </header>
-                <div id="main-layout-container" class="flex-grow flex flex-col md:flex-row overflow-hidden welcome-view">
-                    <div id="profile-card" class="p-6 border-b md:border-b-0 md:border-r custom-scrollbar overflow-y-auto transition-all duration-500" style="border-color: var(--panel-border);">
-                        <div class="relative group">
-                            <div id="profile-banner" class="h-28 rounded-xl transition-all duration-500" style="background: linear-gradient(135deg, var(--accent-color), #0d9488);"></div>
-                            <div class="absolute -bottom-12 left-6">
-                                <img id="profile-avatar" src="https://placehold.co/96x96/1e293b/e2e8f0?text=A" alt="Avatar" class="w-24 h-24 rounded-2xl border-4 shadow-lg transition-transform group-hover:scale-105" style="border-color: var(--panel-bg); object-fit: cover;">
-                            </div>
-                        </div>
-                        <div class="mt-16 px-2">
-                            <h3 id="profile-username" class="text-2xl font-bold tracking-tight" style="color: var(--text-primary);">Acronical</h3>
-                            <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest mt-1 opacity-80">
-                                <div id="profile-status-dot" class="w-2.5 h-2.5 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.2)]"></div>
-                                <span id="profile-status-text">Offline</span>
-                            </div>
-                        </div>
-                        <div class="border-t my-6 opacity-50" style="border-color: var(--panel-border);"></div>
-                        <div class="px-2 space-y-6">
-                            <div>
-                                <h4 class="font-bold text-xs uppercase tracking-[0.2em] mb-2" style="color: var(--accent-color);">About Me</h4>
-                                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">UK-based content creator and developer. Focused on Discord bots, open-source projects, and creating helpful tutorials.</p>
-                            </div>
-                            <div id="activity-section" class="p-4 rounded-xl border animate-pulse-slow" style="display: none; background: var(--card-bg); border-color: var(--card-border);">
-                                <h4 id="activity-title" class="font-bold text-[10px] uppercase tracking-widest mb-3 opacity-70" style="color: var(--text-primary);">Playing a game</h4>
-                                <div class="flex items-center gap-4">
-                                    <img id="activity-large-image" src="https://placehold.co/40x40/7c3aed/ffffff?text=?" alt="Activity Icon" class="w-12 h-12 rounded-lg shadow-md">
-                                    <div class="overflow-hidden">
-                                        <p id="activity-name" class="font-bold text-sm truncate" style="color: var(--text-primary);">...</p>
-                                        <p id="activity-details" class="text-xs truncate opacity-80">...</p>
-                                        <p id="activity-state" class="text-xs truncate opacity-60">...</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="spotify-section" class="p-4 rounded-xl border border-green-500/20" style="display: none; background: rgba(29, 185, 84, 0.05);">
-                                <h4 class="font-bold text-[10px] uppercase tracking-widest mb-3 text-green-500">Listening to Spotify</h4>
-                                <div class="flex items-center gap-4">
-                                    <div class="relative">
-                                        <img id="spotify-album-art" src="https://placehold.co/40x40/1db954/ffffff?text=S" alt="Album Art" class="w-12 h-12 rounded-lg shadow-md animate-[spin_8s_linear_infinite]">
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <p id="spotify-song" class="font-bold text-sm truncate" style="color: var(--text-primary);">...</p>
-                                        <p id="spotify-artist" class="text-xs truncate text-green-500/80">...</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="tab-content-area" class="flex-grow p-6 md:p-10 overflow-y-auto custom-scrollbar">
-                        <div id="Projects" class="tab-content" style="display:none;">
-                            <div class="flex items-center gap-3 mb-8 anim-fade-in-up">
-                                <i data-feather="code" class="w-6 h-6" style="color: var(--accent-color);"></i>
-                                <h3 class="text-2xl font-bold" style="color: var(--text-primary);">Creator Projects</h3>
-                            </div>
-                            <div id="project-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-                        </div>
-                        <div id="Experience" class="tab-content" style="display:none;">
-                            <div class="flex items-center gap-3 mb-8 anim-fade-in-up">
-                                <i data-feather="briefcase" class="w-6 h-6" style="color: var(--accent-color);"></i>
-                                <h3 class="text-2xl font-bold" style="color: var(--text-primary);">Experience & Work</h3>
-                            </div>
-                            <div id="client-grid-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-                        </div>
-                        <div id="Services" class="tab-content" style="display:none;">
-                            <div class="flex items-center gap-3 mb-4 anim-fade-in-up">
-                                <i data-feather="server" class="w-6 h-6" style="color: var(--accent-color);"></i>
-                                <h3 class="text-2xl font-bold" style="color: var(--text-primary);">Services Status</h3>
-                            </div>
-                            <p class="mb-8 text-sm anim-fade-in-up opacity-70">Real-time connectivity check for active platforms and bots.</p>
-                            <div id="service-status-list" class="grid grid-cols-1 gap-4"></div>
-                        </div>
-                        <div id="Socials" class="tab-content" style="display:none;">
-                            <div class="flex items-center gap-3 mb-12 anim-fade-in-up">
-                                <i data-feather="share-2" class="w-6 h-6" style="color: var(--accent-color);"></i>
-                                <h3 class="text-2xl font-bold" style="color: var(--text-primary);">Connect With Me</h3>
-                            </div>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8">
-                                <a href="https://github.com/AcronicalYT" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center gap-3 p-4 rounded-2xl transition-all hover:bg-black/5 dark:hover:bg-white/5 anim-fade-in-up">
-                                    <div class="p-4 rounded-xl bg-slate-800 text-white group-hover:scale-110 transition-transform"><i data-feather="github"></i></div>
-                                    <span class="text-xs font-bold uppercase tracking-widest">GitHub</span>
-                                </a>
-                                <a href="https://www.youtube.com/@AcronicalYT" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center gap-3 p-4 rounded-2xl transition-all hover:bg-black/5 dark:hover:bg-white/5 anim-fade-in-up">
-                                    <div class="p-4 rounded-xl bg-red-600 text-white group-hover:scale-110 transition-transform"><i data-feather="youtube"></i></div>
-                                    <span class="text-xs font-bold uppercase tracking-widest">YouTube</span>
-                                </a>
-                                <a href="https://www.twitch.tv/acronicalyt" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center gap-3 p-4 rounded-2xl transition-all hover:bg-black/5 dark:hover:bg-white/5 anim-fade-in-up">
-                                    <div class="p-4 rounded-xl bg-purple-600 text-white group-hover:scale-110 transition-transform"><i data-feather="twitch"></i></div>
-                                    <span class="text-xs font-bold uppercase tracking-widest">Twitch</span>
-                                </a>
-                                <a href="https://discord.acronical.uk" target="_blank" rel="noopener noreferrer" class="social-link group flex flex-col items-center gap-3 p-4 rounded-2xl transition-all hover:bg-black/5 dark:hover:bg-white/5 anim-fade-in-up">
-                                    <div class="p-4 rounded-xl bg-indigo-600 text-white group-hover:scale-110 transition-transform"><i data-feather="message-square"></i></div>
-                                    <span class="text-xs font-bold uppercase tracking-widest">Discord</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div id="Contact" class="tab-content" style="display:none;">
-                            <div class="flex items-center gap-3 mb-8 anim-fade-in-up">
-                                <i data-feather="mail" class="w-6 h-6" style="color: var(--accent-color);"></i>
-                                <h3 class="text-2xl font-bold" style="color: var(--text-primary);">Get In Touch</h3>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="card p-6 rounded-2xl border flex items-center gap-6 anim-fade-in-up" style="background: var(--card-bg); border-color: var(--card-border);">
-                                    <div class="p-4 rounded-xl bg-indigo-500/10 text-indigo-500"><i data-feather="message-square" class="w-8 h-8"></i></div>
-                                    <div class="overflow-hidden">
-                                        <h4 class="font-bold text-xs uppercase tracking-widest opacity-60 mb-1">Discord</h4>
-                                        <div class="flex items-center gap-2">
-                                            <span id="discord-username" class="font-bold truncate" style="color: var(--text-primary);">@acronical</span>
-                                            <button onclick="copyToClipboard('@acronical')" class="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" title="Copy username">
-                                                <i data-feather="copy" class="w-4 h-4"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card p-6 rounded-2xl border flex items-center gap-6 anim-fade-in-up" style="background: var(--card-bg); border-color: var(--card-border);">
-                                    <div class="p-4 rounded-xl bg-teal-500/10 text-teal-500"><i data-feather="at-sign" class="w-8 h-8"></i></div>
-                                    <div class="overflow-hidden">
-                                        <h4 class="font-bold text-xs uppercase tracking-widest opacity-60 mb-1">Email</h4>
-                                        <div class="flex items-center gap-2">
-                                            <a href="mailto:contact@acronical.uk" id="email-address" class="font-bold truncate hover:underline" style="color: var(--text-primary);">contact@acronical.uk</a>
-                                            <button onclick="copyToClipboard('contact@acronical.uk')" class="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" title="Copy email">
-                                                <i data-feather="copy" class="w-4 h-4"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
+    <body class="py-12 px-4 sm:px-8 overflow-x-hidden text-gray-800 transition-colors duration-300">
+        <button id="theme-toggle" class="fixed top-4 right-4 sm:top-8 sm:right-8 z-50 p-3 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-gray-200 dark:border-slate-700 text-gray-800 dark:text-gray-200 hover:scale-110 transition-transform" aria-label="Toggle Dark Mode">
+            <svg id="theme-icon-dark" class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            <svg id="theme-icon-light" class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        </button>
+
+        <main class="max-w-3xl mx-auto space-y-20">
+            <article class="paper paper-lines rounded-sm transform rotate-1 hover:rotate-0 transition-transform duration-300">
+                <div class="tape rotate-2 w-32 ml-12"></div>
+                <div class="paper-content">
+                    <header class="mb-6">
+                        <h1 class="text-6xl font-bold text-gray-900 leading-none handwriting tracking-wide">Acronical</h1>
+                        <p class="text-xl font-semibold text-gray-600 mt-2 handwriting">UK-based content creator and developer. Focused on Discord bots, open-source projects, and creating helpful tutorials.</p>
+                    </header>
+
+                    <section>
+                        <p class="mt-6 handwriting text-2xl font-bold text-gray-900">My Socials:</p>
+                        <ul class="flex flex-wrap gap-x-6 gap-y-2 mt-1 list-none font-semibold">
+                            <li><a target="_blank" href="https://www.github.com/AcronicalYT" class="ink-link">GitHub</a></li>
+                            <li><a target="_blank" href="https://www.youtube.com/@AcronicalYT" class="ink-link">YouTube</a></li>
+                            <li><a target="_blank" href="https://www.twitch.tv/AcronicalYT" class="ink-link">Twitch</a></li>
+                            <li><a target="_blank" href="https://discord.acronical.uk" class="ink-link">Discord</a></li>
+                            <li><a target="_blank" href="https://www.twitter.com/AcronicalYT" class="ink-link">Twitter</a></li>
+                            <li><a target="_blank" href="https://www.ko-fi.com/Acronical" class="ink-link">Ko-fi</a></li>
+                        </ul>
+                    </section>
+                </div>
+            </article>
+
+            <article class="paper paper-lines rounded-sm transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+                <div class="pin"></div>
+                <div class="paper-content">
+                    <h2 class="text-4xl font-bold text-gray-900 handwriting mb-4 border-b-2 border-gray-300 inline-block pb-1">My Projects</h2>
+                    <ul id="projects" class="space-y-6 list-none mt-4"></ul>
+                </div>
+            </article>
+
+            <article class="paper paper-lines rounded-sm transform rotate-2 hover:rotate-0 transition-transform duration-300">
+                <div class="tape -rotate-3 w-28 -ml-20 mt-2"></div>
+                <div class="paper-content">
+                    <h2 class="text-4xl font-bold text-gray-900 handwriting mb-4 border-b-2 border-gray-300 inline-block pb-1">Experience & Work</h2>
+                    <ul id="experience" class="space-y-6 list-none mt-4"></ul>
+                </div>
+            </article>
+
+            <article class="paper paper-lines rounded-sm transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+                <div class="pin"></div>
+                <div class="paper-content">
+                    <h2 class="text-4xl font-bold text-gray-900 handwriting mb-4 border-b-2 border-gray-300 inline-block pb-1">Hosted Services</h2>
+                    <ul id="services" class="space-y-6 list-none mt-4"></ul>
+                </div>
+            </article>
+
+            <article class="paper paper-lines rounded-sm transform rotate-2 hover:rotate-0 transition-transform duration-300">
+                <div class="tape -rotate-3 w-28 -ml-20 mt-2"></div>
+                <div class="paper-content">
+                    <h2 class="text-4xl font-bold text-gray-900 handwriting mb-4 border-b-2 border-gray-300 inline-block pb-1">Contact Me</h2>
+                    <p>Feel free to contact me via Discord, or my email!</p>
+
+                    <div id="lanyard" class="mt-5 flex-column items-center gap-4 p-3 border border-gray-300 rounded bg-white dark:bg-[#0f172a] shadow-sm transition-colors duration-300 w-full max-w-sm transform rotate-[0.5deg] hidden">
+                        <div class="flex gap-4 p-3">
+                            <div class="relative flex-shrink-0">
+                                <img id="discord-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" class="w-14 h-14 rounded-full border border-gray-200" alt="Discord Avatar">
+                                <div id="discord-status-dot" class="absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-white dark:border-slate-800 bg-gray-500 transition-colors duration-300"></div>
+                            </div>
+                            <div class="flex-col overflow-hidden">
+                                <p class="font-bold text-lg leading-tight handwriting text-gray-900">@acronical</p>
+                                <p id="discord-activity" class="text-sm text-gray-600 truncate w-full">Loading status...</p>
+                            </div>
+                        </div>
+                        <div id="spotify-section" class="hidden border-t border-gray-200 dark:border-slate-600 pt-2 mt-1 pl-3">
+                            <div class="flex-column items-center align-center gap-3 ">
+                                <img id="spotify-album-art" src="" class="w-10 h-10 rounded-md shadow-sm" alt="Album Art">
+                                <div class="flex-col overflow-hidden text-sm">
+                                    <p class="font-bold text-green-500 flex items-center gap-1 text-xs uppercase tracking-wide">
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.3 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.2-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.539-1.56.3z"/></svg>
+                                        Listening to Spotify
+                                    </p>
+                                    <p id="spotify-song" class="text-gray-900 font-bold truncate leading-tight"></p>
+                                    <p id="spotify-artist" class="text-gray-600 truncate text-xs"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="contact" class="mt-6 p-4 border-2 border-dashed border-gray-400 rounded bg-black/5 text-center transform rotate-1 cursor-pointer hover:bg-black/10 transition-colors">
+                        <p class="font-bold text-2xl mb-2 handwriting text-gray-900">My best contacts:</p>
+                        <p><strong>Discord:</strong> @acronical</p>
+                        <p><strong>Email:</strong> contact@acronical.uk</p>
                     </div>
                 </div>
-            </div>
+            </article>
         </main>
-
-        <div id="copy-notification" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-[#0d9488] text-white text-xs font-bold uppercase tracking-widest py-3 px-6 rounded-xl shadow-2xl opacity-0 transition-all duration-300 pointer-events-none z-[100] border border-white/20">
-            Copied to clipboard
-        </div>
-
-        <script>
-            window.addEventListener('load', () => {
-                feather.replace();
-            });
-        </script>
     </body>
 </html>

@@ -6,72 +6,19 @@ const LANYARD_WEBSOCKET_URL = "wss://lanyard.acronical.uk/socket";
 const DISCORD_USER_ID = "627045949998497792";
 
 let servicesData = [];
-let servicesStatusChecked = false;
-let isTransitioning = false;
 let lanyardSocket;
 
-function openTab(evt, tabName) {
-    if (isTransitioning) return;
-
-    const newTab = document.getElementById(tabName);
-    const tablinks = document.querySelectorAll('.tab-link');
-    let currentTab = null;
-
-    document.querySelectorAll('.tab-content').forEach(tab => {
-        if (tab.style.display !== 'none' && !tab.classList.contains('tab-fade-out')) {
-            currentTab = tab;
-        }
-    });
-
-    if (currentTab === newTab) return;
-
-    isTransitioning = true;
-    tablinks.forEach(link => link.classList.remove('active'));
-
-    if (evt && evt.currentTarget && evt.currentTarget.classList.contains('tab-link')) {
-        evt.currentTarget.classList.add('active');
-    }
-
-    const showNewTab = () => {
-        newTab.style.display = 'block';
-        newTab.classList.add('tab-fade-in');
-        observeAnimations(newTab);
-        newTab.addEventListener('animationend', () => {
-            newTab.classList.remove('tab-fade-in');
-            isTransitioning = false;
-        }, { once: true });
-    };
-
-    if (currentTab) {
-        currentTab.classList.add('tab-fade-out');
-        currentTab.addEventListener('animationend', () => {
-            currentTab.style.display = 'none';
-            currentTab.classList.remove('tab-fade-out');
-            showNewTab();
-        }, { once: true });
-    } else {
-        showNewTab();
-    }
-
-    if (tabName === 'Services' && !servicesStatusChecked) {
-        checkAllServicesStatus();
-        servicesStatusChecked = true;
-    }
-}
-
-function renderError(container, message, colSpan = 1) {
+function renderError(container, message) {
     if (!container) return;
     container.innerHTML = `
-        <div class="md:col-span-${colSpan} flex flex-col items-center justify-center gap-2 p-8 text-center" style="color: var(--error-color);">
-            <i data-feather="alert-triangle" class="w-10 h-10"></i>
-            <p>${message}</p>
-        </div>
+        <li class="flex flex-col items-start gap-1 text-red-600 dark:text-red-400 handwriting font-bold text-xl">
+            <p>⚠️ ${message}</p>
+        </li>
     `;
-    feather.replace();
 }
 
 async function fetchAndRenderServices() {
-    const container = document.getElementById('service-status-list');
+    const container = document.querySelector('#services');
     if (!container) return;
 
     try {
@@ -86,27 +33,28 @@ async function fetchAndRenderServices() {
 
     container.innerHTML = '';
     servicesData.forEach(service => {
-        const row = document.createElement('div');
-        row.className = "status-row flex items-center justify-between p-4 rounded-lg anim-fade-in-up";
+        const row = document.createElement('li');
+        row.className = "status-row anim-fade-in-up";
 
-        const statusClass = service.online ? 'status-dot-current' : 'status-dot-past';
+        const statusClass = service.online ? 'text-green-500' : 'text-red-500';
         const statusText = service.online ? 'Online' : 'Offline';
-        const textClass = service.online ? 'status-text-current' : 'status-text-past';
 
         row.innerHTML = `
-            <span class="font-medium" style="color: var(--text-primary);">${service.name}</span>
-            <div id="status-${service.id}" class="flex items-center gap-2">
-                <div class="status-dot w-3 h-3 ${statusClass} rounded-full"></div>
-                <span class="status-text font-bold ${textClass}">${statusText}</span>
+            <div id="status-${service.id}" class="flex items-center gap-2 max-w-sm">
+                <span class="status-dot font-bold text-xl ${statusClass}">●</span>
+                <span class="font-medium text-gray-900 dark:text-gray-100 handwriting text-xl">${service.name}</span>
+                <span class="status-text text-sm text-gray-500 dark:text-gray-400 italic ml-auto">${statusText}</span>
             </div>
         `;
         container.appendChild(row);
     });
+
     observeAnimations(container);
+    checkAllServicesStatus();
 }
 
 async function checkServiceStatus(service) {
-    const statusContainer = document.getElementById(`status-${service.id}`);
+    const statusContainer = document.querySelector(`#status-${service.id}`);
     if (!statusContainer) return;
 
     const dot = statusContainer.querySelector('.status-dot');
@@ -124,10 +72,12 @@ async function checkServiceStatus(service) {
         try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 5000);
-            const res = await fetch(url, { mode: 'no-cors', cache: 'no-cache', signal: controller.signal });
+            const res = await fetch(url, { cache: 'no-cache', signal: controller.signal });
             clearTimeout(timeoutId);
-            success = true;
-            break;
+            if (res.ok) {
+                success = true;
+                break;
+            }
         } catch (e) {
             continue;
         }
@@ -137,32 +87,41 @@ async function checkServiceStatus(service) {
 }
 
 function setServiceUI(dot, text, state) {
-    dot.classList.remove('animate-pulse', 'status-dot-current', 'status-dot-past', 'status-dot-checking');
-    text.classList.remove('status-text-current', 'status-text-past');
-    text.style.color = '';
+    dot.className = 'status-dot font-bold text-xl';
+    text.className = 'status-text text-sm italic ml-auto';
 
-    if (state === 'online') {
-        dot.classList.add('status-dot-current');
-        text.classList.add('status-text-current');
-        text.textContent = 'Online';
-    } else if (state === 'offline') {
-        dot.classList.add('status-dot-past');
-        text.classList.add('status-text-past');
-        text.textContent = 'Decommissioned';
-    } else if (state === 'failed') {
-        dot.classList.add('status-dot-past');
-        text.classList.add('status-text-past');
-        text.textContent = 'Failed to Connect';
-    } else if (state === 'checking') {
-        dot.classList.add('status-dot-checking', 'animate-pulse');
-        text.textContent = 'Checking...';
-        text.style.color = 'var(--text-secondary)';
+    switch (state) {
+        case 'online':
+            dot.classList.add('text-green-500');
+            text.classList.add('text-gray-600', 'dark:text-gray-400');
+            text.textContent = 'Online';
+            break;
+        case 'offline':
+            dot.classList.add('text-red-500');
+            text.classList.add('text-red-600', 'dark:text-red-400');
+            text.textContent = 'Decommissioned';
+            break;
+        case 'failed':
+            dot.classList.add('text-red-500');
+            text.classList.add('text-red-600', 'dark:text-red-400');
+            text.textContent = 'Failed to Connect';
+            break;
+        case 'checking':
+            dot.classList.add('text-yellow-500', 'animate-pulse');
+            text.classList.add('text-yellow-600', 'dark:text-yellow-500');
+            text.textContent = 'Checking...';
+            break;
+        default:
+            dot.classList.add('text-gray-500');
+            text.classList.add('text-gray-600', 'dark:text-gray-400');
+            text.textContent = 'Unknown...';
+            break;
     }
 }
 
 function checkAllServicesStatus() {
     servicesData.forEach(service => {
-        const container = document.getElementById(`status-${service.id}`);
+        const container = document.querySelector(`#status-${service.id}`);
         if (container) setServiceUI(container.querySelector('.status-dot'), container.querySelector('.status-text'), 'checking');
         checkServiceStatus(service);
     });
@@ -182,18 +141,8 @@ function observeAnimations(container) {
     });
 }
 
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        const notification = document.getElementById('copy-notification');
-        if (notification) {
-            notification.style.opacity = '1';
-            setTimeout(() => notification.style.opacity = '0', 2000);
-        }
-    });
-}
-
 async function fetchAndRenderProjects() {
-    const container = document.getElementById('project-grid-container');
+    const container = document.querySelector('#projects');
     if (!container) return;
 
     try {
@@ -205,45 +154,34 @@ async function fetchAndRenderProjects() {
         container.innerHTML = '';
 
         projects.forEach(project => {
-            const card = document.createElement('div');
-            card.className = 'card p-5 rounded-lg card-hover-effect anim-fade-in-up flex flex-col';
-
-            const tagVars = {
-                'video-plugin': { bg: 'var(--tag-video-bg)', text: 'var(--tag-video-text)' },
-                'plugin': { bg: 'var(--tag-plugin-bg)', text: 'var(--tag-plugin-text)' },
-                'discord-bot': { bg: 'var(--tag-discord-bg)', text: 'var(--tag-discord-text)' }
-            };
-            const currentTagVars = tagVars[project.type] || { bg: 'var(--tag-default-bg)', text: 'var(--tag-default-text)' };
+            const li = document.createElement('li');
+            li.className = 'anim-fade-in-up';
 
             let buttonsHTML = '';
 
-            if (project.download?.has) buttonsHTML += `<a href="${project.download.url}" target="_blank" class="action-button inline-flex items-center gap-2 text-sm font-bold py-2 px-3 rounded-md"><i data-feather="download" class="w-4 h-4"></i>Download</a>`;
-            if (project.invite?.has) buttonsHTML += `<a href="${project.invite.url}" target="_blank" class="action-button inline-flex items-center gap-2 text-sm font-bold py-2 px-3 rounded-md"><i data-feather="arrow-right-circle" class="w-4 h-4"></i>Invite</a>`;
-            if (project.link?.has) buttonsHTML += `<a href="${project.link.url}" target="_blank" class="action-button inline-flex items-center gap-2 text-sm font-bold py-2 px-3 rounded-md"><i data-feather="external-link" class="w-4 h-4"></i>View</a>`;
+            if (project.download?.has) buttonsHTML += `<a href="${project.download.url}" target="_blank" class="ink-link inline-flex items-center text-sm font-bold">Download</a>`;
+            if (project.invite?.has) buttonsHTML += `<a href="${project.invite.url}" target="_blank" class="ink-link inline-flex items-center text-sm font-bold ml-4">Invite</a>`;
+            if (project.link?.has) buttonsHTML += `<a href="${project.link.url}" target="_blank" class="ink-link inline-flex items-center text-sm font-bold ml-4">View</a>`;
 
-            card.innerHTML = `
-                <div class="flex-grow">
-                    <h4 class="font-bold text-lg" style="color: var(--text-primary);">${project.name}</h4>
-                    <p class="text-sm mt-2 mb-4">${project.description || ''}</p>
+            li.innerHTML = `
+                <strong class="text-xl handwriting text-gray-900 dark:text-gray-100">${project.name}</strong>
+                <span class="text-xs text-gray-500 italic border border-gray-300 dark:border-slate-600 rounded px-1 ml-2 capitalize">${project.type.replace('-', ' ')}</span><br>
+                <span class="text-gray-800 dark:text-gray-200 block mt-1">${project.description || ''}</span>
+                <div class="mt-2 flex items-center">
+                    ${buttonsHTML}
                 </div>
-                <div class="flex-shrink-0 mt-auto">
-                    <div class="flex items-center justify-between">
-                        <span class="project-tag inline-block px-2 py-1 rounded capitalize text-xs" style="background-color: ${currentTagVars.bg}; color: ${currentTagVars.text};">${project.type.replace('-', ' ')}</span>
-                        <div class="flex gap-2">${buttonsHTML}</div>
-                    </div>
-                </div>`;
-            container.appendChild(card);
+            `;
+            container.appendChild(li);
         });
 
-        feather.replace();
         observeAnimations(container);
     } catch (error) {
-        renderError(container, "Could not load projects.", 3);
+        renderError(container, "Could not load projects.");
     }
 }
 
 async function fetchAndRenderClients() {
-    const container = document.getElementById('client-grid-container');
+    const container = document.querySelector('#experience');
     if (!container) return;
 
     try {
@@ -253,45 +191,34 @@ async function fetchAndRenderClients() {
 
         container.innerHTML = '';
         clients.forEach(client => {
-            const card = document.createElement('div');
-            card.className = 'card p-5 rounded-lg anim-fade-in-up flex flex-col';
+            const li = document.createElement('li');
+            li.className = 'anim-fade-in-up';
 
             const dateStr = client.start ? (client.end ? `${client.start} &ndash; ${client.end}` : `Since ${client.start}`) : '';
             const statusLabel = client.left ? 'Past Work' : 'Current Work';
-            const statusClass = client.left ? 'status-text-past' : 'status-text-current';
-            const dotClass = client.left ? 'status-dot-past' : 'status-dot-current animate-pulse';
+
+            const dotClass = client.left ? 'text-red-500' : 'text-blue-500';
+            const statusTextClass = client.left ? 'text-red-800 dark:text-red-400' : 'text-blue-800 dark:text-blue-400';
 
             let buttonsHTML = '';
-            if (client.link != null) buttonsHTML += `<a href="${client.link}" target="_blank" class="action-button inline-flex items-center gap-2 text-sm font-bold py-2 px-3 rounded-md"><i data-feather="external-link" class="w-4 h-4"></i>View</a>`;
+            if (client.link != null) buttonsHTML += `<a href="${client.link}" target="_blank" class="ink-link inline-flex items-center text-sm font-bold ml-4">View</a>`;
 
-            card.innerHTML = `
-                <div class="flex-grow">
-                    <div class="flex justify-between items-start">
-                         <a href="${client.link}" target="_blank" class="font-bold text-lg contact-link transition-colors" style="color: var(--text-primary);">${client.entity}</a>
-                         <span class="text-xs flex-shrink-0 ml-4">${dateStr}</span>
-                    </div>
-                    <p class="text-sm mt-2 mb-4">${client.description || ''}</p>
+            li.innerHTML = `
+                <strong class="text-xl handwriting text-gray-900 dark:text-gray-100">${client.entity}</strong>
+                <span class="text-sm text-gray-600 dark:text-gray-400 italic ml-2">(${dateStr})</span><br>
+                <span class="text-gray-800 dark:text-gray-200 block mt-1">${client.description || ''}</span>
+                <div class="flex items-center gap-2 text-sm font-bold ${statusTextClass} mt-2">
+                    <span class="${dotClass} text-lg leading-none">●</span>
+                    <span>${statusLabel}</span>
+                    ${buttonsHTML}
                 </div>
-                <div class="flex-shrink-0 mt-auto pt-4 border-t border-white/5">
-                    <div class="flex items-center gap-2 text-sm justify-between">
-                        <div class="flex items-center gap-2 text-sm">
-                            <div class="w-2 h-2 ${dotClass} rounded-full"></div>
-                            <span class="${statusClass}">${statusLabel}</span>
-                        </div>
-                        <div class="flex gap-2">${buttonsHTML}</div>
-                    </div>
-                </div>
-                <div class="flex-shrink-0 mt-auto">
-                    <div class="flex items-center ">
-                        
-                    </div>
-                </div>`;
-            container.appendChild(card);
+            `;
+            container.appendChild(li);
         });
-        feather.replace();
+
         observeAnimations(container);
     } catch (e) {
-        renderError(container, "Failed to load experience.", 2);
+        renderError(container, "Failed to load experience.");
     }
 }
 
@@ -301,7 +228,9 @@ function connectLanyard() {
     lanyardSocket.onmessage = (event) => {
         const data = JSON.parse(event.data);
         if (data.op === 1) setInterval(() => lanyardSocket.send(JSON.stringify({ op: 3 })), data.d.heartbeat_interval);
-        if (data.op === 0) updateProfileCard(data.d);
+        if (data.op === 0 && (data.t === 'INIT_STATE' || data.t === 'PRESENCE_UPDATE')) {
+            updateProfileCard(data.d);
+        }
     };
     lanyardSocket.onclose = () => setTimeout(connectLanyard, 5000);
 }
@@ -310,95 +239,105 @@ function updateProfileCard(data) {
     if (!data?.discord_user) return;
 
     const user = data.discord_user;
-    const avatar = document.getElementById('profile-avatar');
-    avatar.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${user.avatar.startsWith('a_') ? 'gif' : 'png'}?size=128`;
-    document.getElementById('profile-username').textContent = user.username;
+    const container = document.getElementById('lanyard');
+    if (container) container.classList.remove('hidden');
 
-    const statusMap = {
-        online: 'var(--status-dot-online)',
-        idle: 'var(--status-dot-idle)',
-        dnd: 'var(--status-dot-dnd)',
-        offline: 'var(--status-dot-offline)'
-    };
-    const dot = document.getElementById('profile-status-dot');
-    dot.style.backgroundColor = statusMap[data.discord_status] || statusMap.offline;
-    document.getElementById('profile-status-text').textContent = data.discord_status;
+    const avatar = document.getElementById('discord-avatar');
+    if(avatar) avatar.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${user.avatar.startsWith('a_') ? 'gif' : 'png'}?size=128`;
+
+    const dot = document.getElementById('discord-status-dot');
+    if (dot) {
+        dot.className = 'absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-white dark:border-slate-800 transition-colors duration-300 ';
+        switch (data.discord_status) {
+            case 'online': dot.classList.add('bg-green-500'); break;
+            case 'idle': dot.classList.add('bg-yellow-500'); break;
+            case 'dnd': dot.classList.add('bg-red-500'); break;
+            default: dot.classList.add('bg-gray-500'); break;
+        }
+    }
+
+    let activityText = data.discord_status === 'offline' ? 'Offline' : 'Online';
+    if (data.activities && data.activities.length > 0) {
+        const customStatus = data.activities.find(a => a.type === 4);
+        const playing = data.activities.find(a => a.type === 0);
+
+        if (customStatus && customStatus.state) {
+            activityText = customStatus.state;
+            if (customStatus.emoji) {
+                activityText = (customStatus.emoji.id ? '🎮 ' : customStatus.emoji.name + ' ') + activityText;
+            }
+        } else if (playing) {
+            activityText = `Playing ${playing.name}`;
+        }
+    }
+
+    const activityEl = document.getElementById('discord-activity');
+    if (activityEl) activityEl.textContent = activityText;
 
     const spotify = data.spotify;
     const spotifyEl = document.getElementById('spotify-section');
     if (spotify) {
-        spotifyEl.style.display = 'block';
-        document.getElementById('spotify-song').textContent = spotify.song;
-        document.getElementById('spotify-artist').textContent = `by ${spotify.artist}`;
-        document.getElementById('spotify-album-art').src = spotify.album_art_url;
+        if (spotifyEl) spotifyEl.classList.remove('hidden');
+        const songEl = document.getElementById('spotify-song');
+        if (songEl) songEl.textContent = spotify.song;
+        const artistEl = document.getElementById('spotify-artist');
+        if (artistEl) artistEl.textContent = `by ${spotify.artist}`;
+        const artEl = document.getElementById('spotify-album-art');
+        if (artEl) artEl.src = spotify.album_art_url;
     } else {
-        spotifyEl.style.display = 'none';
-    }
-
-    const activity = data.activities.find(a => a.type === 0) || data.activities.find(a => a.type === 4);
-    const activityEl = document.getElementById('activity-section');
-    if (activity) {
-        activityEl.style.display = 'block';
-        const isGame = activity.type === 0;
-        document.getElementById('activity-title').textContent = isGame ? 'PLAYING' : 'STATUS';
-        document.getElementById('activity-name').textContent = isGame ? activity.name : (activity.state || '');
-        document.getElementById('activity-details').textContent = activity.details || '';
-        document.getElementById('activity-state').textContent = isGame ? (activity.state || '') : '';
-        const img = document.getElementById('activity-large-image');
-        if (isGame && activity.assets?.large_image) {
-            img.style.display = 'block';
-            img.src = activity.assets.large_image.startsWith('mp:external')
-                ? activity.assets.large_image.replace(/mp:external\/.*\/https\//, 'https://')
-                : `https://cdn.discordapp.com/app-assets/${activity.application_id}/${activity.assets.large_image}.png`;
-        } else {
-            img.style.display = 'none';
-        }
-    } else {
-        activityEl.style.display = 'none';
+        if (spotifyEl) spotifyEl.classList.add('hidden');
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
-    const sunIcon = document.querySelector('.sun-icon');
-    const moonIcon = document.querySelector('.moon-icon');
-    const mainLayout = document.getElementById('main-layout-container');
+    const darkIcon = document.getElementById('theme-icon-dark');
+    const lightIcon = document.getElementById('theme-icon-light');
 
     const setAppTheme = (theme) => {
         const isDark = theme === 'dark';
         document.documentElement.classList.toggle('dark', isDark);
-        sunIcon?.classList.toggle('hidden', isDark);
-        moonIcon?.classList.toggle('hidden', !isDark);
+        document.body.classList.toggle('dark', isDark);
+
+        if (darkIcon && lightIcon) {
+            darkIcon.classList.toggle('hidden', !isDark);
+            darkIcon.classList.toggle('block', isDark);
+            lightIcon.classList.toggle('hidden', isDark);
+            lightIcon.classList.toggle('block', !isDark);
+        }
+
         localStorage.setItem('theme', theme);
     };
 
     themeToggle?.addEventListener('click', () => setAppTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark'));
     setAppTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
 
+    const contactBox = document.getElementById('contact');
+    if (contactBox) {
+        contactBox.addEventListener('click', () => {
+            const email = "contact@acronical.uk";
+            const textArea = document.createElement("textarea");
+            textArea.value = email;
+            document.body.appendChild(textArea);
+            textArea.select();
+
+            try {
+                document.execCommand('copy');
+                const originalText = contactBox.innerHTML;
+                contactBox.innerHTML = `<p class="font-bold text-2xl mb-2 handwriting text-green-600">Email Copied!</p>`;
+                setTimeout(() => {
+                    contactBox.innerHTML = originalText;
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy', err);
+            } finally {
+                document.body.removeChild(textArea);
+            }
+        });
+    }
+
     fetchAndRenderProjects();
     fetchAndRenderClients();
     fetchAndRenderServices();
     connectLanyard();
-
-    document.querySelectorAll('.tab-link').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            mainLayout.classList.replace('welcome-view', 'content-view');
-            openTab(e, btn.dataset.tab);
-        });
-    });
-
-    document.getElementById('home-button')?.addEventListener('click', () => {
-        mainLayout.classList.replace('content-view', 'welcome-view');
-        const activeTab = document.querySelector('.tab-content[style*="display: block"]');
-        if (activeTab) {
-            isTransitioning = true;
-            document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
-            activeTab.classList.add('tab-fade-out');
-            activeTab.addEventListener('animationend', () => {
-                activeTab.style.display = 'none';
-                activeTab.classList.remove('tab-fade-out');
-                isTransitioning = false;
-            }, { once: true });
-        }
-    });
 });
