@@ -74,7 +74,7 @@ async function checkServiceStatus(service) {
             const timeoutId = setTimeout(() => controller.abort(), 5000);
             const res = await fetch(url, { mode: 'no-cors', cache: 'no-cache', signal: controller.signal });
             clearTimeout(timeoutId);
-            if (res.ok) {
+            if (res.ok || res.type === 'opaque' || res.status === 200 || res.status === 403 || res.status === 401 || res.status === 0) {
                 success = true;
                 break;
             }
