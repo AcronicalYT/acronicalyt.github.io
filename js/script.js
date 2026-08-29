@@ -13,55 +13,88 @@ let allPostits = [];
 let panX = 0;
 let panY = 0;
 let zoom = 1;
-let isDragging = false;
-let dragStartX = 0;
-let dragStartY = 0;
+let isCanvasDragging = false;
+let canvasDragStartX = 0;
+let canvasDragStartY = 0;
+
+// Post-it drag state
+let draggedPostit = null;
+let postitDragStartX = 0;
+let postitDragStartY = 0;
 
 const POSTIT_COLORS = ['postit-yellow', 'postit-pink', 'postit-blue', 'postit-green'];
+const POSTIT_WIDTH = 320;
+const POSTIT_HEIGHT = 300;
 
-function renderError(container, message) {
-    if (!container) return;
-    container.innerHTML = `
-        <li class="flex flex-col items-start gap-1 text-red-600 dark:text-red-400 handwriting font-bold text-xl">
-            <p>⚠️ ${message}</p>
-        </li>
-    `;
+function getPositionWithCollisionAvoidance(existingPostits) {
+    const centerX = 0;
+    const centerY = 0;
+    const minDistance = 450;
+    const maxDistance = 900;
+    const gridSize = 80;
+
+    let position;
+    let attempts = 0;
+    let hasCollision = true;
+
+    while (hasCollision && attempts < 50) {
+        const angle = Math.random() * Math.PI * 2;
+        const distance = minDistance + Math.random() * (maxDistance - minDistance);
+        position = {
+            x: Math.cos(angle) * distance,
+            y: Math.sin(angle) * distance,
+            rotation: (Math.random() - 0.5) * 8
+        };
+
+        hasCollision = false;
+        for (const postit of existingPostits) {
+            const postitX = parseFloat(postit.dataset.posX);
+            const postitY = parseFloat(postit.dataset.posY);
+            const dx = position.x - postitX;
+            const dy = position.y - postitY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < gridSize) {
+                hasCollision = true;
+                break;
+            }
+        }
+
+        attempts++;
+    }
+
+    return position;
 }
 
-function getRandomPosition() {
-    const minDistance = 400;
-    const maxDistance = 800;
-    const angle = Math.random() * Math.PI * 2;
-    const distance = minDistance + Math.random() * (maxDistance - minDistance);
-    return {
-        x: Math.cos(angle) * distance,
-        y: Math.sin(angle) * distance,
-        rotation: (Math.random() - 0.5) * 8
-    };
-}
-
-function createPostit(title, items, color) {
+function createPostit(title, content, color) {
     const container = document.getElementById('postits-container');
     if (!container) return;
 
-    const pos = getRandomPosition();
+    const pos = getPositionWithCollisionAvoidance(allPostits);
     const postit = document.createElement('div');
     postit.className = `postit ${color}`;
+    postit.dataset.posX = pos.x;
+    postit.dataset.posY = pos.y;
     postit.style.left = `calc(50% + ${pos.x}px)`;
     postit.style.top = `calc(50% + ${pos.y}px)`;
     postit.style.transform = `translate(-50%, -50%) rotate(${pos.rotation}deg)`;
 
-    let itemsHTML = '';
-    items.forEach(item => {
-        itemsHTML += `<div class="postit-item">${item}</div>`;
-    });
-
     postit.innerHTML = `
         <h3>${title}</h3>
         <div class="postit-content">
-            ${itemsHTML}
+            ${content}
         </div>
     `;
+
+    // Add drag handlers for the post-it
+    postit.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return;
+        e.stopPropagation();
+        draggedPostit = postit;
+        postitDragStartX = e.clientX;
+        postitDragStartY = e.clientY;
+        postit.style.zIndex = 1000;
+    });
 
     container.appendChild(postit);
     allPostits.push(postit);
@@ -74,13 +107,17 @@ async function fetchAndRenderServices() {
         const data = await response.json();
         servicesData = Object.entries(data).map(([key, val]) => ({ id: key, ...val }));
 
-        const items = [];
-        servicesData.forEach(service => {
-            const statusText = service.online ? '🟢 Online' : '🔴 Offline';
-            items.push(`<strong>${service.name}</strong> - ${statusText}`);
+        servicesData.forEach((service, idx) => {
+            const statusText = service.online ? '🟢 Online' : '🔴 Decommissioned';
+            const color = POSTIT_COLORS[idx % POSTIT_COLORS.length];
+            const content = `
+                <div class="postit-item">
+                    <small>${statusText}</small>
+                </div>
+            `;
+            createPostit(service.name, content, color);
         });
 
-        createPostit('Hosted Services', items, POSTIT_COLORS[2]);
         checkAllServicesStatus();
     } catch (error) {
         console.error("Could not load services:", error);
@@ -118,22 +155,24 @@ async function fetchAndRenderProjects() {
         const data = await response.json();
         const projects = Object.values(data);
 
-        const items = [];
-        projects.forEach(project => {
+        projects.forEach((project, idx) => {
             let buttons = [];
             if (project.download?.has) buttons.push(`<a href="${project.download.url}" target="_blank">Download</a>`);
             if (project.invite?.has) buttons.push(`<a href="${project.invite.url}" target="_blank">Invite</a>`);
             if (project.link?.has) buttons.push(`<a href="${project.link.url}" target="_blank">View</a>`);
 
             const typeTag = `<span class="postit-tag">${project.type.replace('-', ' ')}</span>`;
-            items.push(`
-                <strong>${project.name}</strong>${typeTag}<br>
-                <small>${project.description || ''}</small><br>
-                ${buttons.length > 0 ? `<small style="margin-top: 0.25rem; display: block;">${buttons.join(' | ')}</small>` : ''}
-            `);
+            const content = `
+                <div class="postit-item">
+                    ${typeTag}
+                    <p class="postit-desc">${project.description || ''}</p>
+                    ${buttons.length > 0 ? `<div class="postit-links">${buttons.join(' | ')}</div>` : ''}
+                </div>
+            `;
+            
+            const color = POSTIT_COLORS[idx % POSTIT_COLORS.length];
+            createPostit(project.name, content, color);
         });
-
-        createPostit('My Projects', items, POSTIT_COLORS[0]);
     } catch (error) {
         console.error("Could not load projects:", error);
     }
@@ -145,22 +184,24 @@ async function fetchAndRenderClients() {
         const data = await response.json();
         const clients = Object.values(data);
 
-        const items = [];
-        clients.forEach(client => {
+        clients.forEach((client, idx) => {
             const dateStr = client.start ? (client.end ? `${client.start} – ${client.end}` : `Since ${client.start}`) : '';
             const statusLabel = client.left ? '🔴 Past Work' : '🟢 Current';
 
             let viewButton = '';
             if (client.link != null) viewButton = `<a href="${client.link}" target="_blank">View</a>`;
 
-            items.push(`
-                <strong>${client.entity}</strong> <small>${dateStr}</small><br>
-                <small>${client.description || ''}</small><br>
-                <small style="margin-top: 0.25rem; display: block;">${statusLabel}${viewButton ? ' | ' + viewButton : ''}</small>
-            `);
-        });
+            const content = `
+                <div class="postit-item">
+                    <small class="postit-date">${dateStr}</small>
+                    <p class="postit-desc">${client.description || ''}</p>
+                    <small>${statusLabel}${viewButton ? ' | ' + viewButton : ''}</small>
+                </div>
+            `;
 
-        createPostit('Experience & Work', items, POSTIT_COLORS[3]);
+            const color = POSTIT_COLORS[idx % POSTIT_COLORS.length];
+            createPostit(client.entity, content, color);
+        });
     } catch (e) {
         console.error("Failed to load experience:", e);
     }
@@ -289,24 +330,48 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'r' || e.key === 'R') resetView();
     });
 
-    // Pan and zoom
+    // Canvas pan and zoom
     canvas?.addEventListener('mousedown', (e) => {
-        if (e.button !== 0) return;
-        isDragging = true;
-        dragStartX = e.clientX - panX;
-        dragStartY = e.clientY - panY;
+        if (e.button !== 0 || draggedPostit) return;
+        isCanvasDragging = true;
+        canvasDragStartX = e.clientX - panX;
+        canvasDragStartY = e.clientY - panY;
         canvas.classList.add('grabbing');
     });
 
     document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        panX = e.clientX - dragStartX;
-        panY = e.clientY - dragStartY;
+        // Handle post-it dragging
+        if (draggedPostit) {
+            const deltaX = e.clientX - postitDragStartX;
+            const deltaY = e.clientY - postitDragStartY;
+            
+            const currentX = parseFloat(draggedPostit.dataset.posX);
+            const currentY = parseFloat(draggedPostit.dataset.posY);
+            
+            draggedPostit.dataset.posX = currentX + deltaX / zoom;
+            draggedPostit.dataset.posY = currentY + deltaY / zoom;
+            
+            draggedPostit.style.left = `calc(50% + ${draggedPostit.dataset.posX}px)`;
+            draggedPostit.style.top = `calc(50% + ${draggedPostit.dataset.posY}px)`;
+            
+            postitDragStartX = e.clientX;
+            postitDragStartY = e.clientY;
+            return;
+        }
+
+        // Handle canvas panning
+        if (!isCanvasDragging) return;
+        panX = e.clientX - canvasDragStartX;
+        panY = e.clientY - canvasDragStartY;
         updateViewport();
     });
 
     document.addEventListener('mouseup', () => {
-        isDragging = false;
+        isCanvasDragging = false;
+        if (draggedPostit) {
+            draggedPostit.style.zIndex = 'auto';
+        }
+        draggedPostit = null;
         canvas?.classList.remove('grabbing');
     });
 
