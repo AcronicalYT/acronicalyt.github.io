@@ -173,6 +173,22 @@ a.ink-link:hover {
     border-color: #475569;
 }
 
+.underline-yellow {
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: #fef08a;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 3px;
+}
+
+.underline-blue {
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: #bfdbfe;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 3px;
+}
+
 /* Post-it note specific styling */
 .postit {
     position: absolute;

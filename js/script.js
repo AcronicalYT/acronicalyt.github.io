@@ -24,17 +24,15 @@ let postitDragStartY = 0;
 const POSTIT_COLORS = ['postit-yellow', 'postit-pink', 'postit-blue', 'postit-green'];
 
 function getPositionWithCollisionAvoidance(existingPostits) {
-    const centerX = 0;
-    const centerY = 0;
-    const minDistance = 450;
-    const maxDistance = 900;
-    const gridSize = 80;
+    const minDistance = 550;
+    const maxDistance = 1000;
+    const minSeparation = 150;
 
     let position;
     let attempts = 0;
     let hasCollision = true;
 
-    while (hasCollision && attempts < 50) {
+    while (hasCollision && attempts < 100) {
         const angle = Math.random() * Math.PI * 2;
         const distance = minDistance + Math.random() * (maxDistance - minDistance);
         position = {
@@ -49,9 +47,9 @@ function getPositionWithCollisionAvoidance(existingPostits) {
             const postitY = parseFloat(postit.dataset.posY);
             const dx = position.x - postitX;
             const dy = position.y - postitY;
-            const distance = Math.sqrt(dx * dx + dy * dy);
+            const dist = Math.sqrt(dx * dx + dy * dy);
 
-            if (distance < gridSize) {
+            if (dist < minSeparation) {
                 hasCollision = true;
                 break;
             }
@@ -72,9 +70,7 @@ function createPostit(title, content, color) {
     postit.className = `postit ${color}`;
     postit.dataset.posX = pos.x;
     postit.dataset.posY = pos.y;
-    postit.style.left = `calc(50% + ${pos.x}px)`;
-    postit.style.top = `calc(50% + ${pos.y}px)`;
-    postit.style.transform = `translate(-50%, -50%) rotate(${pos.rotation}deg)`;
+    postit.dataset.baseRotation = pos.rotation;
     postit.style.zIndex = zIndexCounter;
 
     postit.innerHTML = `
@@ -83,6 +79,18 @@ function createPostit(title, content, color) {
             ${content}
         </div>
     `;
+
+    // Update position using transform for better performance
+    const updatePosition = () => {
+        const x = parseFloat(postit.dataset.posX);
+        const y = parseFloat(postit.dataset.posY);
+        const rot = parseFloat(postit.dataset.baseRotation);
+        postit.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) rotate(${rot}deg)`;
+    };
+    updatePosition();
+
+    postit.style.left = '50%';
+    postit.style.top = '50%';
 
     // Add drag handlers for the post-it
     postit.addEventListener('mousedown', (e) => {
@@ -295,12 +303,15 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const currentX = parseFloat(draggedPostit.dataset.posX);
             const currentY = parseFloat(draggedPostit.dataset.posY);
+            const baseRotation = parseFloat(draggedPostit.dataset.baseRotation);
             
-            draggedPostit.dataset.posX = currentX + deltaX / zoom;
-            draggedPostit.dataset.posY = currentY + deltaY / zoom;
+            const newX = currentX + deltaX / zoom;
+            const newY = currentY + deltaY / zoom;
             
-            draggedPostit.style.left = `calc(50% + ${draggedPostit.dataset.posX}px)`;
-            draggedPostit.style.top = `calc(50% + ${draggedPostit.dataset.posY}px)`;
+            draggedPostit.dataset.posX = newX;
+            draggedPostit.dataset.posY = newY;
+            
+            draggedPostit.style.transform = `translate(calc(-50% + ${newX}px), calc(-50% + ${newY}px)) rotate(${baseRotation}deg)`;
             
             postitDragStartX = e.clientX;
             postitDragStartY = e.clientY;
