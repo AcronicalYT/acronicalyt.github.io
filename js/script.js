@@ -299,6 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
         canvasDragStartX = e.clientX - panX;
         canvasDragStartY = e.clientY - panY;
         canvas.classList.add('grabbing');
+        if (viewport) viewport.style.willChange = 'transform';
     });
 
     document.addEventListener('mousemove', (e) => {
@@ -317,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
             draggedPostit.dataset.posX = newX;
             draggedPostit.dataset.posY = newY;
             
-            draggedPostit.style.transform = `translate(${newX - 50}%, ${newY - 50}%) rotate(${baseRotation}deg)`;
+            draggedPostit.style.transform = `translate(calc(-50% + ${newX}px), calc(-50% + ${newY}px)) rotate(${baseRotation}deg)`;
             
             postitDragStartX = e.clientX;
             postitDragStartY = e.clientY;
@@ -339,6 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         draggedPostit = null;
         canvas?.classList.remove('grabbing');
+        if (viewport) viewport.style.willChange = 'auto';
     });
 
     // Zoom with mouse wheel
