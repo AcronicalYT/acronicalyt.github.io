@@ -19,7 +19,7 @@ h1, h2, h3, h4, .handwriting {
 }
 
 #viewport {
-    will-change: transform;
+    transform: translate(0, 0) scale(1);
 }
 
 #center-content {

@@ -18,6 +18,9 @@ let canvasDragStartY = 0;
 let lastCanvasPanX = 0;
 let lastCanvasPanY = 0;
 
+let viewportElement = null;
+let pendingViewportUpdate = false;
+
 // Post-it drag state
 let draggedPostit = null;
 let postitDragStartX = 0;
@@ -234,9 +237,8 @@ function updateProfileCard(data) {
 }
 
 function updateViewport() {
-    const viewport = document.getElementById('viewport');
-    if (viewport) {
-        viewport.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+    if (viewportElement) {
+        viewportElement.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
     }
 }
 
@@ -255,7 +257,7 @@ function updateZoomLevel() {
 
 document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('canvas');
-    const viewport = document.getElementById('viewport');
+    viewportElement = document.getElementById('viewport');
     const themeToggle = document.getElementById('theme-toggle');
     const resetButton = document.getElementById('reset-view');
     const darkIcon = document.getElementById('theme-icon-dark');
@@ -303,7 +305,9 @@ document.addEventListener('DOMContentLoaded', () => {
         lastCanvasPanX = panX;
         lastCanvasPanY = panY;
         canvas.classList.add('grabbing');
-        if (viewport) viewport.style.willChange = 'transform';
+        if (viewportElement) {
+            viewportElement.style.willChange = 'transform';
+        }
     });
 
     document.addEventListener('mousemove', (e) => {
@@ -346,7 +350,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         draggedPostit = null;
         canvas?.classList.remove('grabbing');
-        if (viewport) viewport.style.willChange = 'auto';
+        if (viewportElement) {
+            viewportElement.style.willChange = 'auto';
+        }
     });
 
     // Zoom with mouse wheel
