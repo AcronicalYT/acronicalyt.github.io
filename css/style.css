@@ -23,7 +23,10 @@ h1, h2, h3, h4, .handwriting {
 }
 
 #center-content {
-    pointer-events: auto;
+    pointer-events: auto !important;
+    cursor: auto !important;
+    z-index: 9999;
+    user-select: none;
 }
 
 #postits-container {
@@ -200,9 +203,13 @@ a.ink-link:hover {
     padding: 1rem;
     border-radius: 0.25rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease-out;
     cursor: grab;
     user-select: none;
+}
+
+.postit.dragging {
+    pointer-events: none;
+    will-change: transform;
 }
 
 .postit:hover {

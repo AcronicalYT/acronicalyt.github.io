@@ -100,6 +100,7 @@ function createPostit(title, content, color) {
         postitDragStartX = e.clientX;
         postitDragStartY = e.clientY;
         postit.style.zIndex = ++zIndexCounter;
+        postit.classList.add('dragging');
     });
 
     container.appendChild(postit);
@@ -316,7 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
             draggedPostit.dataset.posX = newX;
             draggedPostit.dataset.posY = newY;
             
-            draggedPostit.style.transform = `translate(calc(-50% + ${newX}px), calc(-50% + ${newY}px)) rotate(${baseRotation}deg)`;
+            draggedPostit.style.transform = `translate(${newX - 50}%, ${newY - 50}%) rotate(${baseRotation}deg)`;
             
             postitDragStartX = e.clientX;
             postitDragStartY = e.clientY;
@@ -328,12 +329,13 @@ document.addEventListener('DOMContentLoaded', () => {
         panX = e.clientX - canvasDragStartX;
         panY = e.clientY - canvasDragStartY;
         updateViewport();
-    });
+    }, { passive: true });
 
     document.addEventListener('mouseup', () => {
         isCanvasDragging = false;
         if (draggedPostit) {
             draggedPostit.style.zIndex = 'auto';
+            draggedPostit.classList.remove('dragging');
         }
         draggedPostit = null;
         canvas?.classList.remove('grabbing');
