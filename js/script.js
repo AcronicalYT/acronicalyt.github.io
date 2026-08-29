@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
         panX = lastCanvasPanX + deltaX;
         panY = lastCanvasPanY + deltaY;
         updateViewport();
-    }, { passive: true });
+    });
 
     document.addEventListener('mouseup', () => {
         isCanvasDragging = false;
