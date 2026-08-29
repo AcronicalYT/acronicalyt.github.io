@@ -6,84 +6,92 @@
         <title>Acronical | Terms of Service</title>
         <link rel="stylesheet" href="/css/style.css">
         <script src="https://cdn.tailwindcss.com"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-        <script src="https://unpkg.com/feather-icons"></script>
+        <script>
+            tailwind.config = {
+                darkMode: 'class',
+            }
+        </script>
     </head>
-    <body class="bg-[#f1f5f9] dark:bg-[#020617] transition-colors duration-300">
-        <div class="blob-container">
-            <div class="blob blob-1 w-96 h-96 opacity-50"></div>
-            <div class="blob blob-2 w-80 h-80 opacity-40"></div>
-            <div class="blob blob-3 w-72 h-72 opacity-50"></div>
-        </div>
-        <main class="min-h-screen w-full p-4 md:p-8 flex items-center justify-center">
-            <div class="glass-panel w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col anim-fade-in-up is-visible">
-                <header class="p-6 border-b flex items-center justify-between" style="border-color: var(--panel-border);">
-                    <div class="flex items-center gap-3">
-                        <i data-feather="file-text" class="w-6 h-6" style="color: var(--accent-color);"></i>
-                        <h1 class="text-xl font-bold tracking-tight" style="color: var(--text-primary);">Terms of Service</h1>
-                    </div>
-                    <a href="/" class="text-xs uppercase tracking-widest hover:opacity-70 transition-opacity" style="color: var(--text-secondary);">Back Home</a>
-                </header>
-                <div class="p-6 md:p-10 overflow-y-auto custom-scrollbar">
-                    <div class="mb-8 p-4 rounded-lg border-l-4" style="background: var(--card-bg); border-color: var(--accent-color);">
-                        <p class="text-sm leading-relaxed" style="color: var(--text-primary);">
-                            By inviting or interacting with any Discord bot provided by <span class="font-bold">Acronical</span>, you agree to comply with and be bound by the following terms.
+    <body class="py-12 px-4 sm:px-8 overflow-x-hidden text-gray-800 transition-colors duration-300">
+        <button id="theme-toggle" class="fixed top-4 right-4 sm:top-8 sm:right-8 z-50 p-3 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-gray-200 dark:border-slate-700 text-gray-800 dark:text-gray-200 hover:scale-110 transition-transform" aria-label="Toggle Dark Mode">
+            <svg id="theme-icon-dark" class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            <svg id="theme-icon-light" class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        </button>
+
+        <main class="max-w-3xl mx-auto space-y-6">
+            <a href="/" class="inline-block text-blue-600 dark:text-blue-400 hover:underline mb-4">← Back Home</a>
+            
+            <article class="paper paper-lines rounded-sm transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+                <div class="tape -rotate-3 w-28 -ml-20 mt-2"></div>
+                <div class="paper-content">
+                    <h1 class="text-5xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-4">Terms of Service</h1>
+                    
+                    <section class="mt-8 mb-8 p-4 border-l-4 border-gray-400 dark:border-slate-600 bg-gray-50 dark:bg-gray-900 rounded">
+                        <p class="text-gray-700 dark:text-gray-300">
+                            By inviting or interacting with any Discord bot provided by <strong>Acronical</strong>, you agree to comply with and be bound by the following terms.
                         </p>
-                    </div>
-                    <div class="space-y-8">
-                        <section>
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class="text-xs font-bold px-2 py-0.5 rounded" style="background: var(--accent-color); color: var(--bg-color);">01</span>
-                                <h2 class="font-bold uppercase text-xs tracking-widest" style="color: var(--text-primary);">Usage Agreement</h2>
-                            </div>
-                            <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+                    </section>
+
+                    <section class="mt-8 space-y-6">
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-2 border-b-2 border-gray-300 dark:border-slate-600 inline-block pb-1">Usage Agreement</h2>
+                            <p class="text-gray-700 dark:text-gray-300 mt-4">
                                 All services are provided "as is" without warranty of any kind. Bots are intended for Discord-related purposes only. Misuse, attempted exploitation, or use in violation of Discord's own ToS may result in a service ban.
                             </p>
-                        </section>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <section class="card p-5 rounded-xl border" style="border-color: var(--card-border); background: var(--card-bg);">
-                                <h2 class="font-bold uppercase text-[10px] tracking-widest mb-2" style="color: var(--accent-color);">02. Data Collection</h2>
-                                <p class="text-xs leading-relaxed">
-                                    Collection is limited to User IDs, Server IDs, and necessary message content required for the bot's features and performance improvements.
-                                </p>
-                            </section>
-                            <section class="card p-5 rounded-xl border" style="border-color: var(--card-border); background: var(--card-bg);">
-                                <h2 class="font-bold uppercase text-[10px] tracking-widest mb-2" style="color: var(--accent-color);">03. Data Usage</h2>
-                                <p class="text-xs leading-relaxed">
-                                    Data is utilised strictly for command processing and user interaction. No information is sold or shared with external third parties.
-                                </p>
-                            </section>
                         </div>
-                        <section>
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class="text-xs font-bold px-2 py-0.5 rounded" style="background: var(--accent-color); color: var(--bg-color);">04</span>
-                                <h2 class="font-bold uppercase text-xs tracking-widest" style="color: var(--text-primary);">Storage Policy</h2>
-                            </div>
-                            <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-2 border-b-2 border-gray-300 dark:border-slate-600 inline-block pb-1">Data Collection</h2>
+                            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                                Collection is limited to User IDs, Server IDs, and necessary message content required for the bot's features and performance improvements.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-2 border-b-2 border-gray-300 dark:border-slate-600 inline-block pb-1">Data Usage</h2>
+                            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                                Data is utilised strictly for command processing and user interaction. No information is sold or shared with external third parties.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-2 border-b-2 border-gray-300 dark:border-slate-600 inline-block pb-1">Storage Policy</h2>
+                            <p class="text-gray-700 dark:text-gray-300 mt-4">
                                 Data is primarily stored within Discord. Any secondary storage uses secure databases for non-identifiable configuration data (e.g., Role IDs, Guild settings).
                             </p>
-                        </section>
-                    </div>
-                    <footer class="mt-10 pt-6 border-t flex flex-col md:flex-row justify-between items-center gap-4" style="border-color: var(--panel-border);">
-                        <div class="flex items-center gap-3">
-                            <i data-feather="help-circle" class="w-4 h-4" style="color: var(--text-secondary);"></i>
-                            <span class="text-sm">Questions?</span>
-                            <a href="mailto:tos@acronical.uk" class="contact-link text-sm font-bold transition-colors" style="color: var(--accent-color);">tos@acronical.uk</a>
                         </div>
-                        <p class="text-[10px] uppercase tracking-widest opacity-40">Effective: Feb 2026</p>
+                    </section>
+
+                    <footer class="mt-12 pt-8 border-t-2 border-gray-300 dark:border-slate-600 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                        <p>Questions? <a href="mailto:tos@acronical.uk" class="ink-link">tos@acronical.uk</a></p>
+                        <p class="text-xs">Effective: February 2026</p>
                     </footer>
                 </div>
-            </div>
+            </article>
         </main>
 
         <script>
-            feather.replace();
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            }
+            const themeToggle = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('theme-icon-dark');
+            const lightIcon = document.getElementById('theme-icon-light');
+
+            const setAppTheme = (theme) => {
+                const isDark = theme === 'dark';
+                document.documentElement.classList.toggle('dark', isDark);
+                document.body.classList.toggle('dark', isDark);
+
+                if (darkIcon && lightIcon) {
+                    darkIcon.classList.toggle('hidden', !isDark);
+                    darkIcon.classList.toggle('block', isDark);
+                    lightIcon.classList.toggle('hidden', isDark);
+                    lightIcon.classList.toggle('block', !isDark);
+                }
+
+                localStorage.setItem('theme', theme);
+            };
+
+            themeToggle?.addEventListener('click', () => setAppTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark'));
+            setAppTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
         </script>
     </body>
 </html>

@@ -6,84 +6,83 @@
         <title>Acronical | Cookie Policy</title>
         <link rel="stylesheet" href="/css/style.css">
         <script src="https://cdn.tailwindcss.com"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-        <script src="https://unpkg.com/feather-icons"></script>
-        <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+        <script>
+            tailwind.config = {
+                darkMode: 'class',
+            }
+        </script>
     </head>
-    <body class="bg-[#f1f5f9] dark:bg-[#020617] transition-colors duration-300">
-        <div class="blob-container">
-            <div class="blob blob-1 w-96 h-96 opacity-50"></div>
-            <div class="blob blob-2 w-80 h-80 opacity-40"></div>
-            <div class="blob blob-3 w-72 h-72 opacity-50"></div>
-        </div>
+    <body class="py-12 px-4 sm:px-8 overflow-x-hidden text-gray-800 transition-colors duration-300">
+        <button id="theme-toggle" class="fixed top-4 right-4 sm:top-8 sm:right-8 z-50 p-3 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-gray-200 dark:border-slate-700 text-gray-800 dark:text-gray-200 hover:scale-110 transition-transform" aria-label="Toggle Dark Mode">
+            <svg id="theme-icon-dark" class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            <svg id="theme-icon-light" class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        </button>
 
-        <main class="min-h-screen w-full p-4 md:p-8 flex items-center justify-center">
-            <div class="glass-panel w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col anim-fade-in-up is-visible">
-                <header class="p-6 border-b flex items-center justify-between" style="border-color: var(--panel-border);">
-                    <div class="flex items-center gap-3">
-                        <i data-feather="database" class="w-6 h-6" style="color: var(--accent-color);"></i>
-                        <h1 class="text-xl font-bold tracking-tight" style="color: var(--text-primary);">Cookie Policy</h1>
-                    </div>
-                    <a href="/" class="text-xs uppercase tracking-widest hover:opacity-70 transition-opacity" style="color: var(--text-secondary);">Back Home</a>
-                </header>
-                <div class="p-6 md:p-10 overflow-y-auto custom-scrollbar">
-                    <section class="mb-10 text-center md:text-left">
-                        <h2 class="text-3xl font-bold mb-4" style="color: var(--text-primary);">Cookies...</h2>
-                        <p class="leading-relaxed" style="color: var(--text-secondary);">
+        <main class="max-w-3xl mx-auto space-y-6">
+            <a href="/" class="inline-block text-blue-600 dark:text-blue-400 hover:underline mb-4">← Back Home</a>
+            
+            <article class="paper paper-lines rounded-sm transform rotate-1 hover:rotate-0 transition-transform duration-300">
+                <div class="tape rotate-2 w-32 ml-12"></div>
+                <div class="paper-content">
+                    <h1 class="text-5xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-4">Cookie Policy</h1>
+                    
+                    <section class="mt-8 space-y-4">
+                        <p class="text-gray-700 dark:text-gray-300">
                             We've all heard of them — those digital crumbs companies use to track your every move so they know what you did at 3:26am last Wednesday.
-                            I (<span class="font-bold" style="color: var(--text-primary);">Acronical</span>) like to keep things a bit simpler.
+                        </p>
+                        <p class="text-gray-700 dark:text-gray-300">
+                            I (<strong>Acronical</strong>) like to keep things a bit simpler.
                         </p>
                     </section>
-                    <div class="grid grid-cols-1 gap-6 mb-10">
-                        <div class="card p-6 rounded-xl border flex flex-col md:flex-row gap-6 items-start" style="border-color: var(--card-border); background: var(--card-bg);">
-                            <div class="p-3 rounded-lg" style="background: var(--action-button-bg);">
-                                <i data-feather="eye-off" class="w-6 h-6" style="color: var(--accent-color);"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-sm uppercase tracking-widest mb-2" style="color: var(--text-primary);">Zero Data Collection</h3>
-                                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
-                                    I collect absolutely <span class="font-bold" style="color: var(--accent-color);">zero</span> personal data through this site. I don't see who you are, or what you do.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="space-y-8">
-                        <section>
-                            <h3 class="font-bold text-xs uppercase tracking-widest mb-4 flex items-center gap-2" style="color: var(--text-primary);">
-                                <i data-feather="external-link" class="w-4 h-4"></i> Third-Party Embeds
-                            </h3>
-                            <p class="text-sm leading-relaxed mb-4" style="color: var(--text-secondary);">
-                                Some cookies may be placed by external services used for embeds or analytics. These services have their own policies which you can review:
-                            </p>
-                            <div class="flex flex-wrap gap-3">
-                                <a href="https://policies.google.com/technologies/cookies?hl=en" target="_blank" class="action-button px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2">
-                                    <i data-feather="youtube" class="w-3 h-3"></i> YouTube
-                                </a>
-                                <a href="https://www.twitch.tv/p/en/legal/cookie-notice/" target="_blank" class="action-button px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2">
-                                    <i data-feather="twitch" class="w-3 h-3"></i> Twitch
-                                </a>
-                                <a href="https://github.com/privacy/cookies" target="_blank" class="action-button px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2">
-                                    <i data-feather="github" class="w-3 h-3"></i> GitHub
-                                </a>
-                            </div>
-                        </section>
-                    </div>
-                    <footer class="mt-10 pt-6 border-t flex justify-between items-center" style="border-color: var(--panel-border);">
-                        <p class="text-[10px] uppercase tracking-widest opacity-40">Privacy First Policy</p>
-                        <p class="text-[10px] uppercase tracking-widest opacity-40">2026</p>
+
+                    <section class="mt-8">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-4 border-b-2 border-gray-300 dark:border-slate-600 inline-block pb-1">Zero Data Collection</h2>
+                        <p class="text-gray-700 dark:text-gray-300 mt-4">
+                            I collect absolutely <strong>zero</strong> personal data through this site. I don't see who you are, or what you do.
+                        </p>
+                    </section>
+
+                    <section class="mt-8">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-4 border-b-2 border-gray-300 dark:border-slate-600 inline-block pb-1">Third-Party Embeds</h2>
+                        <p class="text-gray-700 dark:text-gray-300 mt-4">
+                            Some cookies may be placed by external services used for embeds or analytics. These services have their own policies which you can review:
+                        </p>
+                        <ul class="mt-4 space-y-2 list-none">
+                            <li><a href="https://policies.google.com/technologies/cookies?hl=en" target="_blank" class="ink-link">YouTube Cookie Policy</a></li>
+                            <li><a href="https://www.twitch.tv/p/en/legal/cookie-notice/" target="_blank" class="ink-link">Twitch Cookie Notice</a></li>
+                            <li><a href="https://github.com/privacy/cookies" target="_blank" class="ink-link">GitHub Cookie Policy</a></li>
+                        </ul>
+                    </section>
+
+                    <footer class="mt-12 pt-8 border-t-2 border-gray-300 dark:border-slate-600 text-xs text-gray-500 dark:text-gray-400">
+                        <p>Privacy First Policy — 2026</p>
                     </footer>
                 </div>
-            </div>
+            </article>
         </main>
 
         <script>
-            feather.replace();
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            }
+            const themeToggle = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('theme-icon-dark');
+            const lightIcon = document.getElementById('theme-icon-light');
+
+            const setAppTheme = (theme) => {
+                const isDark = theme === 'dark';
+                document.documentElement.classList.toggle('dark', isDark);
+                document.body.classList.toggle('dark', isDark);
+
+                if (darkIcon && lightIcon) {
+                    darkIcon.classList.toggle('hidden', !isDark);
+                    darkIcon.classList.toggle('block', isDark);
+                    lightIcon.classList.toggle('hidden', isDark);
+                    lightIcon.classList.toggle('block', !isDark);
+                }
+
+                localStorage.setItem('theme', theme);
+            };
+
+            themeToggle?.addEventListener('click', () => setAppTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark'));
+            setAppTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
         </script>
     </body>
 </html>

@@ -196,7 +196,6 @@ a.ink-link:hover {
     text-underline-offset: 3px;
 }
 
-/* Post-it note specific styling */
 .postit {
     position: absolute;
     width: 280px;
@@ -312,52 +311,58 @@ a.ink-link:hover {
     white-space: nowrap;
 }
 
-/* Dark mode post-it adjustments */
+.dark .postit {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
 .dark .postit-yellow {
-    background-color: #fef3c7;
+    background-color: #854d0e;
 }
 
 .dark .postit-pink {
-    background-color: #fbcfe8;
+    background-color: #831843; /
 }
 
 .dark .postit-blue {
-    background-color: #93c5fd;
+    background-color: #1e3a8a;
 }
 
 .dark .postit-green {
-    background-color: #a7f3d0;
+    background-color: #14532d;
 }
 
 .dark .postit h3 {
-    color: #1f2937;
+    color: #f8fafc;
+    border-bottom-color: rgba(255, 255, 255, 0.15);
 }
 
 .dark .postit-content {
-    color: #1f2937;
+    color: #e2e8f0;
 }
 
 .dark .postit-desc {
-    color: #1f2937;
+    color: #f1f5f9;
 }
 
 .dark .postit-item small {
-    color: #4b5563;
+    color: #cbd5e1;
 }
 
 .dark .postit-date {
-    color: #6b7280;
-}
-
-.dark .postit-links a {
-    color: #1e40af;
-}
-
-.dark .postit-links a:hover {
-    color: #1e3a8a;
+    color: #94a3b8;
 }
 
 .dark .postit-tag {
-    background-color: rgba(0, 0, 0, 0.15);
-    color: #1f2937;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #f8fafc;
+}
+
+.dark .postit-links a {
+    color: #93c5fd;
+    text-decoration-color: rgba(147, 197, 253, 0.5);
+}
+
+.dark .postit-links a:hover {
+    color: #bfdbfe;
+    text-decoration-color: #bfdbfe;
 }

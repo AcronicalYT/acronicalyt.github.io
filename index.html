@@ -17,7 +17,6 @@
     </head>
 
     <body class="h-screen overflow-hidden text-gray-800 transition-colors duration-300">
-        <!-- Theme toggle and controls -->
         <div class="fixed top-4 right-4 sm:top-8 sm:right-8 z-50 flex gap-2">
             <button id="reset-view" class="p-3 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-gray-200 dark:border-slate-700 text-gray-800 dark:text-gray-200 hover:scale-110 transition-transform" aria-label="Reset View" title="Return to center (R)">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
@@ -28,10 +27,8 @@
             </button>
         </div>
 
-        <!-- Pan and zoom container -->
         <div id="canvas" class="w-full h-full overflow-hidden">
-            <div id="viewport" class="w-full h-full origin-center transition-transform">
-                <!-- Center content -->
+            <div id="viewport" class="w-full h-full origin-center">
                 <div id="center-content" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl px-4">
                     <article class="paper paper-lines rounded-sm">
                         <div class="tape rotate-2 w-32 ml-12"></div>
@@ -94,7 +91,6 @@
                     </article>
                 </div>
 
-                <!-- Post-it notes container -->
                 <div id="postits-container" class="absolute inset-0"></div>
             </div>
         </div>

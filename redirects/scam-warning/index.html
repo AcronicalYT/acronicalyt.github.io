@@ -4,15 +4,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Acronical | Security Alert</title>
-
         <link rel="stylesheet" href="/css/style.css">
         <script src="https://cdn.tailwindcss.com"></script>
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-
-        <script src="https://unpkg.com/feather-icons"></script>
+        <script>
+            tailwind.config = {
+                darkMode: 'class',
+            }
+        </script>
 
         <meta property="og:site_name" content="YouTube">
         <meta property="og:url" content="https://www.youtube.com/watch?v=Gc9E_de_jNU">
@@ -26,76 +24,79 @@
         <meta property="og:video:width" content="1280">
         <meta property="og:video:height" content="720">
     </head>
-    <body class="bg-[#f1f5f9] dark:bg-[#020617] transition-colors duration-300">
-        <div class="blob-container">
-            <div class="blob blob-1 w-96 h-96 opacity-50"></div>
-            <div class="blob blob-2 w-80 h-80 opacity-40"></div>
-            <div class="blob blob-3 w-72 h-72 opacity-50"></div>
-        </div>
+    <body class="py-12 px-4 sm:px-8 overflow-x-hidden text-gray-800 transition-colors duration-300">
+        <button id="theme-toggle" class="fixed top-4 right-4 sm:top-8 sm:right-8 z-50 p-3 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-gray-200 dark:border-slate-700 text-gray-800 dark:text-gray-200 hover:scale-110 transition-transform" aria-label="Toggle Dark Mode">
+            <svg id="theme-icon-dark" class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            <svg id="theme-icon-light" class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        </button>
 
-        <main class="min-h-screen w-full p-4 md:p-8 flex items-center justify-center">
-            <div class="glass-panel w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col anim-fade-in-up is-visible">
-                <header class="p-6 border-b flex items-center justify-between" style="border-color: var(--panel-border);">
-                    <div class="flex items-center gap-3">
-                        <i data-feather="alert-octagon" class="w-6 h-6 text-red-500"></i>
-                        <h1 class="text-xl font-bold tracking-tight" style="color: var(--text-primary);">Security Awareness</h1>
+        <main class="max-w-4xl mx-auto space-y-6">
+            <a href="/" class="inline-block text-blue-600 dark:text-blue-400 hover:underline mb-4">← Back Home</a>
+            
+            <article class="paper paper-lines rounded-sm transform rotate-2 hover:rotate-0 transition-transform duration-300">
+                <div class="tape -rotate-3 w-32 -ml-24 -mt-2"></div>
+                <div class="paper-content">
+                    <h1 class="text-5xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-2">⚠️ Security Alert</h1>
+                    <p class="text-lg font-semibold text-red-600 dark:text-red-400 mb-6">Yet you still did it...</p>
+                    
+                    <div class="mt-8 mb-8 p-4 border-l-4 border-red-500 bg-red-50 dark:bg-red-900/20 rounded">
+                        <p class="text-gray-800 dark:text-gray-200">
+                            Even after reading this announcement, you still clicked on an unknown link.
+                            While this looked like a YouTube link, it wasn't. This is exactly how scammers target users every day.
+                        </p>
                     </div>
-                    <a href="/" class="text-xs uppercase tracking-widest hover:opacity-70 transition-opacity" style="color: var(--text-secondary);">Back Home</a>
-                </header>
-                <div class="p-6 md:p-10 overflow-y-auto custom-scrollbar">
-                    <section class="mb-8">
-                        <h2 class="text-3xl font-bold mb-4" style="color: var(--text-primary);">Yet you still did it...</h2>
-                        <div class="p-5 rounded-xl border-l-4 border-red-500 bg-red-500/10 mb-6">
-                            <p class="leading-relaxed text-sm md:text-base" style="color: var(--text-primary);">
-                                Even after reading this announcement, you still clicked on an unknown link.
-                                While this looked like a YouTube link, it wasn't. This is exactly how scammers target users every day.
+
+                    <section class="mt-8 space-y-6">
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-2 border-b-2 border-red-400 inline-block pb-1">If Compromised</h2>
+                            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                                Change all of your passwords immediately on a <strong>DIFFERENT</strong> device. This is crucial to preventing continued access by hackers.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-2 border-b-2 border-green-400 inline-block pb-1">Trusted Tools</h2>
+                            <p class="text-gray-700 dark:text-gray-300 mt-4">
+                                Use <a target="_blank" class="ink-link font-bold" href="https://www.virustotal.com">VirusTotal</a> to help scan files, but remember: no tool is 100% foolproof.
                             </p>
                         </div>
                     </section>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        <div class="card p-5 rounded-xl border" style="border-color: var(--card-border); background: var(--card-bg);">
-                            <div class="flex items-center gap-2 mb-3 text-red-400">
-                                <i data-feather="shield-off" class="w-4 h-4"></i>
-                                <h3 class="font-bold uppercase text-xs tracking-wider">If Compromised</h3>
-                            </div>
-                            <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
-                                Change all of your passwords immediately on a <b>DIFFERENT</b> device. This is crucial to preventing continued access by hackers.
-                            </p>
-                        </div>
-                        <div class="card p-5 rounded-xl border" style="border-color: var(--card-border); background: var(--card-bg);">
-                            <div class="flex items-center gap-2 mb-3 text-teal-400">
-                                <i data-feather="check-circle" class="w-4 h-4"></i>
-                                <h3 class="font-bold uppercase text-xs tracking-wider">Trusted Tools</h3>
-                            </div>
-                            <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">
-                                Use <a target="_blank" class="font-bold underline" href="https://www.virustotal.com" style="color: var(--accent-color);">VirusTotal</a> to help scan files, but remember: no tool is 100% foolproof.
-                            </p>
-                        </div>
-                    </div>
-                    <section class="space-y-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-xs uppercase tracking-widest flex items-center gap-2" style="color: var(--text-primary);">
-                                <i data-feather="video" class="w-4 h-4"></i> Educational Content
-                            </h3>
-                            <a target="_blank" href="https://www.youtube.com/watch?v=Gc9E_de_jNU" class="text-xs font-bold underline transition-colors" style="color: var(--accent-color);">Watch on YouTube</a>
-                        </div>
-                        <div class="rounded-xl overflow-hidden shadow-lg border" style="border-color: var(--panel-border);">
+
+                    <section class="mt-8 space-y-4">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 handwriting border-b-2 border-gray-300 dark:border-slate-600 inline-block pb-1">Educational Video</h2>
+                        <div class="rounded-lg overflow-hidden shadow-lg border-2 border-gray-300 dark:border-slate-600 mt-4">
                             <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/Gc9E_de_jNU?si=uTziuIK0z8kN46sT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         </div>
-                        <p class="text-center text-xs pt-4 italic" style="color: var(--text-secondary);">
+                        <p class="text-center italic text-gray-600 dark:text-gray-400 pt-4">
                             Trust me when I say this: the internet is full of liars. Don't click what you don't trust. Stay safe out there.
                         </p>
                     </section>
                 </div>
-            </div>
+            </article>
         </main>
 
         <script>
-            feather.replace();
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            }
+            const themeToggle = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('theme-icon-dark');
+            const lightIcon = document.getElementById('theme-icon-light');
+
+            const setAppTheme = (theme) => {
+                const isDark = theme === 'dark';
+                document.documentElement.classList.toggle('dark', isDark);
+                document.body.classList.toggle('dark', isDark);
+
+                if (darkIcon && lightIcon) {
+                    darkIcon.classList.toggle('hidden', !isDark);
+                    darkIcon.classList.toggle('block', isDark);
+                    lightIcon.classList.toggle('hidden', isDark);
+                    lightIcon.classList.toggle('block', !isDark);
+                }
+
+                localStorage.setItem('theme', theme);
+            };
+
+            themeToggle?.addEventListener('click', () => setAppTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark'));
+            setAppTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
         </script>
 
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-SW1DPP7E32"></script>

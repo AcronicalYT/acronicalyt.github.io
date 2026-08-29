@@ -6,9 +6,8 @@ const DISCORD_USER_ID = "627045949998497792";
 
 let lanyardSocket;
 let allPostits = [];
-let zIndexCounter = 100;
+let zIndexCounter = 10000;
 
-// Pan and zoom state
 let panX = 0;
 let panY = 0;
 let zoom = 1;
@@ -20,29 +19,24 @@ let lastCanvasPanY = 0;
 
 let viewportElement = null;
 let pendingViewportUpdate = false;
-let pendingViewportX = 0;
-let pendingViewportY = 0;
-let pendingViewportZoom = 1;
 
-// Post-it drag state
 let draggedPostit = null;
 let postitDragStartX = 0;
 let postitDragStartY = 0;
 
-const POSTIT_COLORS = ['postit-yellow', 'postit-pink', 'postit-blue', 'postit-green'];
-
 function getPositionWithCollisionAvoidance(existingPostits) {
-    const minDistance = 550;
-    const maxDistance = 1000;
-    const minSeparation = 150;
+    const minDistance = 275;
+    const maxDistance = 1150;
+    const minSeparation = 200;
 
     let position;
     let attempts = 0;
     let hasCollision = true;
 
-    while (hasCollision && attempts < 100) {
+    while (hasCollision && attempts < 500) {
         const angle = Math.random() * Math.PI * 2;
-        const distance = minDistance + Math.random() * (maxDistance - minDistance);
+        const distance = minDistance + Math.sqrt(Math.random()) * (maxDistance - minDistance);
+
         position = {
             x: Math.cos(angle) * distance,
             y: Math.sin(angle) * distance,
@@ -64,6 +58,16 @@ function getPositionWithCollisionAvoidance(existingPostits) {
         }
 
         attempts++;
+    }
+
+    if (hasCollision) {
+        const spiralAngle = existingPostits.length * 2.4;
+        const spiralDist = minDistance + (existingPostits.length * 60);
+        position = {
+            x: Math.cos(spiralAngle) * spiralDist,
+            y: Math.sin(spiralAngle) * spiralDist,
+            rotation: (Math.random() - 0.5) * 8
+        };
     }
 
     return position;
@@ -88,7 +92,6 @@ function createPostit(title, content, color) {
         </div>
     `;
 
-    // Update position using transform for better performance
     const updatePosition = () => {
         const x = parseFloat(postit.dataset.posX);
         const y = parseFloat(postit.dataset.posY);
@@ -100,7 +103,6 @@ function createPostit(title, content, color) {
     postit.style.left = '50%';
     postit.style.top = '50%';
 
-    // Add drag handlers for the post-it
     postit.addEventListener('mousedown', (e) => {
         if (e.button !== 0) return;
         e.stopPropagation();
@@ -257,7 +259,15 @@ function resetView() {
     panX = 0;
     panY = 0;
     zoom = 1;
-    updateViewport();
+
+    if (viewportElement) {
+        viewportElement.classList.add('transition-transform', 'duration-300');
+        updateViewport();
+        setTimeout(() => {
+            viewportElement.classList.remove('transition-transform', 'duration-300');
+        }, 300);
+    }
+
     updateZoomLevel();
 }
 
@@ -275,7 +285,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightIcon = document.getElementById('theme-icon-light');
     const contactBox = document.getElementById('contact');
 
-    // Theme toggle
     const setAppTheme = (theme) => {
         const isDark = theme === 'dark';
         document.documentElement.classList.toggle('dark', isDark);
@@ -294,19 +303,15 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle?.addEventListener('click', () => setAppTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark'));
     setAppTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
 
-    // Reset view button
     resetButton?.addEventListener('click', resetView);
 
-    // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
         if (e.key === 'r' || e.key === 'R') resetView();
     });
 
-    // Canvas pan and zoom
     canvas?.addEventListener('mousedown', (e) => {
         if (e.button !== 0 || draggedPostit) return;
         
-        // Don't pan if clicking on center content or its descendants
         const centerContent = document.getElementById('center-content');
         if (centerContent && centerContent.contains(e.target)) return;
         
@@ -322,7 +327,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('mousemove', (e) => {
-        // Handle post-it dragging
         if (draggedPostit) {
             const deltaX = e.clientX - postitDragStartX;
             const deltaY = e.clientY - postitDragStartY;
@@ -344,7 +348,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Handle canvas panning
         if (!isCanvasDragging) return;
         const deltaX = e.clientX - canvasDragStartX;
         const deltaY = e.clientY - canvasDragStartY;
@@ -356,7 +359,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mouseup', () => {
         isCanvasDragging = false;
         if (draggedPostit) {
-            draggedPostit.style.zIndex = 'auto';
             draggedPostit.classList.remove('dragging');
         }
         draggedPostit = null;
@@ -366,7 +368,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Zoom with mouse wheel
     canvas?.addEventListener('wheel', (e) => {
         e.preventDefault();
         const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
@@ -384,7 +385,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateZoomLevel();
     }, { passive: false });
 
-    // Contact copy
     if (contactBox) {
         contactBox.addEventListener('click', () => {
             const email = "contact@acronical.uk";
@@ -408,7 +408,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Load data
     fetchAndRenderProjects();
     fetchAndRenderClients();
     connectLanyard();

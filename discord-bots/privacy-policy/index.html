@@ -6,81 +6,84 @@
         <title>Acronical | Privacy Policy</title>
         <link rel="stylesheet" href="/css/style.css">
         <script src="https://cdn.tailwindcss.com"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-        <script src="https://unpkg.com/feather-icons"></script>
+        <script>
+            tailwind.config = {
+                darkMode: 'class',
+            }
+        </script>
     </head>
-    <body class="bg-[#f1f5f9] dark:bg-[#020617] transition-colors duration-300">
-        <div class="blob-container">
-            <div class="blob blob-1 w-96 h-96 opacity-50"></div>
-            <div class="blob blob-2 w-80 h-80 opacity-40"></div>
-            <div class="blob blob-3 w-72 h-72 opacity-50"></div>
-        </div>
-        <main class="min-h-screen w-full p-4 md:p-8 flex items-center justify-center">
-            <div class="glass-panel w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col anim-fade-in-up is-visible">
-                <header class="p-6 border-b flex items-center justify-between" style="border-color: var(--panel-border);">
-                    <div class="flex items-center gap-3">
-                        <i data-feather="shield" class="w-6 h-6" style="color: var(--accent-color);"></i>
-                        <h1 class="text-xl font-bold tracking-tight" style="color: var(--text-primary);">Privacy Policy</h1>
-                    </div>
-                    <a href="/" class="text-xs uppercase tracking-widest hover:opacity-70 transition-opacity" style="color: var(--text-secondary);">Back Home</a>
-                </header>
-                <div class="p-6 md:p-10 overflow-y-auto custom-scrollbar space-y-8">
-                    <section>
-                        <p class="leading-relaxed" style="color: var(--text-secondary);">
-                            This privacy policy governs the Discord bots created by <span class="font-bold" style="color: var(--text-primary);">Acronical</span>.
+    <body class="py-12 px-4 sm:px-8 overflow-x-hidden text-gray-800 transition-colors duration-300">
+        <button id="theme-toggle" class="fixed top-4 right-4 sm:top-8 sm:right-8 z-50 p-3 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-gray-200 dark:border-slate-700 text-gray-800 dark:text-gray-200 hover:scale-110 transition-transform" aria-label="Toggle Dark Mode">
+            <svg id="theme-icon-dark" class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            <svg id="theme-icon-light" class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        </button>
+
+        <main class="max-w-3xl mx-auto space-y-6">
+            <a href="/" class="inline-block text-blue-600 dark:text-blue-400 hover:underline mb-4">← Back Home</a>
+            
+            <article class="paper paper-lines rounded-sm transform rotate-1 hover:rotate-0 transition-transform duration-300">
+                <div class="pin"></div>
+                <div class="paper-content">
+                    <h1 class="text-5xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-4">Privacy Policy</h1>
+                    
+                    <section class="mt-8 space-y-4">
+                        <p class="text-gray-700 dark:text-gray-300">
+                            This privacy policy governs the Discord bots created by <strong>Acronical</strong>.
                             My goal is to be transparent about the data I handle to provide a safe and functional experience on the Discord platform.
                         </p>
                     </section>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="card p-5 rounded-xl border" style="border-color: var(--card-border); background: var(--card-bg);">
-                            <div class="flex items-center gap-2 mb-3">
-                                <i data-feather="database" class="w-4 h-4" style="color: var(--accent-color);"></i>
-                                <h2 class="font-bold uppercase text-xs tracking-wider" style="color: var(--text-primary);">Data Collection</h2>
-                            </div>
-                            <p class="text-sm leading-relaxed">
-                                The bot processes User IDs, Server IDs, and message content strictly required for command execution and core functionality.
-                            </p>
-                        </div>
-                        <div class="card p-5 rounded-xl border" style="border-color: var(--card-border); background: var(--card-bg);">
-                            <div class="flex items-center gap-2 mb-3">
-                                <i data-feather="cpu" class="w-4 h-4" style="color: var(--accent-color);"></i>
-                                <h2 class="font-bold uppercase text-xs tracking-wider" style="color: var(--text-primary);">Data Usage</h2>
-                            </div>
-                            <p class="text-sm leading-relaxed">
-                                Data is used solely to respond to interactions. I never sell data or share it with third-party entities.
-                            </p>
-                        </div>
-                    </div>
-                    <section class="space-y-4">
-                        <div class="flex items-center gap-2">
-                            <i data-feather="lock" class="w-4 h-4" style="color: var(--accent-color);"></i>
-                            <h2 class="font-bold text-sm uppercase tracking-widest" style="color: var(--text-primary);">Security & Storage</h2>
-                        </div>
-                        <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+
+                    <section class="mt-8">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-4 border-b-2 border-gray-300 dark:border-slate-600 inline-block pb-1">Data Collection</h2>
+                        <p class="text-gray-700 dark:text-gray-300 mt-4">
+                            The bot processes User IDs, Server IDs, and message content strictly required for command execution and core functionality.
+                        </p>
+                    </section>
+
+                    <section class="mt-8">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-4 border-b-2 border-gray-300 dark:border-slate-600 inline-block pb-1">Data Usage</h2>
+                        <p class="text-gray-700 dark:text-gray-300 mt-4">
+                            Data is used solely to respond to interactions. I never sell data or share it with third-party entities.
+                        </p>
+                    </section>
+
+                    <section class="mt-8">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100 handwriting mb-4 border-b-2 border-gray-300 dark:border-slate-600 inline-block pb-1">Security & Storage</h2>
+                        <p class="text-gray-700 dark:text-gray-300 mt-4">
                             Most data resides within Discord's infrastructure. Internal storage is restricted to secure databases containing only non-identifiable strings, IDs, and configuration settings required for persistence.
                         </p>
                     </section>
-                    <footer class="pt-6 border-t flex flex-col md:flex-row justify-between items-center gap-4" style="border-color: var(--panel-border);">
-                        <div class="flex items-center gap-2">
-                            <i data-feather="mail" class="w-4 h-4" style="color: var(--text-secondary);"></i>
-                            <span class="text-sm">Inquiries:</span>
-                            <a href="mailto:privacy@acronical.uk" class="contact-link text-sm font-bold transition-colors" style="color: var(--accent-color);">privacy@acronical.uk</a>
-                        </div>
-                        <p class="text-[10px] uppercase tracking-tighter opacity-50">Last Updated: February 2026</p>
+
+                    <footer class="mt-12 pt-8 border-t-2 border-gray-300 dark:border-slate-600 text-sm text-gray-600 dark:text-gray-400 space-y-2">
+                        <p>Inquiries: <a href="mailto:privacy@acronical.uk" class="ink-link">privacy@acronical.uk</a></p>
+                        <p class="text-xs">Last Updated: February 2026</p>
                     </footer>
                 </div>
-            </div>
+            </article>
         </main>
 
         <script>
-            feather.replace();
-            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
+            const themeToggle = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('theme-icon-dark');
+            const lightIcon = document.getElementById('theme-icon-light');
+
+            const setAppTheme = (theme) => {
+                const isDark = theme === 'dark';
+                document.documentElement.classList.toggle('dark', isDark);
+                document.body.classList.toggle('dark', isDark);
+
+                if (darkIcon && lightIcon) {
+                    darkIcon.classList.toggle('hidden', !isDark);
+                    darkIcon.classList.toggle('block', isDark);
+                    lightIcon.classList.toggle('hidden', isDark);
+                    lightIcon.classList.toggle('block', !isDark);
+                }
+
+                localStorage.setItem('theme', theme);
+            };
+
+            themeToggle?.addEventListener('click', () => setAppTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark'));
+            setAppTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
         </script>
     </body>
 </html>
