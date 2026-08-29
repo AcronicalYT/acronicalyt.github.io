@@ -15,6 +15,8 @@ let zoom = 1;
 let isCanvasDragging = false;
 let canvasDragStartX = 0;
 let canvasDragStartY = 0;
+let lastCanvasPanX = 0;
+let lastCanvasPanY = 0;
 
 // Post-it drag state
 let draggedPostit = null;
@@ -296,8 +298,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (centerContent && centerContent.contains(e.target)) return;
         
         isCanvasDragging = true;
-        canvasDragStartX = e.clientX - panX;
-        canvasDragStartY = e.clientY - panY;
+        canvasDragStartX = e.clientX;
+        canvasDragStartY = e.clientY;
+        lastCanvasPanX = panX;
+        lastCanvasPanY = panY;
         canvas.classList.add('grabbing');
         if (viewport) viewport.style.willChange = 'transform';
     });
@@ -327,8 +331,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Handle canvas panning
         if (!isCanvasDragging) return;
-        panX = e.clientX - canvasDragStartX;
-        panY = e.clientY - canvasDragStartY;
+        const deltaX = e.clientX - canvasDragStartX;
+        const deltaY = e.clientY - canvasDragStartY;
+        panX = lastCanvasPanX + deltaX;
+        panY = lastCanvasPanY + deltaY;
         updateViewport();
     }, { passive: true });
 
