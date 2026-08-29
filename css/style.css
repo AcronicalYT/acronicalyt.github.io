@@ -19,10 +19,14 @@ h1, h2, h3, h4, .handwriting {
 }
 
 #viewport {
-    pointer-events: none;
+    will-change: transform;
 }
 
-#viewport > div {
+#center-content {
+    pointer-events: auto;
+}
+
+#postits-container {
     pointer-events: auto;
 }
 
@@ -32,11 +36,6 @@ h1, h2, h3, h4, .handwriting {
 
 #canvas.grabbing {
     cursor: grabbing;
-}
-
-#viewport {
-    pointer-events: none;
-    will-change: transform;
 }
 
 .paper {
