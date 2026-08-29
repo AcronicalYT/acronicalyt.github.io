@@ -16,98 +16,83 @@
         </script>
     </head>
 
-    <body class="py-12 px-4 sm:px-8 overflow-x-hidden text-gray-800 transition-colors duration-300">
-        <button id="theme-toggle" class="fixed top-4 right-4 sm:top-8 sm:right-8 z-50 p-3 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-gray-200 dark:border-slate-700 text-gray-800 dark:text-gray-200 hover:scale-110 transition-transform" aria-label="Toggle Dark Mode">
-            <svg id="theme-icon-dark" class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-            <svg id="theme-icon-light" class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-        </button>
+    <body class="h-screen overflow-hidden text-gray-800 transition-colors duration-300">
+        <!-- Theme toggle and controls -->
+        <div class="fixed top-4 right-4 sm:top-8 sm:right-8 z-50 flex gap-2">
+            <button id="reset-view" class="p-3 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-gray-200 dark:border-slate-700 text-gray-800 dark:text-gray-200 hover:scale-110 transition-transform" aria-label="Reset View" title="Return to center (R)">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            </button>
+            <button id="theme-toggle" class="p-3 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-gray-200 dark:border-slate-700 text-gray-800 dark:text-gray-200 hover:scale-110 transition-transform" aria-label="Toggle Dark Mode">
+                <svg id="theme-icon-dark" class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                <svg id="theme-icon-light" class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            </button>
+        </div>
 
-        <main class="max-w-3xl mx-auto space-y-20">
-            <article class="paper paper-lines rounded-sm transform rotate-1 hover:rotate-0 transition-transform duration-300">
-                <div class="tape rotate-2 w-32 ml-12"></div>
-                <div class="paper-content">
-                    <header class="mb-6">
-                        <h1 class="text-6xl font-bold text-gray-900 leading-none handwriting tracking-wide">Acronical</h1>
-                        <p class="text-xl font-semibold text-gray-600 mt-2 handwriting">UK-based content creator and developer. Focused on Discord bots, open-source projects, and creating helpful tutorials.</p>
-                    </header>
+        <!-- Pan and zoom container -->
+        <div id="canvas" class="w-full h-full overflow-hidden">
+            <div id="viewport" class="w-full h-full origin-center transition-transform">
+                <!-- Center content -->
+                <div id="center-content" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl px-4">
+                    <article class="paper paper-lines rounded-sm">
+                        <div class="tape rotate-2 w-32 ml-12"></div>
+                        <div class="paper-content">
+                            <header class="mb-6">
+                                <h1 class="text-6xl font-bold text-gray-900 dark:text-gray-100 leading-none handwriting tracking-wide">Acronical</h1>
+                                <p class="text-xl font-semibold text-gray-600 dark:text-gray-400 mt-2 handwriting">UK-based content creator and developer. Focused on Discord bots, open-source projects, and creating helpful tutorials.</p>
+                            </header>
 
-                    <section>
-                        <p class="mt-6 handwriting text-2xl font-bold text-gray-900">My Socials:</p>
-                        <ul class="flex flex-wrap gap-x-6 gap-y-2 mt-1 list-none font-semibold">
-                            <li><a target="_blank" href="https://www.github.com/AcronicalYT" class="ink-link">GitHub</a></li>
-                            <li><a target="_blank" href="https://www.youtube.com/@AcronicalYT" class="ink-link">YouTube</a></li>
-                            <li><a target="_blank" href="https://www.twitch.tv/AcronicalYT" class="ink-link">Twitch</a></li>
-                            <li><a target="_blank" href="https://discord.acronical.uk" class="ink-link">Discord</a></li>
-                            <li><a target="_blank" href="https://www.twitter.com/AcronicalYT" class="ink-link">Twitter</a></li>
-                            <li><a target="_blank" href="https://www.ko-fi.com/Acronical" class="ink-link">Ko-fi</a></li>
-                        </ul>
-                    </section>
-                </div>
-            </article>
+                            <section class="mt-8">
+                                <p class="handwriting text-2xl font-bold text-gray-900 dark:text-gray-100">My Socials:</p>
+                                <ul class="flex flex-wrap gap-x-6 gap-y-2 mt-3 list-none font-semibold">
+                                    <li><a target="_blank" href="https://www.github.com/AcronicalYT" class="ink-link">GitHub</a></li>
+                                    <li><a target="_blank" href="https://www.youtube.com/@AcronicalYT" class="ink-link">YouTube</a></li>
+                                    <li><a target="_blank" href="https://www.twitch.tv/AcronicalYT" class="ink-link">Twitch</a></li>
+                                    <li><a target="_blank" href="https://discord.acronical.uk" class="ink-link">Discord</a></li>
+                                    <li><a target="_blank" href="https://www.twitter.com/AcronicalYT" class="ink-link">Twitter</a></li>
+                                    <li><a target="_blank" href="https://www.ko-fi.com/Acronical" class="ink-link">Ko-fi</a></li>
+                                </ul>
+                            </section>
 
-            <article class="paper paper-lines rounded-sm transform -rotate-1 hover:rotate-0 transition-transform duration-300">
-                <div class="pin"></div>
-                <div class="paper-content">
-                    <h2 class="text-4xl font-bold text-gray-900 handwriting mb-4 border-b-2 border-gray-300 inline-block pb-1">My Projects</h2>
-                    <ul id="projects" class="space-y-6 list-none mt-4"></ul>
-                </div>
-            </article>
-
-            <article class="paper paper-lines rounded-sm transform rotate-2 hover:rotate-0 transition-transform duration-300">
-                <div class="tape -rotate-3 w-28 -ml-20 mt-2"></div>
-                <div class="paper-content">
-                    <h2 class="text-4xl font-bold text-gray-900 handwriting mb-4 border-b-2 border-gray-300 inline-block pb-1">Experience & Work</h2>
-                    <ul id="experience" class="space-y-6 list-none mt-4"></ul>
-                </div>
-            </article>
-
-            <article class="paper paper-lines rounded-sm transform -rotate-1 hover:rotate-0 transition-transform duration-300">
-                <div class="pin"></div>
-                <div class="paper-content">
-                    <h2 class="text-4xl font-bold text-gray-900 handwriting mb-4 border-b-2 border-gray-300 inline-block pb-1">Hosted Services</h2>
-                    <ul id="services" class="space-y-6 list-none mt-4"></ul>
-                </div>
-            </article>
-
-            <article class="paper paper-lines rounded-sm transform rotate-2 hover:rotate-0 transition-transform duration-300">
-                <div class="tape -rotate-3 w-28 -ml-20 mt-2"></div>
-                <div class="paper-content">
-                    <h2 class="text-4xl font-bold text-gray-900 handwriting mb-4 border-b-2 border-gray-300 inline-block pb-1">Contact Me</h2>
-                    <p>Feel free to contact me via Discord, or my email!</p>
-
-                    <div id="lanyard" class="mt-5 flex-column items-center gap-4 p-3 border border-gray-300 rounded bg-white dark:bg-[#0f172a] shadow-sm transition-colors duration-300 w-full max-w-sm transform rotate-[0.5deg] hidden">
-                        <div class="flex gap-4 p-3">
-                            <div class="relative flex-shrink-0">
-                                <img id="discord-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" class="w-14 h-14 rounded-full border border-gray-200" alt="Discord Avatar">
-                                <div id="discord-status-dot" class="absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-white dark:border-slate-800 bg-gray-500 transition-colors duration-300"></div>
-                            </div>
-                            <div class="flex-col overflow-hidden">
-                                <p class="font-bold text-lg leading-tight handwriting text-gray-900">@acronical</p>
-                                <p id="discord-activity" class="text-sm text-gray-600 truncate w-full">Loading status...</p>
-                            </div>
-                        </div>
-                        <div id="spotify-section" class="hidden border-t border-gray-200 dark:border-slate-600 pt-2 mt-1 pl-3">
-                            <div class="flex-column items-center align-center gap-3 ">
-                                <img id="spotify-album-art" src="" class="w-10 h-10 rounded-md shadow-sm" alt="Album Art">
-                                <div class="flex-col overflow-hidden text-sm">
-                                    <p class="font-bold text-green-500 flex items-center gap-1 text-xs uppercase tracking-wide">
-                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.3 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.2-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.539-1.56.3z"/></svg>
-                                        Listening to Spotify
-                                    </p>
-                                    <p id="spotify-song" class="text-gray-900 font-bold truncate leading-tight"></p>
-                                    <p id="spotify-artist" class="text-gray-600 truncate text-xs"></p>
+                            <div id="lanyard" class="mt-8 flex-column items-center gap-4 p-3 border border-gray-300 dark:border-slate-600 rounded bg-white dark:bg-[#0f172a] shadow-sm transition-colors duration-300 max-w-sm transform rotate-[0.5deg] hidden">
+                                <div class="flex gap-4 p-3">
+                                    <div class="relative flex-shrink-0">
+                                        <img id="discord-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" class="w-14 h-14 rounded-full border border-gray-200 dark:border-slate-600" alt="Discord Avatar">
+                                        <div id="discord-status-dot" class="absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-white dark:border-slate-800 bg-gray-500 transition-colors duration-300"></div>
+                                    </div>
+                                    <div class="flex-col overflow-hidden">
+                                        <p class="font-bold text-lg leading-tight handwriting text-gray-900 dark:text-gray-100">@acronical</p>
+                                        <p id="discord-activity" class="text-sm text-gray-600 dark:text-gray-400 truncate w-full">Loading status...</p>
+                                    </div>
+                                </div>
+                                <div id="spotify-section" class="hidden border-t border-gray-200 dark:border-slate-600 pt-2 mt-1 pl-3">
+                                    <div class="flex-column items-center align-center gap-3">
+                                        <img id="spotify-album-art" src="" class="w-10 h-10 rounded-md shadow-sm" alt="Album Art">
+                                        <div class="flex-col overflow-hidden text-sm">
+                                            <p class="font-bold text-green-500 flex items-center gap-1 text-xs uppercase tracking-wide">
+                                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.54.659.3 1.02zm1.44-3.3c-.301.42-.84.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.24 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.6.18-1.2.72-1.38 4.2-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.539-1.56.3z"/></svg>
+                                                Listening to Spotify
+                                            </p>
+                                            <p id="spotify-song" class="text-gray-900 dark:text-gray-100 font-bold truncate leading-tight"></p>
+                                            <p id="spotify-artist" class="text-gray-600 dark:text-gray-400 truncate text-xs"></p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div id="contact" class="mt-6 p-4 border-2 border-dashed border-gray-400 rounded bg-black/5 text-center transform rotate-1 cursor-pointer hover:bg-black/10 transition-colors">
-                        <p class="font-bold text-2xl mb-2 handwriting text-gray-900">My best contacts:</p>
-                        <p><strong>Discord:</strong> @acronical</p>
-                        <p><strong>Email:</strong> contact@acronical.uk</p>
-                    </div>
+                            <div id="contact" class="mt-8 p-4 border-2 border-dashed border-gray-400 dark:border-slate-600 rounded bg-black/5 dark:bg-white/5 text-center transform rotate-1 cursor-pointer hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                                <p class="font-bold text-2xl mb-2 handwriting text-gray-900 dark:text-gray-100">My best contacts:</p>
+                                <p class="text-gray-800 dark:text-gray-200"><strong>Discord:</strong> @acronical</p>
+                                <p class="text-gray-800 dark:text-gray-200"><strong>Email:</strong> contact@acronical.uk</p>
+                            </div>
+                        </div>
+                    </article>
                 </div>
-            </article>
-        </main>
+
+                <!-- Post-it notes container -->
+                <div id="postits-container" class="absolute inset-0"></div>
+            </div>
+        </div>
+
+        <div id="zoom-level" class="fixed bottom-4 left-4 sm:bottom-8 sm:left-8 z-40 px-3 py-2 rounded-full bg-white dark:bg-slate-800 shadow-xl border border-gray-200 dark:border-slate-700 text-gray-800 dark:text-gray-200 text-sm font-semibold">100%</div>
     </body>
 </html>

@@ -7,6 +7,17 @@ const DISCORD_USER_ID = "627045949998497792";
 
 let servicesData = [];
 let lanyardSocket;
+let allPostits = [];
+
+// Pan and zoom state
+let panX = 0;
+let panY = 0;
+let zoom = 1;
+let isDragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+
+const POSTIT_COLORS = ['postit-yellow', 'postit-pink', 'postit-blue', 'postit-green'];
 
 function renderError(container, message) {
     if (!container) return;
@@ -17,57 +28,69 @@ function renderError(container, message) {
     `;
 }
 
-async function fetchAndRenderServices() {
-    const container = document.querySelector('#services');
+function getRandomPosition() {
+    const minDistance = 400;
+    const maxDistance = 800;
+    const angle = Math.random() * Math.PI * 2;
+    const distance = minDistance + Math.random() * (maxDistance - minDistance);
+    return {
+        x: Math.cos(angle) * distance,
+        y: Math.sin(angle) * distance,
+        rotation: (Math.random() - 0.5) * 8
+    };
+}
+
+function createPostit(title, items, color) {
+    const container = document.getElementById('postits-container');
     if (!container) return;
 
+    const pos = getRandomPosition();
+    const postit = document.createElement('div');
+    postit.className = `postit ${color}`;
+    postit.style.left = `calc(50% + ${pos.x}px)`;
+    postit.style.top = `calc(50% + ${pos.y}px)`;
+    postit.style.transform = `translate(-50%, -50%) rotate(${pos.rotation}deg)`;
+
+    let itemsHTML = '';
+    items.forEach(item => {
+        itemsHTML += `<div class="postit-item">${item}</div>`;
+    });
+
+    postit.innerHTML = `
+        <h3>${title}</h3>
+        <div class="postit-content">
+            ${itemsHTML}
+        </div>
+    `;
+
+    container.appendChild(postit);
+    allPostits.push(postit);
+}
+
+async function fetchAndRenderServices() {
     try {
         const response = await fetch(SERVICES_API_ENDPOINT);
         if (!response.ok) throw new Error('Fetch failed');
         const data = await response.json();
         servicesData = Object.entries(data).map(([key, val]) => ({ id: key, ...val }));
+
+        const items = [];
+        servicesData.forEach(service => {
+            const statusText = service.online ? '🟢 Online' : '🔴 Offline';
+            items.push(`<strong>${service.name}</strong> - ${statusText}`);
+        });
+
+        createPostit('Hosted Services', items, POSTIT_COLORS[2]);
+        checkAllServicesStatus();
     } catch (error) {
-        renderError(container, "Could not load services.");
-        return;
+        console.error("Could not load services:", error);
     }
-
-    container.innerHTML = '';
-    servicesData.forEach(service => {
-        const row = document.createElement('li');
-        row.className = "status-row anim-fade-in-up";
-
-        const statusClass = service.online ? 'text-green-500' : 'text-red-500';
-        const statusText = service.online ? 'Online' : 'Offline';
-
-        row.innerHTML = `
-            <div id="status-${service.id}" class="flex items-center gap-2 max-w-sm">
-                <span class="status-dot font-bold text-xl ${statusClass}">●</span>
-                <span class="font-medium text-gray-900 dark:text-gray-100 handwriting text-xl">${service.name}</span>
-                <span class="status-text text-sm text-gray-500 dark:text-gray-400 italic ml-auto">${statusText}</span>
-            </div>
-        `;
-        container.appendChild(row);
-    });
-
-    observeAnimations(container);
-    checkAllServicesStatus();
 }
 
 async function checkServiceStatus(service) {
-    const statusContainer = document.querySelector(`#status-${service.id}`);
-    if (!statusContainer) return;
-
-    const dot = statusContainer.querySelector('.status-dot');
-    const text = statusContainer.querySelector('.status-text');
-
-    if (!service.online) {
-        setServiceUI(dot, text, 'offline');
-        return;
-    }
+    if (!service.online) return;
 
     const urls = [service.uptimeURL, service.altUptimeURL].filter(Boolean);
-    let success = false;
-
     for (const url of urls) {
         try {
             const controller = new AbortController();
@@ -75,150 +98,71 @@ async function checkServiceStatus(service) {
             const res = await fetch(url, { mode: 'no-cors', cache: 'no-cache', signal: controller.signal });
             clearTimeout(timeoutId);
             if (res.ok || res.type === 'opaque' || res.status === 200 || res.status === 403 || res.status === 401 || res.status === 0) {
-                success = true;
-                break;
+                return true;
             }
         } catch (e) {
             continue;
         }
     }
-
-    setServiceUI(dot, text, success ? 'online' : 'failed');
-}
-
-function setServiceUI(dot, text, state) {
-    dot.className = 'status-dot font-bold text-xl';
-    text.className = 'status-text text-sm italic ml-auto';
-
-    switch (state) {
-        case 'online':
-            dot.classList.add('text-green-500');
-            text.classList.add('text-gray-600', 'dark:text-gray-400');
-            text.textContent = 'Online';
-            break;
-        case 'offline':
-            dot.classList.add('text-red-500');
-            text.classList.add('text-red-600', 'dark:text-red-400');
-            text.textContent = 'Decommissioned';
-            break;
-        case 'failed':
-            dot.classList.add('text-red-500');
-            text.classList.add('text-red-600', 'dark:text-red-400');
-            text.textContent = 'Failed to Connect';
-            break;
-        case 'checking':
-            dot.classList.add('text-yellow-500', 'animate-pulse');
-            text.classList.add('text-yellow-600', 'dark:text-yellow-500');
-            text.textContent = 'Checking...';
-            break;
-        default:
-            dot.classList.add('text-gray-500');
-            text.classList.add('text-gray-600', 'dark:text-gray-400');
-            text.textContent = 'Unknown...';
-            break;
-    }
+    return false;
 }
 
 function checkAllServicesStatus() {
-    servicesData.forEach(service => {
-        const container = document.querySelector(`#status-${service.id}`);
-        if (container) setServiceUI(container.querySelector('.status-dot'), container.querySelector('.status-text'), 'checking');
-        checkServiceStatus(service);
-    });
-}
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('is-visible');
-    });
-}, { threshold: 0.1 });
-
-function observeAnimations(container) {
-    container.querySelectorAll('.anim-fade-in-up').forEach((el, index) => {
-        el.classList.remove('is-visible');
-        el.style.transitionDelay = `${index * 100}ms`;
-        observer.observe(el);
-    });
+    servicesData.forEach(service => checkServiceStatus(service));
 }
 
 async function fetchAndRenderProjects() {
-    const container = document.querySelector('#projects');
-    if (!container) return;
-
     try {
         const response = await fetch(PROJECTS_API_ENDPOINT);
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         const projects = Object.values(data);
 
-        container.innerHTML = '';
-
+        const items = [];
         projects.forEach(project => {
-            const li = document.createElement('li');
-            li.className = 'anim-fade-in-up';
+            let buttons = [];
+            if (project.download?.has) buttons.push(`<a href="${project.download.url}" target="_blank">Download</a>`);
+            if (project.invite?.has) buttons.push(`<a href="${project.invite.url}" target="_blank">Invite</a>`);
+            if (project.link?.has) buttons.push(`<a href="${project.link.url}" target="_blank">View</a>`);
 
-            let buttonsHTML = '';
-
-            if (project.download?.has) buttonsHTML += `<a href="${project.download.url}" target="_blank" class="ink-link inline-flex items-center text-sm font-bold">Download</a>`;
-            if (project.invite?.has) buttonsHTML += `<a href="${project.invite.url}" target="_blank" class="ink-link inline-flex items-center text-sm font-bold ml-4">Invite</a>`;
-            if (project.link?.has) buttonsHTML += `<a href="${project.link.url}" target="_blank" class="ink-link inline-flex items-center text-sm font-bold ml-4">View</a>`;
-
-            li.innerHTML = `
-                <strong class="text-xl handwriting text-gray-900 dark:text-gray-100">${project.name}</strong>
-                <span class="text-xs text-gray-500 italic border border-gray-300 dark:border-slate-600 rounded px-1 ml-2 capitalize">${project.type.replace('-', ' ')}</span><br>
-                <span class="text-gray-800 dark:text-gray-200 block mt-1">${project.description || ''}</span>
-                <div class="mt-2 flex items-center">
-                    ${buttonsHTML}
-                </div>
-            `;
-            container.appendChild(li);
+            const typeTag = `<span class="postit-tag">${project.type.replace('-', ' ')}</span>`;
+            items.push(`
+                <strong>${project.name}</strong>${typeTag}<br>
+                <small>${project.description || ''}</small><br>
+                ${buttons.length > 0 ? `<small style="margin-top: 0.25rem; display: block;">${buttons.join(' | ')}</small>` : ''}
+            `);
         });
 
-        observeAnimations(container);
+        createPostit('My Projects', items, POSTIT_COLORS[0]);
     } catch (error) {
-        renderError(container, "Could not load projects.");
+        console.error("Could not load projects:", error);
     }
 }
 
 async function fetchAndRenderClients() {
-    const container = document.querySelector('#experience');
-    if (!container) return;
-
     try {
         const response = await fetch(CLIENTS_API_ENDPOINT);
         const data = await response.json();
         const clients = Object.values(data);
 
-        container.innerHTML = '';
+        const items = [];
         clients.forEach(client => {
-            const li = document.createElement('li');
-            li.className = 'anim-fade-in-up';
+            const dateStr = client.start ? (client.end ? `${client.start} – ${client.end}` : `Since ${client.start}`) : '';
+            const statusLabel = client.left ? '🔴 Past Work' : '🟢 Current';
 
-            const dateStr = client.start ? (client.end ? `${client.start} &ndash; ${client.end}` : `Since ${client.start}`) : '';
-            const statusLabel = client.left ? 'Past Work' : 'Current Work';
+            let viewButton = '';
+            if (client.link != null) viewButton = `<a href="${client.link}" target="_blank">View</a>`;
 
-            const dotClass = client.left ? 'text-red-500' : 'text-blue-500';
-            const statusTextClass = client.left ? 'text-red-800 dark:text-red-400' : 'text-blue-800 dark:text-blue-400';
-
-            let buttonsHTML = '';
-            if (client.link != null) buttonsHTML += `<a href="${client.link}" target="_blank" class="ink-link inline-flex items-center text-sm font-bold ml-4">View</a>`;
-
-            li.innerHTML = `
-                <strong class="text-xl handwriting text-gray-900 dark:text-gray-100">${client.entity}</strong>
-                <span class="text-sm text-gray-600 dark:text-gray-400 italic ml-2">(${dateStr})</span><br>
-                <span class="text-gray-800 dark:text-gray-200 block mt-1">${client.description || ''}</span>
-                <div class="flex items-center gap-2 text-sm font-bold ${statusTextClass} mt-2">
-                    <span class="${dotClass} text-lg leading-none">●</span>
-                    <span>${statusLabel}</span>
-                    ${buttonsHTML}
-                </div>
-            `;
-            container.appendChild(li);
+            items.push(`
+                <strong>${client.entity}</strong> <small>${dateStr}</small><br>
+                <small>${client.description || ''}</small><br>
+                <small style="margin-top: 0.25rem; display: block;">${statusLabel}${viewButton ? ' | ' + viewButton : ''}</small>
+            `);
         });
 
-        observeAnimations(container);
+        createPostit('Experience & Work', items, POSTIT_COLORS[3]);
     } catch (e) {
-        renderError(container, "Failed to load experience.");
+        console.error("Failed to load experience:", e);
     }
 }
 
@@ -289,11 +233,36 @@ function updateProfileCard(data) {
     }
 }
 
+function updateViewport() {
+    const viewport = document.getElementById('viewport');
+    if (viewport) {
+        viewport.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+    }
+}
+
+function resetView() {
+    panX = 0;
+    panY = 0;
+    zoom = 1;
+    updateViewport();
+    updateZoomLevel();
+}
+
+function updateZoomLevel() {
+    const zoomEl = document.getElementById('zoom-level');
+    if (zoomEl) zoomEl.textContent = `${Math.round(zoom * 100)}%`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('canvas');
+    const viewport = document.getElementById('viewport');
     const themeToggle = document.getElementById('theme-toggle');
+    const resetButton = document.getElementById('reset-view');
     const darkIcon = document.getElementById('theme-icon-dark');
     const lightIcon = document.getElementById('theme-icon-light');
+    const contactBox = document.getElementById('contact');
 
+    // Theme toggle
     const setAppTheme = (theme) => {
         const isDark = theme === 'dark';
         document.documentElement.classList.toggle('dark', isDark);
@@ -312,7 +281,54 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle?.addEventListener('click', () => setAppTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark'));
     setAppTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
 
-    const contactBox = document.getElementById('contact');
+    // Reset view button
+    resetButton?.addEventListener('click', resetView);
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'r' || e.key === 'R') resetView();
+    });
+
+    // Pan and zoom
+    canvas?.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return;
+        isDragging = true;
+        dragStartX = e.clientX - panX;
+        dragStartY = e.clientY - panY;
+        canvas.classList.add('grabbing');
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        panX = e.clientX - dragStartX;
+        panY = e.clientY - dragStartY;
+        updateViewport();
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        canvas?.classList.remove('grabbing');
+    });
+
+    // Zoom with mouse wheel
+    canvas?.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
+        const newZoom = Math.max(0.3, Math.min(3, zoom * zoomFactor));
+
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        panX = mouseX - (mouseX - panX) * (newZoom / zoom);
+        panY = mouseY - (mouseY - panY) * (newZoom / zoom);
+        zoom = newZoom;
+
+        updateViewport();
+        updateZoomLevel();
+    }, { passive: false });
+
+    // Contact copy
     if (contactBox) {
         contactBox.addEventListener('click', () => {
             const email = "contact@acronical.uk";
@@ -324,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 document.execCommand('copy');
                 const originalText = contactBox.innerHTML;
-                contactBox.innerHTML = `<p class="font-bold text-2xl mb-2 handwriting text-green-600">Email Copied!</p>`;
+                contactBox.innerHTML = `<p class="font-bold text-2xl mb-2 handwriting text-green-600 dark:text-green-400">Email Copied!</p>`;
                 setTimeout(() => {
                     contactBox.innerHTML = originalText;
                 }, 2000);
@@ -336,6 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Load data
     fetchAndRenderProjects();
     fetchAndRenderClients();
     fetchAndRenderServices();

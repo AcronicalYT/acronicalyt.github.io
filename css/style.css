@@ -5,6 +5,8 @@ body {
     background-image: radial-gradient(#cbd5e1 2px, transparent 2px);
     background-size: 40px 40px;
     font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 body.dark {
@@ -14,6 +16,22 @@ body.dark {
 
 h1, h2, h3, h4, .handwriting {
     font-family: 'Kalam', cursive;
+}
+
+#viewport {
+    pointer-events: none;
+}
+
+#viewport > div {
+    pointer-events: auto;
+}
+
+#canvas {
+    cursor: grab;
+}
+
+#canvas.grabbing {
+    cursor: grabbing;
 }
 
 .paper {
@@ -153,4 +171,121 @@ a.ink-link:hover {
 
 .dark #discord-avatar {
     border-color: #475569;
+}
+
+/* Post-it note specific styling */
+.postit {
+    position: absolute;
+    width: 320px;
+    padding: 1.5rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease-out;
+}
+
+.postit:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 20px -3px rgba(0, 0, 0, 0.4);
+}
+
+.postit-yellow {
+    background-color: #fef08a;
+}
+
+.postit-pink {
+    background-color: #fbcfe8;
+}
+
+.postit-blue {
+    background-color: #bfdbfe;
+}
+
+.postit-green {
+    background-color: #bbf7d0;
+}
+
+.postit h3 {
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+    font-weight: 700;
+    color: #1f2937;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+.postit-content {
+    font-size: 0.95rem;
+    color: #374151;
+    line-height: 1.5;
+}
+
+.postit-item {
+    margin-bottom: 1rem;
+}
+
+.postit-item:last-child {
+    margin-bottom: 0;
+}
+
+.postit-item strong {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.postit-item a {
+    color: #2563eb;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: rgba(37, 99, 235, 0.4);
+}
+
+.postit-item a:hover {
+    color: #1e40af;
+}
+
+.postit-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    margin-left: 0.5rem;
+    text-transform: capitalize;
+}
+
+/* Dark mode post-it adjustments */
+.dark .postit-yellow {
+    background-color: #fef3c7;
+}
+
+.dark .postit-pink {
+    background-color: #fbcfe8;
+}
+
+.dark .postit-blue {
+    background-color: #93c5fd;
+}
+
+.dark .postit-green {
+    background-color: #a7f3d0;
+}
+
+.dark .postit h3 {
+    color: #1f2937;
+}
+
+.dark .postit-content {
+    color: #1f2937;
+}
+
+.dark .postit-item strong {
+    color: #1f2937;
+}
+
+.dark .postit-item a {
+    color: #1e40af;
+}
+
+.dark .postit-item a:hover {
+    color: #1e3a8a;
 }
