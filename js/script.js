@@ -92,6 +92,15 @@ function createPostit(title, content, color) {
         </div>
     `;
 
+    postit.querySelectorAll('a').forEach(link => {
+        link.addEventListener('mousedown', (e) => {
+            e.stopPropagation();
+        });
+        link.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    });
+
     const updatePosition = () => {
         const x = parseFloat(postit.dataset.posX);
         const y = parseFloat(postit.dataset.posY);
@@ -104,7 +113,7 @@ function createPostit(title, content, color) {
     postit.style.top = '50%';
 
     postit.addEventListener('mousedown', (e) => {
-        if (e.button !== 0) return;
+        if (e.button !== 0 || e.target.closest('a')) return;
         e.stopPropagation();
         draggedPostit = postit;
         postitDragStartX = e.clientX;
@@ -311,6 +320,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     canvas?.addEventListener('mousedown', (e) => {
         if (e.button !== 0 || draggedPostit) return;
+
+        if (e.target.closest('a')) return;
         
         const centerContent = document.getElementById('center-content');
         if (centerContent && centerContent.contains(e.target)) return;
