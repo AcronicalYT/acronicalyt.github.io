@@ -20,6 +20,9 @@ let lastCanvasPanY = 0;
 
 let viewportElement = null;
 let pendingViewportUpdate = false;
+let pendingViewportX = 0;
+let pendingViewportY = 0;
+let pendingViewportZoom = 1;
 
 // Post-it drag state
 let draggedPostit = null;
@@ -237,8 +240,16 @@ function updateProfileCard(data) {
 }
 
 function updateViewport() {
-    if (viewportElement) {
-        viewportElement.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+    if (!viewportElement) return;
+    
+    if (!pendingViewportUpdate) {
+        pendingViewportUpdate = true;
+        requestAnimationFrame(() => {
+            if (viewportElement) {
+                viewportElement.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+            }
+            pendingViewportUpdate = false;
+        });
     }
 }
 
