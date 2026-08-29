@@ -289,6 +289,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Canvas pan and zoom
     canvas?.addEventListener('mousedown', (e) => {
         if (e.button !== 0 || draggedPostit) return;
+        
+        // Don't pan if clicking on center content or its descendants
+        const centerContent = document.getElementById('center-content');
+        if (centerContent && centerContent.contains(e.target)) return;
+        
         isCanvasDragging = true;
         canvasDragStartX = e.clientX - panX;
         canvasDragStartY = e.clientY - panY;
