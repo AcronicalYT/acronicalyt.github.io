@@ -1,13 +1,12 @@
 const BASE_API_URL = "https://api.acronical.uk/";
 const PROJECTS_API_ENDPOINT = `${BASE_API_URL}projects`;
 const CLIENTS_API_ENDPOINT = `${BASE_API_URL}experience`;
-const SERVICES_API_ENDPOINT = `${BASE_API_URL}services`;
 const LANYARD_WEBSOCKET_URL = "wss://lanyard.acronical.uk/socket";
 const DISCORD_USER_ID = "627045949998497792";
 
-let servicesData = [];
 let lanyardSocket;
 let allPostits = [];
+let zIndexCounter = 100;
 
 // Pan and zoom state
 let panX = 0;
@@ -23,8 +22,6 @@ let postitDragStartX = 0;
 let postitDragStartY = 0;
 
 const POSTIT_COLORS = ['postit-yellow', 'postit-pink', 'postit-blue', 'postit-green'];
-const POSTIT_WIDTH = 320;
-const POSTIT_HEIGHT = 300;
 
 function getPositionWithCollisionAvoidance(existingPostits) {
     const centerX = 0;
@@ -78,6 +75,7 @@ function createPostit(title, content, color) {
     postit.style.left = `calc(50% + ${pos.x}px)`;
     postit.style.top = `calc(50% + ${pos.y}px)`;
     postit.style.transform = `translate(-50%, -50%) rotate(${pos.rotation}deg)`;
+    postit.style.zIndex = zIndexCounter;
 
     postit.innerHTML = `
         <h3>${title}</h3>
@@ -93,59 +91,11 @@ function createPostit(title, content, color) {
         draggedPostit = postit;
         postitDragStartX = e.clientX;
         postitDragStartY = e.clientY;
-        postit.style.zIndex = 1000;
+        postit.style.zIndex = ++zIndexCounter;
     });
 
     container.appendChild(postit);
     allPostits.push(postit);
-}
-
-async function fetchAndRenderServices() {
-    try {
-        const response = await fetch(SERVICES_API_ENDPOINT);
-        if (!response.ok) throw new Error('Fetch failed');
-        const data = await response.json();
-        servicesData = Object.entries(data).map(([key, val]) => ({ id: key, ...val }));
-
-        servicesData.forEach((service, idx) => {
-            const statusText = service.online ? '🟢 Online' : '🔴 Decommissioned';
-            const color = POSTIT_COLORS[idx % POSTIT_COLORS.length];
-            const content = `
-                <div class="postit-item">
-                    <small>${statusText}</small>
-                </div>
-            `;
-            createPostit(service.name, content, color);
-        });
-
-        checkAllServicesStatus();
-    } catch (error) {
-        console.error("Could not load services:", error);
-    }
-}
-
-async function checkServiceStatus(service) {
-    if (!service.online) return;
-
-    const urls = [service.uptimeURL, service.altUptimeURL].filter(Boolean);
-    for (const url of urls) {
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 5000);
-            const res = await fetch(url, { mode: 'no-cors', cache: 'no-cache', signal: controller.signal });
-            clearTimeout(timeoutId);
-            if (res.ok || res.type === 'opaque' || res.status === 200 || res.status === 403 || res.status === 401 || res.status === 0) {
-                return true;
-            }
-        } catch (e) {
-            continue;
-        }
-    }
-    return false;
-}
-
-function checkAllServicesStatus() {
-    servicesData.forEach(service => checkServiceStatus(service));
 }
 
 async function fetchAndRenderProjects() {
@@ -155,7 +105,7 @@ async function fetchAndRenderProjects() {
         const data = await response.json();
         const projects = Object.values(data);
 
-        projects.forEach((project, idx) => {
+        projects.forEach((project) => {
             let buttons = [];
             if (project.download?.has) buttons.push(`<a href="${project.download.url}" target="_blank">Download</a>`);
             if (project.invite?.has) buttons.push(`<a href="${project.invite.url}" target="_blank">Invite</a>`);
@@ -170,8 +120,7 @@ async function fetchAndRenderProjects() {
                 </div>
             `;
             
-            const color = POSTIT_COLORS[idx % POSTIT_COLORS.length];
-            createPostit(project.name, content, color);
+            createPostit(project.name, content, 'postit-yellow');
         });
     } catch (error) {
         console.error("Could not load projects:", error);
@@ -184,7 +133,7 @@ async function fetchAndRenderClients() {
         const data = await response.json();
         const clients = Object.values(data);
 
-        clients.forEach((client, idx) => {
+        clients.forEach((client) => {
             const dateStr = client.start ? (client.end ? `${client.start} – ${client.end}` : `Since ${client.start}`) : '';
             const statusLabel = client.left ? '🔴 Past Work' : '🟢 Current';
 
@@ -199,8 +148,7 @@ async function fetchAndRenderClients() {
                 </div>
             `;
 
-            const color = POSTIT_COLORS[idx % POSTIT_COLORS.length];
-            createPostit(client.entity, content, color);
+            createPostit(client.entity, content, 'postit-blue');
         });
     } catch (e) {
         console.error("Failed to load experience:", e);
@@ -420,6 +368,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load data
     fetchAndRenderProjects();
     fetchAndRenderClients();
-    fetchAndRenderServices();
     connectLanyard();
 });
