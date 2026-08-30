@@ -35,6 +35,9 @@ h1, h2, h3, h4, .handwriting {
 
 #canvas {
     cursor: grab;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 #canvas.grabbing {

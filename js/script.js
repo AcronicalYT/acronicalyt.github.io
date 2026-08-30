@@ -24,6 +24,9 @@ let draggedPostit = null;
 let postitDragStartX = 0;
 let postitDragStartY = 0;
 
+let initialPinchDistance = null;
+let initialPinchZoom = 1;
+
 function getPositionWithCollisionAvoidance(existingPostits) {
     const minDistance = 275;
     const maxDistance = 1150;
@@ -93,12 +96,9 @@ function createPostit(title, content, color) {
     `;
 
     postit.querySelectorAll('a').forEach(link => {
-        link.addEventListener('mousedown', (e) => {
-            e.stopPropagation();
-        });
-        link.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
+        link.addEventListener('mousedown', (e) => e.stopPropagation());
+        link.addEventListener('click', (e) => e.stopPropagation());
+        link.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: true });
     });
 
     const updatePosition = () => {
@@ -121,6 +121,17 @@ function createPostit(title, content, color) {
         postit.style.zIndex = ++zIndexCounter;
         postit.classList.add('dragging');
     });
+
+    postit.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1 || e.target.closest('a')) return;
+        e.stopPropagation();
+        draggedPostit = postit;
+        const touch = e.touches[0];
+        postitDragStartX = touch.clientX;
+        postitDragStartY = touch.clientY;
+        postit.style.zIndex = ++zIndexCounter;
+        postit.classList.add('dragging');
+    }, { passive: true });
 
     container.appendChild(postit);
     allPostits.push(postit);
@@ -418,6 +429,99 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    function getTouchDistance(touch1, touch2) {
+        const dx = touch1.clientX - touch2.clientX;
+        const dy = touch1.clientY - touch2.clientY;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    canvas?.addEventListener('touchstart', (e) => {
+        const centerContent = document.getElementById('center-content');
+        if (centerContent && centerContent.contains(e.target)) return;
+
+        if (e.touches.length === 1 && !draggedPostit) {
+            isCanvasDragging = true;
+            canvasDragStartX = e.touches[0].clientX;
+            canvasDragStartY = e.touches[0].clientY;
+            lastCanvasPanX = panX;
+            lastCanvasPanY = panY;
+            if (viewportElement) viewportElement.style.willChange = 'transform';
+        } else if (e.touches.length === 2) {
+            isCanvasDragging = false;
+            initialPinchDistance = getTouchDistance(e.touches[0], e.touches[1]);
+            initialPinchZoom = zoom;
+        }
+    }, { passive: false });
+
+    document.addEventListener('touchmove', (e) => {
+        if (draggedPostit && e.touches.length === 1) {
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - postitDragStartX;
+            const deltaY = touch.clientY - postitDragStartY;
+
+            const currentX = parseFloat(draggedPostit.dataset.posX);
+            const currentY = parseFloat(draggedPostit.dataset.posY);
+            const baseRotation = parseFloat(draggedPostit.dataset.baseRotation);
+
+            const newX = currentX + deltaX / zoom;
+            const newY = currentY + deltaY / zoom;
+
+            draggedPostit.dataset.posX = newX;
+            draggedPostit.dataset.posY = newY;
+            draggedPostit.style.transform = `translate(calc(-50% + ${newX}px), calc(-50% + ${newY}px)) rotate(${baseRotation}deg)`;
+
+            postitDragStartX = touch.clientX;
+            postitDragStartY = touch.clientY;
+            return;
+        }
+
+        if (e.touches.length === 2 && initialPinchDistance) {
+            e.preventDefault();
+            const currentDistance = getTouchDistance(e.touches[0], e.touches[1]);
+            const scaleChange = currentDistance / initialPinchDistance;
+            const newZoom = Math.max(0.3, Math.min(3, initialPinchZoom * scaleChange));
+
+            const rect = canvas.getBoundingClientRect();
+            const touchCenterX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+            const touchCenterY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+
+            panX = touchCenterX - (touchCenterX - panX) * (newZoom / zoom);
+            panY = touchCenterY - (touchCenterY - panY) * (newZoom / zoom);
+            zoom = newZoom;
+
+            updateViewport();
+            updateZoomLevel();
+            return;
+        }
+
+        if (isCanvasDragging && e.touches.length === 1) {
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - canvasDragStartX;
+            const deltaY = touch.clientY - canvasDragStartY;
+            panX = lastCanvasPanX + deltaX;
+            panY = lastCanvasPanY + deltaY;
+            updateViewport();
+        }
+    }, { passive: false });
+
+    document.addEventListener('touchend', (e) => {
+        if (e.touches.length === 0) {
+            isCanvasDragging = false;
+            initialPinchDistance = null;
+            if (draggedPostit) {
+                draggedPostit.classList.remove('dragging');
+            }
+            draggedPostit = null;
+            if (viewportElement) viewportElement.style.willChange = 'auto';
+        } else if (e.touches.length === 1) {
+            initialPinchDistance = null;
+            canvasDragStartX = e.touches[0].clientX;
+            canvasDragStartY = e.touches[0].clientY;
+            lastCanvasPanX = panX;
+            lastCanvasPanY = panY;
+        }
+    });
 
     fetchAndRenderProjects();
     fetchAndRenderClients();
